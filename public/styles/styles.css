@@ -1,0 +1,14 @@
+* {
+  box-sizing: border-box;
+}
+
+#sign-up-form {
+  width: 70%;
+  height: 400px;
+}
+
+label {
+  margin: 10px;
+  padding: 10px;
+}
+

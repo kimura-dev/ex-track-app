@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>BJJ Technique Tracker</title>
+ <!-- Load an icon library to show a hamburger menu (bars) on small screens -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="styles/float-grid.css">
+  <link rel="stylesheet" type="text/css" href="styles/styles.css">
+</head>
+<body>
+  <header>
+    <nav>
+    
+    </nav>
+  </header>
+  <h1>BJJ Technique Tracker</h1>
+  <div id="form-messages"></div>
+  <section id="sign-up-form" hidden>
+    <form method="POST" action="/auth/users">
+      <fieldset>
+        <legend>Sign Up</legend>
+        <label for="firstname" name="firstName" >First Name
+          <input type="text" name="firstName" class="first">
+        </label>
+        <label for="lastname">Last Name
+          <input type="text" name="lastName" class="last">
+        </label>
+        <label for="username" name="username">User Name
+          <input type="text" name="username" class="username">
+        </label>
+        <label for="email">Email
+          <input type="email" name="email" class="email">
+        </label>
+        <label for="rank">Rank
+        <select name="rank" class="rank">
+          <option value="white" name="white" class="white">White</option>
+          <option value="blue" name="blue" class="blue">Blue</option>
+          <option value="purple" name="purple" class="purple">Purple</option>
+          <option value="brown" name="brown" class="brown">Brown</option>
+          <option value="black" name="black" class="black">Black</option>
+        </select>
+        </label>
+        <label for="affiliates">Affiliations
+          <input type="text" name="affiliates" class="affiliates">
+        </label>
+        <label for="password">Password
+          <input type="password" name="password" class="password">
+        </label>
+        <label for="password2">Confirm Password
+            <input type="password" name="password2" class="password2">
+        </label>
+        <button type="submit">Submit</button>
+        <button class="log-in">Log In</button>
+      </fieldset>
+    </form>
+  </section>
+
+  <section id="login-form" hidden>
+    <form method="POST" action="/api/auth/login">
+      <fieldset>
+        <legend>Log In</legend>
+        <label for="user-name">User name:
+            <input type="text" name="username" >
+          </label>
+          <label for="user-password">Password:
+            <input type="password" name="password" >
+          </label>
+          <button type="submit">Log In</button>
+          <button class="sign-up">Sign Up</button>
+      </fieldset>
+    </form>
+  </section>
+  <section id="dashboard" hidden>
+
+  </section>
+  <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+  <script src="scripts/client.js"></script>
+</body>
+</html>
