@@ -12,6 +12,7 @@ router.get('/', (req, res) => {
     .populate('user')
     .then(exercises => {
       res.status(200).json(exercises);
+      res.send('Connected');
     }).catch(err => {
       res.status(500).json({message: 'Internal server error'});
     });
