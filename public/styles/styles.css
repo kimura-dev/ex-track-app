@@ -1,5 +1,11 @@
-* {
+*, *:before, *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
+}
+
+body {
+  background-color: #8FDCFF;
 }
 
 #sign-up-form {
@@ -11,12 +17,15 @@ label {
   margin: 10px;
   padding: 10px;
 }
-
+/*------------------------------------------*/
+/*         Nav-Bar Section */
+/*------------------------------------------*/
 /* Style the navigation bar */
 .navbar {
   width: 100%;
   background-color: #555;
   overflow: auto;
+  margin-bottom: 15px;
 }
 
 /* Navbar links */
@@ -74,6 +83,74 @@ label {
 
 .checked {
   color: orange;
+}
+
+/*------------------------------------------*/
+/* Overlay Pop Up Section */
+/*------------------------------------------*/
+
+/*----------------------*/
+    /*Pop Up Window*/
+/*----------------------*/
+
+.popup{
+    background-color:black;
+    position: absolute;
+    border: solid 2px white;
+    width: 575px;
+    min-height:auto;
+    z-index:5000;
+    top:100px;
+    margin-left:auto;
+    margin-right:auto;
+    left:0px;
+    right:0px;
+}
+.overlayBg{
+    background-color:#333;
+    opacity: 0.5;
+    position: absolute;
+    z-index:1000;
+    top:0px;
+    left:0px;
+    width:100%;
+    min-height:100%;
+}
+
+img {
+  margin:10px;
+}
+
+p{
+  margin: 10px;
+}
+
+#output {
+  margin: 0 auto;
+  width: 1140px;
+  height: 100%;
+}
+
+.button-options {
+  display: block;
+}
+
+.tokenClass {
+  margin-right: 40px;
+  margin-left: 40px;
+
+}
+
+.col {
+  background-color: #D0E892;
+}
+
+/*------------------------------------------*/
+/*         Landing Page Section */
+/*------------------------------------------*/
+.introduction-page {
+  text-align: center;
+  
 }
 
 

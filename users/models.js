@@ -5,10 +5,7 @@ const bcrypt = require('bcryptjs');
 mongoose.Promise = global.Promise;
 
 const UserSchema = mongoose.Schema({
-  // googleID:{
-  //   type:String,
-  //   required: true
-  // },
+
   email: {
     type: String,
     required: true,
@@ -23,37 +20,38 @@ const UserSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  local            : {
-    email        : String,
-    password     : String,
-},
-  facebook         : {
-    id           : String,
-    token        : String,
-    email        : String,
-    name         : String
-},
-twitter          : {
-    id           : String,
-    token        : String,
-    displayName  : String,
-    username     : String
-},
-google           : {
-    id           : String,
-    token        : String,
-    email        : String,
-    name         : String
-},
+  // local            : {
+  //   email        : String,
+  //   password     : String,
+  // },
+  //   facebook         : {
+  //     id           : String,
+  //     token        : String,
+  //     email        : String,
+  //     name         : String
+  // },
+  // twitter          : {
+  //     id           : String,
+  //     token        : String,
+  //     displayName  : String,
+  //     username     : String
+  // },
+  // google           : {
+  //     id           : String,
+  //     token        : String,
+  //     email        : String,
+  //     name         : String
+  // },
   level: {
-    type:String
+    type:String, 
+    default: 'white'
   },
   affiliates: {
-    type:String
+    type:String, default: ''
   },
-  image: {
-    type:String
-  },
+  // image: {
+  //   type:String
+  // },
    firstName: {
      type: String, default: ''
     },

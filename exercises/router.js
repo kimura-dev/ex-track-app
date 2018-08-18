@@ -79,7 +79,7 @@ router.get('/edit/:id', ensureAuthenticated, ensurePublicOrOwner, (req, res) => 
 });
 
 // Process Add Exercises
-router.post('/', ensureAuthenticated, (req, res) => {
+router.post('/', (req, res) => {
   let allowComments;
 
   if(req.body.allowComments){
@@ -87,19 +87,28 @@ router.post('/', ensureAuthenticated, (req, res) => {
   } else {
     allowComments = false;
   }
+  
+  if(req.body.videos.length > 0){
+    videos = req.body.videos;
+  } else {
+    videos = null 
+  }
+  console.log(req.body);
 
   const newExercise = {
     title: req.body.title,
     body: req.body.body,
     status: req.body.status,
     allowComments:allowComments,
-    user: req.user.id
+    user: req.user.id,
+    videos:videos
   }
 
   // Create Exercise
   new Exercise(newExercise)
     .save()
     .then(exercise => {
+      console.log(exercise);
       res.status(200).json(exercise);
     }).catch(err => {
       console.log(err);

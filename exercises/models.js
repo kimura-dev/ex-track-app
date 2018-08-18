@@ -7,19 +7,27 @@ const ExerciseSchema = new Schema({
     type:String,
     required: true
   },
-  content:{
-    type: String,
-    required: true
-  },
+  // content:{
+  //   type: String,
+  //   required: true
+  // },
   status: {
     type: String,
     default:'public'
   },
+  // videos: [{
+  //   title: String,
+  //   description:{
+  //     type: String
+  //   },
+  //   url: String 
+  // }],
   videos: [{
     title: String,
     description:{
-      type: String
-    },
+        type: String
+      },
+    videoID: String,
     url: String
   }],
   ratings: [{
@@ -50,6 +58,7 @@ const ExerciseSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref:'User'
     }
+    // exercise.user.firstName
   }],
   user:{
     type: Schema.Types.ObjectId,

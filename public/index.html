@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>BJJ Technique Tracker</title>
+  <title>Technique Tracker</title>
  <!-- Load an icon library to show a hamburger menu (bars) on small screens -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="styles/float-grid.css">
@@ -15,7 +15,8 @@
     <nav>
       <div class="navbar">
         <!-- <a class="active" href="#"><i class="fa fa-fw fa-home"></i> Home</a>  -->
-        <a href="#"><i class="fa fa-fw fa-search"></i> Search</a> 
+        <a href="#" class="nav-search-exercise"><i class="fa fa-fw fa-search"></i> Search</a> 
+        <a href="#" class="nav-logs"> Logs</a> 
         <a href="#" class="nav-exercises"> Techniques</a> 
         <!-- <a href="#"><i class="fa fa-fw fa-envelope"></i> Logs</a>  -->
         <a href="#" class="nav-login"><i class="fa fa-fw fa-user"></i> Login</a>
@@ -25,25 +26,25 @@
   </header>
 
   <section class="introduction-page">
-      <h1>Technique Tracker</h1>
-      <p>Welcome to BJJ Technique Tracker 1.0.0</p>
-      <p>Search, add and track your favorite brazilian jiu-jitsu techniques, using our technique tracker. Choose for your techniques to be viewed by the world or completley private as your own personal technique for tracking.</p>
+      <h1 >Technique Tracker</h1>
+      <p>Welcome to Technique Tracker 1.0.0</p>
+      <p>Search, add and track your favorite techniques, using our technique tracker. Choose for your techniques to be viewed by the world or completley private as your own personal technique for tracking.</p>
       <!-- <button class="begin">Begin</button> -->
   </section>
 
-  <section class="section-add-exercise">
+  <section class="search-exercise" hidden>
       <form method="GET" action="/exercises">
         <fieldset>
-          <legend>Type in a technique:</legend>
+          <legend>Search A Technique:</legend>
           <label for="exercise-search">
              <input type="text" class="search-exercise">
             </label>
             <button type="submit">Search</button>
-            <button class="btn-add-exercise">Add Technique</button>
         </fieldset>
       </form>
   </section>
-  
+
+  <button class="btn-add-exercise">Add Technique</button>
 
   <div id="form-messages"></div>
   <section id="sign-up-form" hidden>
@@ -80,38 +81,45 @@
         <label for="password2">Confirm Password
             <input type="password" name="password2" class="password2">
         </label>
-        <button type="btn-submit-signup">Submit</button>
+        <button type="submit-signup-btn">Submit</button>
         <button class="log-in">Log In</button>
       </fieldset>
     </form>
   </section>
 
   <section id="login-form" hidden>
-    <form method="POST" action="/api/auth/login">
+    <form>
       <fieldset>
         <legend>Log In</legend>
         <label for="user-name">User name:
-            <input type="text" name="username" >
+            <input type="text" name="username" class="login-username">
           </label>
           <label for="user-password">Password:
-            <input type="password" name="password" >
+            <input type="password" name="password" class="login-password">
           </label>
-          <button type="submit">Log In</button>
-          <!-- <button class="sign-up">Sign Up</button> -->
+          <button type="submit" class="logIn">Log In</button>
       </fieldset>
     </form>
+  </section>
+
+  <section class="dashboard">
+     <div class="row">
+       <div class="col-12">
+
+       </div>
+     </div>
   </section>
 
   <section class="add-exercise-form" hidden>
     <div class="row">
       <div class="col-12">
-          <form action="/exercises" method="POST">
+          <form>
             <fieldset>
-              <legend>Add Technique</legend>
+              <legend>Technique</legend>
               <div class="row">
                 <div class="input-field">
                   <label for="exercise-title" name="exercise-title">Title:
-                    <input type="text" class="exercise-title">
+                    <input type="text" name="title" class="exercise-title">
                   </label>
                     </div>
                   </div>
@@ -125,10 +133,10 @@
               </div>
       
               <div class="row">
-                <div class="input-field">
-                  <select name="status">
-                    <option value="public" selected>Public</option>
-                    <option value="private">Private</option>
+                <div class="col-4">
+                  <select name="status" class="status">
+                    <option value="public" name="public" class="public">Public</option>
+                    <option value="private" name="private" class="private">Private</option>
                   </select>
                   <label for="status">Status</label>
                 </div>
@@ -136,116 +144,147 @@
       
               <div class="row">
                 <p>
-                  <label for="allow-comments">Allow Comments
-                      <input type="checkbox" name="allowComments" class="allow-comments" checked="checked">
+                  <label for="allowComments">Allow Comments
+                      <input type="checkbox" name="allowComments" class="allowComments" checked="checked">
                   </label>
                 </p>
               </div>
 
-              <div class="row">
-                  <p>In Action Videos:</p>
-              </div>
-              <div class="row">
-                <div class="col-3">
-                  <div class="video">
-                    <img class="thumbnail" src="https://tf-assets-prod.s3.amazonaws.com/tf-curric/WEB-DEV-001/2.6.3_challenge_responsive_layout/rey_square.png" />
-                    <div class="video-content">
-                      <h3 class="exercise-title">Rey</h3>
-                      <p class="exercise-description">Protagonist, from Jakku</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-3">
-                  <div class="video">
-                    <img class="thumbnail" src="https://tf-assets-prod.s3.amazonaws.com/tf-curric/WEB-DEV-001/2.6.3_challenge_responsive_layout/finn_square.png" />
-                    <div class="video-content">
-                      <h3 class="exercise-title">Finn</h3>
-                      <p class="exercise-description">Stormtrooper, befriends Rey</p>
-                    </div>
-                  </div>
-                </div>
-                  <div class="col-3">
-                    <div class="video">
-                      <img class="thumbnail" src="https://tf-assets-prod.s3.amazonaws.com/tf-curric/WEB-DEV-001/2.6.3_challenge_responsive_layout/kylo_square.png" />
-                      <div class="video-content">
-                        <h3 class="exercise-title">Kylo Ren</h3>
-                        <p class="exercise-description">Main villain, or is he?</p>
-                      </div>
-                    </div>
-                  </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-3">
-                      <div class="video">
-                        <img class="thumbnail" src="https://tf-assets-prod.s3.amazonaws.com/tf-curric/WEB-DEV-001/2.6.3_challenge_responsive_layout/poe_square.png" />
-                        <div class="video-content">
-                          <h3 class="exercise-title">Poe</h3>
-                          <p class="exercise-description">Pilot for the resistance</p>
-                        </div>
-                      </div>
-                    </div>
-                
-                    <div class="col-3">
-                      <div class="video">
-                        <img class="thumbnail" src="https://tf-assets-prod.s3.amazonaws.com/tf-curric/WEB-DEV-001/2.6.3_challenge_responsive_layout/chewbacca_square.png" />
-                        <div class="video-content">
-                          <h3 class="exercise-title">Chewbacca</h3>
-                          <p class="exercise-description">A great first mate</p>
-                        </div>
-                      </div>
-                    </div>
-                     <!-- $('.exercise-title').val('');
-                          $('.exercise-description').val(''); -->
-                      
-                          
+              <button class="add-video">Add Video</button> 
 
-                
-                    <div class="col-3">
-                      <div class="video">
-                        <img class="thumbnail" src="https://tf-assets-prod.s3.amazonaws.com/tf-curric/WEB-DEV-001/2.6.3_challenge_responsive_layout/yoda_square.png" />
-                        <div class="video-content">
-                          <h3 class="exercise-title">Yoda</h3>
-                          <p class="exercise-description">Wise old Jedi master</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <section class="ratings">
-                    <h3>Rate this:</h3>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                  </section>
-                  <button type="submit">Save</button>
+              <section class="ratings">
+                <h3>Rate this:</h3>
+                <span class="fa fa-star checked" data-rating-value="1"></span>
+                <span class="fa fa-star checked" data-rating-value="2"></span>
+                <span class="fa fa-star" data-rating-value="3"></span>
+                <span class="fa fa-star" data-rating-value="4"></span>
+                <span class="fa fa-star" data-rating-value="5"></span>
               </section>
-            </fieldset>
-          </form>
-      </div>
 
-    <section class="video-picker">
+              <button type="submit" value="save" class="save-exercise-btn">Save</button>
+
+              <section class="added-videos"><div class="row"></div></section>
+
+
+              <section class="commentSection" hidden>
+                <div class="row">
+                    <p>Please <a href="/auth/google">log</a> in to leave a comment</p>
+                  <form method="POST" action="/exercises/comment/">
+                    <fieldset>
+                      <legend>
+                        <div class="input-field">
+                          <textarea name="body" class="textarea"></textarea>
+                          <label> Add Comment</label>
+                        </div>
+                        <button value="submit" name="submit">Submit</button>
+                      </legend>
+                    </fieldset>
+                  </form>
+                </div>
+              </section>
+          </section>
+          </fieldset>
+          
+        </form>
+    </div>
+
+    <
+
+    <section class="video-picker" hidden>
       <form method="POST" action="#">
         <fieldset>
           <legend>Video Picker</legend>
           <label for="search">Search
-            <input type="text" name="search">
-            <button>Submit</button>
+            <input type="text" name="search" class="video-search-input">
+            <button type="search" class="video-search-btn">Search</button>
+            <button type="cancel" class="closePickerBtn">Cancel</button>
+            <button type="return" class="returnToProfileBtn">Return to Profile</button>
+
           </label>
         </fieldset>
       </form>
 
-      <section class="video-results">
-        <div class="row">
+      <div class="button-options" hidden>
+          <input type="button" class="tokenClass" value="Previous">
+          <input type="button" class="tokenClass" value="Next"> 
+      </div>
+      <section class="video-results"><div class="row"></div></section>
+    </section>
+
+    <section class="pop-up">
+        <div id="output"></div>
+        <div class="overlayBg"></div>
+        <div class="popup"> 
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/WEkSYw3o5is" rel="0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
         </div>
-      </section>
+    </section>
+    
+    <section class="userExercise">
+      <!-- <div class="col-12"> -->
+          <!-- <form>
+            <fieldset>
+              <legend>Technique</lengend>
+              <h3>${response.title}</h3>
+              <p>${response.date}</p>
+              <section class="ratings">
+            <h3>Rate this:</h3>
+                <span class="fa fa-star checked" data-rating-value="1"></span>
+                <span class="fa fa-star checked" data-rating-value="2"></span>
+                <span class="fa fa-star" data-rating-value="3"></span>
+                <span class="fa fa-star" data-rating-value="4"></span>
+                <span class="fa fa-star" data-rating-value="5"></span>
+              </section>
+              <div class="row">
+                <div class="col-4">
+                  <select name="status" class="status">
+                    <option value="public" name="public" class="public">Public</option>
+                    <option value="private" name="private" class="private">Private</option>
+                  </select>
+                  <label for="status">Status</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-4">
+                  <h3 class="video-title">${response.videos}</h3>
+                <img  class="thumbnail" src="${url}" videoID="${videoID}">
+                  <p class="url"><a href="https://www.youtube.com/watch?v=${videoID}" target="_blank"> ${videoID}</a></p>
+                <textarea name="body" class="description" col="40" row="6"></textarea>
+                <div class="noteBtn">
+                  <button value="save" class="saveNote">Save Note</button>
+                  <button value="save" class="cancelNote">Cancel Note</button>
+                  <button value="save" class="editNote">Edit Note</button>
+                  <button class="deleteVideo">Delete Video</button>
+                </div
+                </div>
+              </div
+            
+            </fieldset>
+          <button class="editTech">Edit Technique</button>
+          <button class="deleteTech">Delete Technique</button>
+        </form>
+        </div>`) -->
+    </section>
+
+    <section class="exercise-logs" hidden>
+      <form method="POST" action="#">
+        <fieldset>
+          <legend>Logs Entry</legend>
+          
+        </fieldset>
+
+      </form>
     </section>
 
   <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous"></script>
+  <script src="https://cdn.ckeditor.com/4.10.0/standard/ckeditor.js"></script>
+  <script >
+    CKEDITOR.replace('body',{
+      plugins: 'wysiwygarea,toolbar,basicstyles,link' 
+    });
+  </script>
   <script src="scripts/client.js"></script>
 </body>
 </html>

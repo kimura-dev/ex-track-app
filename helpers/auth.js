@@ -3,7 +3,7 @@ module.exports = {
     if(req.isAuthenticated()){
       return next();
     }
-    req.redirect('/users/login');
+    res.status(401).json({message:'Not logged in'});
   },
   ensurePublicOrOwner: function(req, res, next){
     if(!req.log){
