@@ -102,14 +102,6 @@
     </form>
   </section>
 
-  <section class="dashboard">
-     <div class="row">
-       <div class="col-12">
-
-       </div>
-     </div>
-  </section>
-
   <section class="add-exercise-form" hidden>
     <div class="row">
       <div class="col-12">
@@ -216,8 +208,83 @@
           <iframe width="560" height="315" src="https://www.youtube.com/embed/ZnuwB35GYMY?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>  
         </div>
     </section>
+
+    <!-- <section class="edit-exercise-page" hidden>
+        <div class="row">
+          <div class="col-12">
+              <form>
+                <fieldset>
+                  <legend>Technique</legend>
+                  <div class="row">
+                    <div class="input-field">
+                      
+                        </div>
+                      </div>
+                  </div>
+          
+                  <div class="row">
+                    <div class="input-field">
+                      <h5>Tell us about it:</h5>
+                      <textarea name="body" rows="5" cols="60" class="exercise-description"></textarea>
+                    </div>
+                  </div>
+          
+                  <div class="row">
+                    <div class="col-4">
+                      <select name="status" class="status">
+                        <option value="public" name="public" class="public">Public</option>
+                        <option value="private" name="private" class="private">Private</option>
+                      </select>
+                      <label for="status">Status</label>
+                    </div>
+                  </div>
+          
+                  <div class="row">
+                    <p>
+                      <label for="allowComments">Allow Comments
+                          <input type="checkbox" name="allowComments" class="allowComments" checked="checked">
+                      </label>
+                    </p>
+                  </div>
+    
+                  <button class="add-video">Add Video</button> 
+    
+    
+                  <button type="submit" value="save" class="save-exercise-btn">Save Exercise</button>
+    
+                  <section class="added-videos"><div class="row"></div></section>
+    
+    
+                  <section class="commentSection" hidden>
+                    <div class="row">
+                        <p>Please <a href="/auth/google">log</a> in to leave a comment</p>
+                      <form method="POST" action="/exercises/comment/">
+                        <fieldset>
+                          <legend>
+                            <div class="input-field">
+                              <textarea name="body" class="textarea"></textarea>
+                              <label> Add Comment</label>
+                            </div>
+                            <button value="submit" name="submit">Submit</button>
+                          </legend>
+                        </fieldset>
+                      </form>
+                    </div>
+                  </section>
+              </section>
+              </fieldset>
+              
+            </form>
+        </div> -->
+    
     
     <section class="userExercise" hidden>
+      <div class="row">
+        <div class="col-12">
+          <p>Click exercise to view</p>
+        </div>
+      </div>
+
       <!-- <div class="col-12">  -->
          <!-- <form>
             <fieldset> -->
@@ -228,6 +295,7 @@
               <div class="user-ex-videos">
                   
               </div>
+              
 
               <!-- <div class="row">
                 <div class="col-4">

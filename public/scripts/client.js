@@ -159,15 +159,10 @@ function showCreatedExercise(response){
 
 function generateItemElement(response) {
   console.log(response);
-  if(response.title === 'undefinded'){
-    return false
-  } 
-
   return $('.user-ex-videos').append(`<div class="col-4 card">
                                 <h3 class="video-title">${response.title}</h3>
                                   <img  class="thumbnail" src="${response.url}" videoID="${response.videoID}">
                                   <p class="url"><a href="https://www.youtube.com/watch?v=${response.videoID}" target="_blank"> ${response.videoID}</a></p>
-                                  <button class="view-exercise">View</button>
                              </div>`);
 };
 
@@ -175,7 +170,7 @@ function generateExerciseItemsString(videos) {
   console.log("Generating exercise items" + videos);
 
    videos.forEach((video) =>{return generateItemElement(video)});
-  
+
 };
 
 /**----------------------------- */
@@ -463,43 +458,6 @@ $(function onPageReady(){
     showAddExerciseForm();
   });
 
-  // View Exercise Click
-  $('.view-exercise').click(function(){
-    console.log('working');
-  })
-
   previewVideos();  
-});
 
-// function generateItemElement(response) {
-//   console.log(response);
-//   $('.user-ex-videos').html(`<div class="col-4">
-//                                 <h3 class="video-title">${response.title}</h3>
-//                                 <div class="row">
-//                                   <div class="input-field">
-//                                     <h5>Tell us about it:</h5>
-//                                     <textarea name="body" rows="5" cols="60" class="user-exercise-description"></textarea>
-//                                   </div>
-//                                 </div>
-//                                 <div class="row">
-//                                   <div class="col-4">
-//                                     <select name="status" class="user-ex-status">
-//                                       <option value="public" name="public" class="public">Public</option>
-//                                       <option value="private" name="private" class="private">Private</option>
-//                                     </select>
-//                                     <label for="status">Status</label>
-//                                   </div>
-//                                 </div>
-//                                 <div class="row">
-//                                   <div class="col-4">
-//                                     <h3 class="video-title">${response.title}</h3>
-//                                     <img  class="thumbnail" src="${response.url}" videoID="${response.videoID}">
-//                                     <p class="url"><a href="https://www.youtube.com/watch?v=${response.videoID}" target="_blank"> ${response.videoID}</a></p>
-//                                   </div>
-//                                 </div>
-//                                 <div class="row">
-//                                   <button class="editTech">Edit Technique</button>
-//                                   <button class="deleteTech">Delete Technique</button>
-//                                 </div>
-//                              </div>`);
-// };
+});
