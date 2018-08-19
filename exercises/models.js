@@ -7,7 +7,7 @@ const ExerciseSchema = new Schema({
     type:String,
     required: true
   },
-  // content:{
+  // description:{
   //   type: String,
   //   required: true
   // },
@@ -15,59 +15,48 @@ const ExerciseSchema = new Schema({
     type: String,
     default:'public'
   },
-  // videos: [{
-  //   title: String,
-  //   description:{
-  //     type: String
-  //   },
-  //   url: String 
-  // }],
   videos: [{
     title: String,
-    description:{
-        type: String
-      },
     videoID: String,
     url: String
-  }],
-  ratings: [{
-    date:{
-      type: Date,
-      default: Date.now
-    },
-    user:{
-      type: Schema.Types.ObjectId,
-      ref:'User'
-    },
-    value: Number
-  }],
-  allowComments: {
-    type: Boolean,
-    default:true
-  },
-  comments: [{
-    body: {
-      type: String,
-      // required: true
-    },
-    date:{
-      type: Date,
-      default: Date.now
-    },
-    user:{
-      type: Schema.Types.ObjectId,
-      ref:'User'
-    }
-    // exercise.user.firstName
-  }],
-  user:{
-    type: Schema.Types.ObjectId,
-    ref:'User'
-  },
-  date:{
-    type: Date,
-    default: Date.now
-  }
+  }]
+  // ratings: [{
+  //   date:{
+  //     type: Date,
+  //     default: Date.now
+  //   },
+  //   user:{
+  //     type: Schema.Types.ObjectId,
+  //     ref:'User'
+  //   },
+  //   value: Number
+  // }],
+  // allowComments: {
+  //   type: Boolean,
+  //   default:true
+  // },
+  // comments: [{
+  //   body: {
+  //     type: String,
+  //     // required: true
+  //   },
+  //   date:{
+  //     type: Date,
+  //     default: Date.now
+  //   },
+  //   user:{
+  //     type: Schema.Types.ObjectId,
+  //     ref:'User'
+  //   }
+  // }],
+  // user:{
+  //   type: Schema.Types.ObjectId,
+  //   ref:'User'
+  // },
+  // date:{
+  //   type: Date,
+  //   default: Date.now
+  // }
 });
 
 const Exercise = mongoose.model('Exercise', ExerciseSchema);

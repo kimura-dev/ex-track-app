@@ -80,13 +80,13 @@ router.get('/edit/:id', ensureAuthenticated, ensurePublicOrOwner, (req, res) => 
 
 // Process Add Exercises
 router.post('/', (req, res) => {
-  let allowComments;
+  // let allowComments;
 
-  if(req.body.allowComments){
-    allowComments = true;
-  } else {
-    allowComments = false;
-  }
+  // if(req.body.allowComments){
+  //   allowComments = true;
+  // } else {
+  //   allowComments = false;
+  // }
   
   if(req.body.videos.length > 0){
     videos = req.body.videos;
@@ -97,11 +97,11 @@ router.post('/', (req, res) => {
 
   const newExercise = {
     title: req.body.title,
-    body: req.body.body,
+    description: req.body.description,
     status: req.body.status,
-    allowComments:allowComments,
-    user: req.user.id,
-    videos:videos
+    // allowComments: allowComments,
+    // user: req.user.id, 
+    videos: JSON.parse(videos)
   }
 
   // Create Exercise

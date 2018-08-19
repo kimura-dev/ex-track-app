@@ -1,6 +1,13 @@
 "use strict";
 
 /**----------------------------- */
+/* Global Vars
+/**----------------------------- */  
+
+let pageToken = {};
+let videosSelected = []; 
+
+/**----------------------------- */
 /* Show & Hide Sign Up Section
 /**----------------------------- */  
 
@@ -12,6 +19,7 @@ function showSignupForm(){
 function hideSignupForm(){
   $('#sign-up-form').hide();
 }
+
 
 /**----------------------------- */
 /*   AJAX Submit Signup Form
@@ -28,7 +36,7 @@ function submitSignupForm(){
     password2: $('.password2').val()
   };
   let formMessages = $('#form-messages');
-
+  
   // Submit the form using AJAX.
   $.ajax({
     type: 'POST',
@@ -67,20 +75,6 @@ function submitSignupForm(){
   });
 };
 
-/*--------------------------------*/
-/*     JSON for selected videos
-/*--------------------------------*/
-function jsonforVideo(videoElement){
-  let target = $(videoElement);
-  return {
-    title: target.find('.video-title').text(),
-    url: target.find('.url a').attr('href'),
-    // videoID: target.parent().prev().prev().attr('videoID'),
-    videoID: target.find('.thumbnail').attr('videoID')
-
-  };
-}
-
 /**-------------------------------- */
 /* Exercise Add Submit Form section 
 /**--------------------------------- */
@@ -92,55 +86,36 @@ function hideAddExerciseForm(){
   $('.add-exercise-form').hide();
 };
 
+/*--------------------------------*/
+/*     JSON for selected videos
+/*--------------------------------*/
+function jsonforVideo(videoElement){
+  let target = $(videoElement);
+  return {
+    title: target.find('.video-title').text(),
+    url: target.find('.thumbnail').attr('src'),
+    videoID: target.find('.thumbnail').attr('videoID')
+  };
+}
+
 function submitExerciseForm(){
   let videos = [];
-  let allowComments;
-  if($('select > option').val() === 'public'){
-    allowComments = true;
-  } else {
-    allowComments = false;
-  }
-
-  if(videosSelected.length > 0){
-    videos = videosSelected;
-  } else {
-    videos = null;
-  }
-
   $('.added-videos .col-4').each(function(){
     videos.push(jsonforVideo(this));
   });
+
   let data = {
     title: $('.exercise-title').val(),
-    description: $('.exercise-description').val(),
+    description: $('.exercise-description').val(), 
     status: $('.status > option:selected').val(),
-    allowComments: allowComments,
-    videos: videos,
-    ratings:[{
-      date: {
-        default: Date.now
-      },
-      user: {
-
-      },
-      value: {
-
-      }
-    }],
-    allowComments: {
-      
-    },
-    // user: username,
-    date:{
-      type: Date,
-      default: Date.now
-    }
+    // allowComments: allowComments,
+    videos: JSON.stringify(videos),
   };
 
   let formMessages = $('#form-messages');
   console.log('This is the request data'+ data);
 
-  // Submit the form using AJAX.
+  // AJAX 
   $.ajax({
     type: 'POST',
     url: 'http://localhost:8080/api/exercises',
@@ -158,6 +133,7 @@ function submitExerciseForm(){
     $('.exercise-title').val('');
     $('.allow-comments').val('');
     hideAddExerciseForm();
+    generateExerciseItemsString(response.videos);
     showCreatedExercise(response);
   }).fail(function(data) {
     // Make sure that the formMessages div has the 'error' class.
@@ -174,65 +150,33 @@ function submitExerciseForm(){
 };
 
 function showCreatedExercise(response){
-  let title = response.title;
+  $('.userExercise').removeAttr('hidden');
+  $('.userExercise').show();
+  $('.user-ex-title').html(response.title);
+  // $('.user-ex-status').html(response.status);
+  // generateItemElement(response);
+};
 
-  // if (allowComments === 'true'){
-  //   $('.userExercises > .row').append(`<div></div>`)
-  // }
-  let allowComments = response.allowComments;
-  let comments = response.comments;
-  let date = response.date;
-  let ratings = response.ratings;
-  let status = response.status;
-  let videos = response.videos;
-  // $('.userExercises > .row').html(`<div class="col-12">
-  //                                   <form>
-  //                                     <fieldset>
-  //                                       <legend>Technique</lengend>
-  //                                       <h3>${response.title}</h3>
-  //                                       <p>${response.date}</p>
-  //                                       <section class="ratings">
-  //                                         <h3>Rate this:</h3>
-  //                                         <span class="fa fa-star checked" data-rating-value="1"></span>
-  //                                         <span class="fa fa-star checked" data-rating-value="2"></span>
-  //                                         <span class="fa fa-star" data-rating-value="3"></span>
-  //                                         <span class="fa fa-star" data-rating-value="4"></span>
-  //                                         <span class="fa fa-star" data-rating-value="5"></span>
-  //                                       </section>
-  //                                       <div class="row">
-  //                                         <div class="col-4">
-  //                                           <select name="status" class="status">
-  //                                             <option value="public" name="public" class="public">Public</option>
-  //                                             <option value="private" name="private" class="private">Private</option>
-  //                                           </select>
-  //                                           <label for="status">Status</label>
-  //                                         </div>
-  //                                       </div>
-  //                                       <div class="row">
-  //                                         <div class="col-4">
-  //                                           <h3 class="video-title">${response.videos}</h3>
-  //                                           <img  class="thumbnail" src="${url}" videoID="${videoID}">
-  //                                           <p class="url"><a href="https://www.youtube.com/watch?v=${videoID}" target="_blank"> ${videoID}</a></p>
-  //                                          <textarea name="body" class="description" col="40" row="6"></textarea>
-  //                                          <div class="noteBtn">
-  //                                            <button value="save" class="saveNote">Save Note</button>
-  //                                            <button value="save" class="cancelNote">Cancel Note</button>
-  //                                            <button value="save" class="editNote">Edit Note</button>
-  //                                            <button class="deleteVideo">Delete Video</button>
-  //                                          </div
-  //                                         </div>
-  //                                       </div
-                                        
-  //                                     </fieldset>
-  //                                    <button class="editTech">Edit Technique</button>
-  //                                    <button class="deleteTech">Delete Technique</button>
-  //                                   </form>
-  //                                  </div>`)
+function generateItemElement(response) {
+  console.log(response);
+  if(response.title === 'undefinded'){
+    return false
+  } 
 
-  $('.userExercises').removeAttr('hidden');
-  $('.userExercises').html(``);
-}
+  return $('.user-ex-videos').append(`<div class="col-4 card">
+                                <h3 class="video-title">${response.title}</h3>
+                                  <img  class="thumbnail" src="${response.url}" videoID="${response.videoID}">
+                                  <p class="url"><a href="https://www.youtube.com/watch?v=${response.videoID}" target="_blank"> ${response.videoID}</a></p>
+                                  <button class="view-exercise">View</button>
+                             </div>`);
+};
 
+function generateExerciseItemsString(videos) {
+  console.log("Generating exercise items" + videos);
+
+   videos.forEach((video) =>{return generateItemElement(video)});
+  
+};
 
 /**----------------------------- */
 /*    Movie Picker Controls
@@ -255,22 +199,13 @@ function hideMoviePicker(){
 /**-------------------------------- */
 /*   YouTube Search Movie Picker 
 /**-------------------------------- */
-let pageToken = {};
 
 function youtubeOutput(data) {
   pageToken.nextPage = data.nextPageToken;
   pageToken.prevPage = data.prevPageToken;
   var html = "";
   $.each(data['items'], function (index, value) {
-    html += `<div class="col-4">
-              <h3 class="video-title">${value.snippet.title}</h3>
-              <img  class="thumbnail" src="${value.snippet.thumbnails.medium.url}" videoID="${value.id.videoId}">
-              <p class="url"><a href="https://www.youtube.com/watch?v=${value.id.videoId}" target="_blank"> ${value.id.videoId}</a></p>  
-              <div class="video-btn">
-                <button class="preview-video">Preview</button>
-                <button class="select-video">Select</button>
-              </div>
-            </div>`;     
+    html += htmlForVideoResult(value);     
   });
   $('.video-results > .row').html(html);
 };
@@ -308,62 +243,63 @@ function previewVideos(){
   });
 }; 
 
-/**-------------------------------- */
-/*   Add Videos to Selected Array
-/**-------------------------------- */
-
-function selectedVideosArray(){
-  let images = [{title:title, url:url, videoID:videoID,}];
-  videosSelected.push(images[0]);
-}
-
 /**---------------------------- */
 /*     Add Videos to Profile
 /**---------------------------- */
-let videosSelected = []; 
-function addVideosToProfile(e) {
-  let target = $( e.target );
-  let title = $(target).parent().prev().prev().prev().text();
-  let url = $(target).parent().prev().prev().attr('src');
-  let videoID = $(target).parent().prev().prev().attr('videoID');
-  let images = [{title:title, url:url, videoID:videoID}];
-  videosSelected.push(images[0]);
-  $('.added-videos').append(`<div class="col-4">
-                                <h3 class="video-title">${title}</h3>
-                                <img  class="thumbnail" src="${url}" videoID="${videoID}">
-                                <p class="url"><a href="https://www.youtube.com/watch?v=${videoID}" target="_blank"> ${videoID}</a></p>
-                                <textarea name="body" class="description" col="40" row="6"></textarea>
-                                <button value="save" class="saveNote">Save Note</button>
-                                <button value="save" class="cancelNote">Cancel Note</button>
 
-                                <button class="deleteVideo">Delete Video</button>
-                              </div>`);
-  hideMoviePicker();
-  showAddExerciseForm(); 
+function addSelectedVideo(e) {
+  let button = $( this );
+  let videoResult = button.closest('.video-result');
+  videoResult.addClass('selected');
+  let video = jsonforVideo(videoResult);
+  $('.added-videos').append(htmlForVideo(video));
+};
+
+/**---------------------------- */
+/*    HTML For Videos 
+/**---------------------------- */
+
+function htmlForVideo(video){
+  return `<div class="col-4">
+              <h3 class="video-title">${video.title}</h3>
+              <img  class="thumbnail" src="${video.url}" videoID="${video.videoID}">
+              <p class="url"><a href="https://www.youtube.com/watch?v=${video.videoID}" target="_blank"> ${video.videoID}</a></p>
+              <div class="video-controls">
+            ${videoControls(true)}
+
+              </div>
+            </div>`
+}
+
+function htmlForVideoResult(value){
+  return  `<div class="col-4 video-result">
+            <h3 class="video-title">${value.snippet.title}</h3>
+            <img  class="thumbnail" src="${value.snippet.thumbnails.medium.url}" videoID="${value.id.videoId}">
+            <p class="url"><a href="https://www.youtube.com/watch?v=${value.id.videoId}" target="_blank"> ${value.id.videoId}</a></p>  
+            <div class="video-controls">
+            ${videoControls(false)}
+            </div>
+          </div>`
+};
+
+function videoControls(isAdded){
+  if(isAdded){
+    return  `
+    <button class="watchVideo">Watch Video</button>
+    <button class="deleteVideo">Delete Video</button>`
+  } 
+    return `<button class="preview-video">Preview</button>
+            <button class="select-video">Select</button>`
+  
 };
 
 /**------------------------------- */
 /*     Delete Video from Profile
 /**-------------------------------- */
-function deleteVideo(e){
+function deleteVideo(){
   let target = $( e.target );
   $(target).parent().remove();  
 };
-
-/**------------------------------- */
-/*   Show Comments in profile
-/**-------------------------------- */
-
-// function showComments(){
-//   let allow = $('input[checked]').val();
-//   if(allow === 'on'){
-//     if(user){
-//        $('commentSection').show();
-//     } else {
-
-//     }
-//   };
-// };
 
 /**----------------------------- */
 /* Login section
@@ -410,18 +346,15 @@ function loggingIn(){
 };
 
 /**--------------------- */
-/*        DASHBOARD
-/**---------------------- */
-
-function showDashboard(){
-  
-};
-
-/**--------------------- */
 /*    On Page Ready/
        Click Events
 /**--------------------- */
 $(function onPageReady(){
+  // CK Editor
+  CKEDITOR.replace('body',{
+    plugins: 'wysiwygarea,toolbar,basicstyles,link' 
+  });
+
   // Popup Iframe and OverlayBg
   $('.popup').hide();
   $('.overlayBg').hide();
@@ -484,10 +417,7 @@ $(function onPageReady(){
   });
  
   // Add Video to Profile
-  $('.video-results').on('click','.select-video',function(e){
-    addVideosToProfile(e);
-    // selectedVideosArray(e);
-  });
+  $('.video-results').on('click','.select-video', addSelectedVideo);
 
   // Close Video Picker 
   $('.closePickerBtn').click(function(e){
@@ -498,8 +428,6 @@ $(function onPageReady(){
 
   // Save Exercise Click
   $('.add-exercise-form form').submit(function(){
-    // let status = $('.status > option').val();
-    // console.log(status);
     submitExerciseForm();
   });
 
@@ -518,10 +446,11 @@ $(function onPageReady(){
     deleteVideo(e);
   });
 
-  // Set Status 
+  // Set Status
+
   // $('.status').click(function(e){
-  //   let target = e.target;
-  //   // console.log(target);
+  //   let button = e.target;
+  //   console.log(button);
   // });   
 
   // $( document ).on( "click", function( event ) {
@@ -534,15 +463,43 @@ $(function onPageReady(){
     showAddExerciseForm();
   });
 
-  // Rate Stars Click
-  $('.fa-star').click(function(){
-    $(this).toggleClass('checked');
-  });
-
-  $('.status').click(function(e){
-    let target = e.target;
-    console.log(target);
+  // View Exercise Click
+  $('.view-exercise').click(function(){
+    console.log('working');
   })
 
   previewVideos();  
 });
+
+// function generateItemElement(response) {
+//   console.log(response);
+//   $('.user-ex-videos').html(`<div class="col-4">
+//                                 <h3 class="video-title">${response.title}</h3>
+//                                 <div class="row">
+//                                   <div class="input-field">
+//                                     <h5>Tell us about it:</h5>
+//                                     <textarea name="body" rows="5" cols="60" class="user-exercise-description"></textarea>
+//                                   </div>
+//                                 </div>
+//                                 <div class="row">
+//                                   <div class="col-4">
+//                                     <select name="status" class="user-ex-status">
+//                                       <option value="public" name="public" class="public">Public</option>
+//                                       <option value="private" name="private" class="private">Private</option>
+//                                     </select>
+//                                     <label for="status">Status</label>
+//                                   </div>
+//                                 </div>
+//                                 <div class="row">
+//                                   <div class="col-4">
+//                                     <h3 class="video-title">${response.title}</h3>
+//                                     <img  class="thumbnail" src="${response.url}" videoID="${response.videoID}">
+//                                     <p class="url"><a href="https://www.youtube.com/watch?v=${response.videoID}" target="_blank"> ${response.videoID}</a></p>
+//                                   </div>
+//                                 </div>
+//                                 <div class="row">
+//                                   <button class="editTech">Edit Technique</button>
+//                                   <button class="deleteTech">Delete Technique</button>
+//                                 </div>
+//                              </div>`);
+// };

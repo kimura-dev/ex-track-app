@@ -152,16 +152,16 @@
 
               <button class="add-video">Add Video</button> 
 
-              <section class="ratings">
+              <!-- <section class="ratings">
                 <h3>Rate this:</h3>
                 <span class="fa fa-star checked" data-rating-value="1"></span>
                 <span class="fa fa-star checked" data-rating-value="2"></span>
                 <span class="fa fa-star" data-rating-value="3"></span>
                 <span class="fa fa-star" data-rating-value="4"></span>
                 <span class="fa fa-star" data-rating-value="5"></span>
-              </section>
+              </section> -->
 
-              <button type="submit" value="save" class="save-exercise-btn">Save</button>
+              <button type="submit" value="save" class="save-exercise-btn">Save Exercise</button>
 
               <section class="added-videos"><div class="row"></div></section>
 
@@ -188,8 +188,6 @@
         </form>
     </div>
 
-    <
-
     <section class="video-picker" hidden>
       <form method="POST" action="#">
         <fieldset>
@@ -215,54 +213,38 @@
         <div id="output"></div>
         <div class="overlayBg"></div>
         <div class="popup"> 
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/WEkSYw3o5is" rel="0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/ZnuwB35GYMY?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>  
         </div>
     </section>
     
-    <section class="userExercise">
-      <!-- <div class="col-12"> -->
-          <!-- <form>
-            <fieldset>
-              <legend>Technique</lengend>
-              <h3>${response.title}</h3>
-              <p>${response.date}</p>
-              <section class="ratings">
-            <h3>Rate this:</h3>
-                <span class="fa fa-star checked" data-rating-value="1"></span>
-                <span class="fa fa-star checked" data-rating-value="2"></span>
-                <span class="fa fa-star" data-rating-value="3"></span>
-                <span class="fa fa-star" data-rating-value="4"></span>
-                <span class="fa fa-star" data-rating-value="5"></span>
-              </section>
-              <div class="row">
+    <section class="userExercise" hidden>
+      <!-- <div class="col-12">  -->
+         <!-- <form>
+            <fieldset> -->
+              <!-- <legend>Technique</lengend> -->
+              <h3 class="user-ex-title"></h3>
+              
+              
+              <div class="user-ex-videos">
+                  
+              </div>
+
+              <!-- <div class="row">
                 <div class="col-4">
-                  <select name="status" class="status">
+                  <select name="status" class="user-ex-status">
                     <option value="public" name="public" class="public">Public</option>
                     <option value="private" name="private" class="private">Private</option>
                   </select>
                   <label for="status">Status</label>
                 </div>
-              </div>
-              <div class="row">
-                <div class="col-4">
-                  <h3 class="video-title">${response.videos}</h3>
-                <img  class="thumbnail" src="${url}" videoID="${videoID}">
-                  <p class="url"><a href="https://www.youtube.com/watch?v=${videoID}" target="_blank"> ${videoID}</a></p>
-                <textarea name="body" class="description" col="40" row="6"></textarea>
-                <div class="noteBtn">
-                  <button value="save" class="saveNote">Save Note</button>
-                  <button value="save" class="cancelNote">Cancel Note</button>
-                  <button value="save" class="editNote">Edit Note</button>
-                  <button class="deleteVideo">Delete Video</button>
-                </div
-                </div>
-              </div
+              </div> -->
             
-            </fieldset>
-          <button class="editTech">Edit Technique</button>
-          <button class="deleteTech">Delete Technique</button>
-        </form>
-        </div>`) -->
+            
+            <!-- </fieldset> -->
+          <!-- <button class="editTech">Edit Technique</button> -->
+          <!-- <button class="deleteTech">Delete Technique</button> -->
+        <!-- </form>
+        </div> -->
     </section>
 
     <section class="exercise-logs" hidden>
@@ -280,11 +262,6 @@
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous"></script>
   <script src="https://cdn.ckeditor.com/4.10.0/standard/ckeditor.js"></script>
-  <script >
-    CKEDITOR.replace('body',{
-      plugins: 'wysiwygarea,toolbar,basicstyles,link' 
-    });
-  </script>
   <script src="scripts/client.js"></script>
 </body>
 </html>
