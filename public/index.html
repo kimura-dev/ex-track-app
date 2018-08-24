@@ -14,11 +14,11 @@
   <header>
     <nav>
       <div class="navbar">
-        <img src="styles/imgs/boxing-gloves.png" class="logo">
-        <a class="active" href="#"><i class="fa fa-fw fa-home"></i>Home</a> 
-        <a href="#" class="nav-search-exercise"><i class="fa fa-fw fa-search"></i> Search</a> 
+        <!-- <img src="styles/imgs/boxing-gloves.png" class="logo"> -->
+        <!-- <a class="active" href="#"><i class="fa fa-fw fa-home"></i>Home</a>  -->
+        <!-- <a href="#" class="nav-search-exercise"><i class="fa fa-fw fa-search"></i> Search</a>  -->
         <a href="#" class="nav-logs"> Logs</a> 
-        <a href="#" class="nav-exercises"> Techniques</a> 
+        <a href="#" class="nav-exercises">Exercises</a> 
         <!-- <a href="#"><i class="fa fa-fw fa-envelope"></i> Logs</a>  -->
         <a href="#" class="nav-login"><i class="fa fa-fw fa-user"></i> Login</a>
         <a href="#" class="nav-signup"><i class="fa fa-fw fa-user-plus"></i> Sign Up</a>
@@ -27,10 +27,15 @@
   </header>
 
   <section class="introduction-page">
-      <h1 >Technique Tracker</h1>
-      <p>Welcome to Technique Tracker 1.0.0</p>
-      <p>Search, add and track your favorite techniques, using our technique tracker. Choose for your techniques to be viewed by the world or completley private as your own personal technique for tracking.</p>
+    <div class="row">
+      <h1 >Exercise Tracker</h1>
+      <p>Welcome to Exercise Tracker 1.0.0</p>
+      <p>Search, add and track your favorite exercises, using our exercise tracker. Choose for your exercises to be viewed by the world or completley private as your own personal for tracking.</p>
       <!-- <button class="begin">Begin</button> -->
+    </div>
+      <div class="row">
+          <button class="login-btn">Login</button>
+        </div>
   </section>
 
   <section class="search-exercise" hidden>
@@ -45,7 +50,7 @@
       </form>
   </section>
 
-  <button class="btn-add-exercise">Add Technique</button>
+  <button class="add-exercise-btn" hidden>Add Exercise</button>
 
   <div id="form-messages"></div>
   <section id="sign-up-form" hidden>
@@ -93,10 +98,10 @@
       <fieldset>
         <legend>Log In</legend>
         <label for="user-name">User name:
-            <input type="text" name="username" class="login-username">
+            <input type="text" name="username" class="login-username" value="kimura">
           </label>
           <label for="user-password">Password:
-            <input type="password" name="password" class="login-password">
+            <input type="password" name="password" class="login-password" value="123456">
           </label>
           <button type="submit" class="logIn">Log In</button>
       </fieldset>
@@ -147,11 +152,18 @@
 
               <hr>
 
-              <button class="add-video">Add Video</button> 
+              <button class="add-video-btn">Add Video</button> 
 
               <button type="submit" value="save" class="save-exercise-btn">Save Exercise</button>
 
-              <section class="added-videos"><div class="row"></div></section>
+              <button type="submit" value="delete" class="delete-exercise-btn">Delete Exercise</button>
+
+
+              <section class="added-videos">
+                <div class="row">
+
+                </div>
+              </section>
 
               <hr>
 
@@ -181,8 +193,9 @@
       <form method="POST" action="#">
         <fieldset>
           <legend>Video Picker</legend>
+          <p>Search for videos to add to your exercise</p>
           <label for="search">Search
-            <input type="text" name="search" class="video-search-input">
+            <input type="text" name="search" class="video-search-input" placeholder="Search videos...">
             <button type="search" class="video-search-btn">Search</button>
             <button type="cancel" class="closePickerBtn">Cancel</button>
             <button type="return" class="returnToProfileBtn">Return to Profile</button>

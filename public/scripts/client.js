@@ -8,6 +8,7 @@ let pageToken = {};
 let videosSelected = [];
 let video = []; 
 let exercises = []; 
+let exerciseId = '';
 let currentExerciseIndex = -1;
 
 
@@ -102,15 +103,26 @@ function hideIntroPage(){
 }
 
 /**-------------------------------- */
-/*  Hide & Show Add Exercise Btn
+/*  Hide & Show Log In Btn
 /**--------------------------------- */
 
 function showAddExerciseBtn(){
-  $('.btn-add-exercise').show();
+  $('.add-exercise-btn').show();
 }
 
 function hideAddExerciseBtn(){
-  $('.btn-add-exercise').hide();
+  $('.add-exercise-btn').hide();
+}
+/**-------------------------------- */
+/*  Hide & Show Log In Btn
+/**--------------------------------- */
+
+function showLogInBtn(){
+  $('.login-btn').show();
+}
+
+function hideLogInBtn(){
+  $('.login-btn').hide();
 }
 
 /**-------------------------------- */
@@ -140,6 +152,7 @@ function jsonforVideo(videoElement){
 /* Exercise Form Submit 
 /**--------------------------------- */
 function submitExerciseForm(){
+
   let videos = [];
   let allowComments;
   if ( $( '.allowComments' ).prop( "checked" ) ) {
@@ -165,7 +178,7 @@ function submitExerciseForm(){
     videos: JSON.stringify(videos)
   };
 
-  console.log(data);
+  // console.log(data);
 
   let formMessages = $('#form-messages');
   // console.log('This is the request data'+ data);
@@ -180,14 +193,14 @@ function submitExerciseForm(){
   // AJAX To Exercises
   $.ajax({
     type: exerciseId ? 'PUT':'POST',
-    url: `http://localhost:8080/api/exercises${exerciseId ?`/${exerciseId}`: ''}`,
+    url: `http://localhost:8080/api/exercises/${ exerciseId ? exerciseId  : ''}`,
     data: data,
     headers: {
       Authorization: `Bearer ${authToken}`
     }
   }).done(function(response) {
-    console.log(response);
-    // exercises[currentExerciseIndex].videos.push(video);
+    console.log(exercises);
+    
     // Make sure that the formMessages div has the 'success' class.
     $(formMessages).removeClass('error');
     $(formMessages).addClass('success');
@@ -203,6 +216,7 @@ function submitExerciseForm(){
     // Create Exercise Array
     if(exerciseId){
       $(formMessages).text(`${response.title} was edited successfully!`);
+      // exercises[currentExerciseIndex].videos.push(video);
       const index = exercises.findIndex((exercise) => {
         return exercise._id === exerciseId;
       });
@@ -328,10 +342,10 @@ function hideMoviePicker(){
 /**-------------------------------- */
 
 function youtubeOutput(data) {
-  $('.video-search-input').val('');
+  // $('.video-search-input').val('');
   pageToken.nextPage = data.nextPageToken;
   pageToken.prevPage = data.prevPageToken;
-  var html = "";
+  let html = "";
   $.each(data['items'], function (index, value) {
     html += htmlForVideoResult(value);     
   });
@@ -380,7 +394,7 @@ function addSelectedVideoToForm(e) {
   let videoResult = button.closest('.video-result');
   let video = jsonforVideo(videoResult);
   $('.added-videos').append(htmlForVideo(video));
-  
+  // exercises[currentExerciseIndex].videos.push(video);
   // console.log(currentExerciseIndex);
 };
 
@@ -481,6 +495,15 @@ function loggingIn(){
   });
 };
 
+function deleteExerciseAJAX(){
+  $.ajax({
+    type: 'DELETE',
+    url: `http://localhost:8080/api/exercises/${exercise_id}`,
+  }).done(function(response){
+    console.log(response);
+  });
+};
+
 /**--------------------- */
 /*    On Page Ready/
        Click Events
@@ -528,21 +551,27 @@ $(function onPageReady(){
     e.preventDefault();
   });
 
+  $('.add-exercise-btn').click(function(){
+    hideIntroPage();
+    hideAddExerciseBtn();
+    showExerciseForm();
+  })
+
   // Sign Up Form Click Event
   $('#sign-up-form > form').submit(function(){
     submitSignupForm();
   });
   
-  // Show Exercise Form
-  $('.btn-add-exercise').click(function(){
-    hideIntroPage();
-    hideAddExerciseBtn();
-    // showLoginForm();
-    showExerciseForm();
+  // Show Login Form
+  $('.login-btn').click(function(){
+    // hideIntroPage();
+    hideLogInBtn();
+    showLoginForm();
+    // showExerciseForm();
   });
 
   // Show Video Picker 
-  $('.add-video').click(function(e){
+  $('.add-video-btn').click(function(e){
     e.preventDefault();
     showMoviePicker();
   });
@@ -587,6 +616,9 @@ $(function onPageReady(){
   $('.added-videos').on('click','.deleteVideo',function(e){
     deleteVideo(e);
   });
+
+  // Delete Exercise
+  $('.delete-exercise-btn').click(deleteExerciseAJAX);
   
   $('.returnToProfileBtn').click(function(){
     hideMoviePicker();
@@ -616,7 +648,7 @@ $(function onPageReady(){
   // })
 
   previewVideos(); 
-  
-   
+
+
 
 });

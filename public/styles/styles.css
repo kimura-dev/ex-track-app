@@ -5,7 +5,7 @@
 }
 
 body {
-  background-color: #8FDCFF;
+  background-color: rgb(255, 255, 255);
 }
 
 #sign-up-form {
@@ -23,7 +23,7 @@ label {
 /* Style the navigation bar */
 .navbar {
   width: 100%;
-  background-color: #555;
+  background-color: rgb(6, 31, 252);
   overflow: auto;
   margin-bottom: 15px;
 }
@@ -141,25 +141,63 @@ p{
 
 }
 
-.col {
+/* .col {
   background-color: #D0E892;
-}
+} */
 
 /*------------------------------------------*/
 /*         Landing Page Section */
 /*------------------------------------------*/
 .introduction-page {
   text-align: center;
-  
 }
 
+.login-btn {
+  background-color: rgb(17, 69, 243);
+  color: aliceblue;
+  margin: 20px;
+  padding: 10px;
+  font-size: 18px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.login-btn:hover {
+  background-color: rgb(238, 122, 13);  
+  padding: 10px;
+  font-size: 18px;
+}
+/* a:link,
+a:visited {
+	color: #dd4b39;
+	text-decoration: none;
+	border-bottom: 1px solid #d34d43;
+	padding-bottom: 1px;
+	-webkit-transition: border-bottom 0.2s; transition: border-bottom 0.2s, color 0.2s;
+}
+
+a:hover,
+a:active {
+	color: rgb(106, 155, 211);
+	text-decoration: none;
+	border-bottom: 1px solid transparent;
+	padding-bottom: 1px;
+} */
+
+
 .exercise {
-  background-color: #D0E892;
+  background-color: rgb(238, 122, 13);
+  overflow: hidden;
 }
 
 .exercise-show {
   font-size: 20px;
-  color: rgb(189, 121, 32);
+  color: rgb(238, 232, 224);
+}
+
+.video-result {
+  margin: 2px;
+  background-color: rgb(238, 122, 13);
 }
 
 .vid-selected {
