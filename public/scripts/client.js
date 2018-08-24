@@ -5,7 +5,11 @@
 /**----------------------------- */  
 
 let pageToken = {};
-let videosSelected = []; 
+let videosSelected = [];
+let video = []; 
+let exercises = []; 
+let currentExerciseIndex = -1;
+
 
 /**----------------------------- */
 /* Show & Hide Sign Up Section
@@ -75,15 +79,49 @@ function submitSignupForm(){
   });
 };
 
+/**------------------------------------ */
+/*  Hide & Show Users exercise Page
+/**------------------------------------ */
+function showUserExercisePage(){
+  $(".user-exercise-page").show()
+}
+
+function hideUserExercisePage(){
+  $(".user-exercise-page").hide()
+}
+
 /**-------------------------------- */
-/* Exercise Add Submit Form section 
+/*  Hide & Show Introduction Page
 /**--------------------------------- */
-function showAddExerciseForm(){
-  $('.add-exercise-form').show();
+function showIntroPage(){
+  $('.introduction-page').show();
+}
+
+function hideIntroPage(){
+  $('.introduction-page').hide();
+}
+
+/**-------------------------------- */
+/*  Hide & Show Add Exercise Btn
+/**--------------------------------- */
+
+function showAddExerciseBtn(){
+  $('.btn-add-exercise').show();
+}
+
+function hideAddExerciseBtn(){
+  $('.btn-add-exercise').hide();
+}
+
+/**-------------------------------- */
+/* Exercise Form Hide & Show 
+/**--------------------------------- */
+function showExerciseForm(){
+  $('.exercise-form').show();
 };
 
-function hideAddExerciseForm(){
-  $('.add-exercise-form').hide();
+function hideExerciseForm(){
+  $('.exercise-form').hide();
 };
 
 /*--------------------------------*/
@@ -98,43 +136,90 @@ function jsonforVideo(videoElement){
   };
 }
 
+/**-------------------------------- */
+/* Exercise Form Submit 
+/**--------------------------------- */
 function submitExerciseForm(){
   let videos = [];
+  let allowComments;
+  if ( $( '.allowComments' ).prop( "checked" ) ) {
+    allowComments = true;
+    $('.comment-section').removeAttr('hidden');
+    $('.comment-section').show();
+  } else {
+    allowComments = false;
+  }
+     
   $('.added-videos .col-4').each(function(){
     videos.push(jsonforVideo(this));
   });
 
+  let exerciseId = $('.exercise-id').val() || undefined;
+
   let data = {
+    _id: exerciseId,
     title: $('.exercise-title').val(),
-    description: $('.exercise-description').val(), 
-    status: $('.status > option:selected').val(),
-    // allowComments: allowComments,
-    videos: JSON.stringify(videos),
+    description: CKEDITOR.instances['body'].getData(), 
+    status: $('.status > option:selected').text(),
+    allowComments: allowComments,
+    videos: JSON.stringify(videos)
   };
 
-  let formMessages = $('#form-messages');
-  console.log('This is the request data'+ data);
+  console.log(data);
 
-  // AJAX 
+  let formMessages = $('#form-messages');
+  // console.log('This is the request data'+ data);
+
+  let authToken = '';
+
+  if(window.localStorage){
+    authToken = window.localStorage.getItem('authToken');
+  }
+  // console.log(authToken);
+
+  // AJAX To Exercises
   $.ajax({
-    type: 'POST',
-    url: 'http://localhost:8080/api/exercises',
-    data: data
+    type: exerciseId ? 'PUT':'POST',
+    url: `http://localhost:8080/api/exercises${exerciseId ?`/${exerciseId}`: ''}`,
+    data: data,
+    headers: {
+      Authorization: `Bearer ${authToken}`
+    }
   }).done(function(response) {
-    console.log('This is the response data'+ response);
+    console.log(response);
+    // exercises[currentExerciseIndex].videos.push(video);
     // Make sure that the formMessages div has the 'success' class.
     $(formMessages).removeClass('error');
     $(formMessages).addClass('success');
 
-    // Set the message text.
-    $(formMessages).text(`${response.title} was added to your profile successfully!`);
-
     // Clear the form.
     $('.exercise-title').val('');
+    $('.exercise-id').val('');
+    $('.exercise-description').val('');
+    $('.added-videos').html('');
     $('.allow-comments').val('');
-    hideAddExerciseForm();
-    generateExerciseItemsString(response.videos);
-    showCreatedExercise(response);
+    hideExerciseForm();
+
+    // Create Exercise Array
+    if(exerciseId){
+      $(formMessages).text(`${response.title} was edited successfully!`);
+      const index = exercises.findIndex((exercise) => {
+        return exercise._id === exerciseId;
+      });
+
+      if (index >= 0){
+        exercises[index] = response;
+        // console.log(response);
+      }
+     
+    } else {
+      $(formMessages).text(`${response.title} was added successfully!`);
+      exercises.push(response);
+    }
+    
+    renderUserExercisesPage();
+    showUserExercisesPage();
+
   }).fail(function(data) {
     // Make sure that the formMessages div has the 'error' class.
     $(formMessages).removeClass('success');
@@ -149,28 +234,75 @@ function submitExerciseForm(){
   });
 };
 
-function showCreatedExercise(response){
-  $('.userExercise').removeAttr('hidden');
-  $('.userExercise').show();
-  $('.user-ex-title').html(response.title);
-  // $('.user-ex-status').html(response.status);
-  // generateItemElement(response);
+/**--------------------------------------------------- */
+/*    Get Exercise Data Displays Users Page
+/**---------------------------------------------------- */
+function showUserExercisesPage(){
+  $('.user-exercise-page').removeAttr('hidden');
+  $('.user-exercise-page').show();
 };
 
-function generateItemElement(response) {
-  console.log(response);
-  return $('.user-ex-videos').append(`<div class="col-4 card">
-                                <h3 class="video-title">${response.title}</h3>
-                                  <img  class="thumbnail" src="${response.url}" videoID="${response.videoID}">
-                                  <p class="url"><a href="https://www.youtube.com/watch?v=${response.videoID}" target="_blank"> ${response.videoID}</a></p>
-                             </div>`);
+function hideUserExercisesPage(){
+  $('.user-exercise-page').attr('hidden');
+  $('.user-exercise-page').hide();
 };
 
-function generateExerciseItemsString(videos) {
-  console.log("Generating exercise items" + videos);
+function renderUserExercisesPage(){
+  let htmlForPage = exercises.map(htmlForExercisePreview).join('');
+  $('.user-exercise-page > .row').html(htmlForPage); 
+};
 
-   videos.forEach((video) =>{return generateItemElement(video)});
+function htmlForExercisePreview(exercise){
+  // console.log(exercise);
+  return ` <div class="col-4">
+                <div class="exercise">
+                  <a class="exercise-show" href="#">View
+                  <img class="exercise-image" src="${exercise.videos[0].url}" videoID="${exercise.videos[0].videoID}" />
+                  </a>
+                  <h3 class="user-exercise-title">${exercise.title}</h3>
+                <div class="exercise-content">
+                  <p>${exercise.description}</p>
+                </div>
+              </div>`;
+};
 
+/**--------------------------------------------------- */
+/*     Display Users Exercise Data to Form
+/**---------------------------------------------------- */
+
+function getExerciseIndexFromClick(e){
+  const target = $(e.currentTarget);
+  let index = target.index();
+  // console.log(index);
+  return index;
+};
+
+function renderVideosOnExercisesForm(exercise){
+  let htmlForVideo = exercise.videos.map(htmlForVideosOnExerciseForm).join('');
+  $('.added-videos').html(htmlForVideo); 
+};
+
+function htmlForVideosOnExerciseForm(video){
+  // console.log(exercise);
+  return `<div class="col-4">
+            <h3 class="video-title">${video.title}</h3>
+            <img  class="thumbnail" src="${video.url}" videoID="${video.videoID}">
+            <p class="url"><a href="https://www.youtube.com/watch?v=${video.videoID}" target="_blank"> ${video.videoID}</a></p>
+            <div class="video-controls">
+              ${videoControls(true)}
+            </div>
+          </div>`;
+};
+
+function populateFormWExerciseData(exercise) {
+  // console.log(exercise._id);
+  if(exercise){
+    $('.exercise-id').val(exercise._id || '') ;
+    $('.exercise-title').val(exercise.title || '') ;
+    $('.exercise-description').val(exercise.description || '');
+    hideUserExercisesPage();
+    showExerciseForm();
+  }
 };
 
 /**----------------------------- */
@@ -178,7 +310,7 @@ function generateExerciseItemsString(videos) {
 /**------------------------------ */
 
 function showMoviePicker(){
-  hideAddExerciseForm();
+  hideExerciseForm();
   $('.video-picker').show();
 };
 
@@ -196,6 +328,7 @@ function hideMoviePicker(){
 /**-------------------------------- */
 
 function youtubeOutput(data) {
+  $('.video-search-input').val('');
   pageToken.nextPage = data.nextPageToken;
   pageToken.prevPage = data.prevPageToken;
   var html = "";
@@ -242,12 +375,13 @@ function previewVideos(){
 /*     Add Videos to Profile
 /**---------------------------- */
 
-function addSelectedVideo(e) {
+function addSelectedVideoToForm(e) {
   let button = $( this );
   let videoResult = button.closest('.video-result');
-  videoResult.addClass('selected');
   let video = jsonforVideo(videoResult);
   $('.added-videos').append(htmlForVideo(video));
+  
+  // console.log(currentExerciseIndex);
 };
 
 /**---------------------------- */
@@ -284,7 +418,7 @@ function videoControls(isAdded){
     <button class="deleteVideo">Delete Video</button>`
   } 
     return `<button class="preview-video">Preview</button>
-            <button class="select-video">Select</button>`
+            <button class="select-video-btn">Select</button>`
   
 };
 
@@ -323,12 +457,19 @@ function loggingIn(){
     url: 'http://localhost:8080/api/auth/login',
     data: data
   }).done(function(response) {
+    // console.log(response);
+    let authToken = response;
+    if(window.localStorage){
+      window.localStorage.setItem('authToken', authToken.authToken);
+    }
     $(formMessages).removeClass('error');
     $(formMessages).addClass('success');
     $(formMessages).text(`Welcome ${response.username}`);
     $('.usersname').val('');
     $('.password').val('');
     hideLoginForm();
+    showUserExercisePage();
+    showAddExerciseBtn();
   }).fail(function(data) {
     $(formMessages).removeClass('success');
     $(formMessages).addClass('error');
@@ -392,12 +533,12 @@ $(function onPageReady(){
     submitSignupForm();
   });
   
-  // Show Add Exercise Form
+  // Show Exercise Form
   $('.btn-add-exercise').click(function(){
-    $('.introduction-page').hide();
-    $(this).hide();
+    hideIntroPage();
+    hideAddExerciseBtn();
     // showLoginForm();
-    showAddExerciseForm();
+    showExerciseForm();
   });
 
   // Show Video Picker 
@@ -412,17 +553,17 @@ $(function onPageReady(){
   });
  
   // Add Video to Profile
-  $('.video-results').on('click','.select-video', addSelectedVideo);
+  $('.video-results').on('click','.select-video-btn', addSelectedVideoToForm);
 
   // Close Video Picker 
   $('.closePickerBtn').click(function(e){
     e.preventDefault();
     hideMoviePicker();
-    showAddExerciseForm();
+    showExerciseForm();
   })
 
   // Save Exercise Click
-  $('.add-exercise-form form').submit(function(){
+  $('.exercise-form form').submit(function(){
     submitExerciseForm();
   });
 
@@ -431,33 +572,51 @@ $(function onPageReady(){
     loggingIn();
   })
 
+  // A href Log In
+  $(".a-login").click(function(){
+    showLoginForm();
+  });
+
   // Submit Sign Up Form
   $('.submit-signup-btn').click(function(e){
     newUserSignUp();
+    hideExerciseForm();
   })
 
   // Delete Videos Click 
   $('.added-videos').on('click','.deleteVideo',function(e){
     deleteVideo(e);
   });
-
-  // Set Status
-
-  // $('.status').click(function(e){
-  //   let button = e.target;
-  //   console.log(button);
-  // });   
-
-  // $( document ).on( "click", function( event ) {
-  //   $( event.target ).closest( "li" ).toggleClass( "highlight" );
-  // });
   
   $('.returnToProfileBtn').click(function(){
-    // addVideosToProfile(e);
     hideMoviePicker();
-    showAddExerciseForm();
+    showExerciseForm();
   });
 
-  previewVideos();  
+  // Edit Exercise Form Page 
+  $('.user-exercise-page').on('click','.exercise-show', function(e){
+    // console.log(exercises);
+    currentExerciseIndex = getExerciseIndexFromClick(e);
+    populateFormWExerciseData(exercises[currentExerciseIndex]);
+    renderVideosOnExercisesForm(exercises[currentExerciseIndex]);
+  });
+
+  // Select Video Btn
+  $('.selected-video-btn').click(function(){
+    $(this).css('color','#e8e8e8');
+    // videoResult.addClass('vid-selected');
+  });
+ 
+  // $('.allowComments').click(function(){
+  //   let commentVal = $(this).val();
+  //   console.log(commentVal);
+  //   if (commentVal == 'on'){
+
+  //   }
+  // })
+
+  previewVideos(); 
+  
+   
 
 });

@@ -24,6 +24,13 @@ mongoose.Promise = global.Promise;
 
 const app = express();
 
+// Helpers 
+const {
+  truncate,
+  stripTags
+} = require('./helpers/helpers');
+
+
 // Logging
 app.use(morgan('common'));
 
@@ -37,6 +44,7 @@ app.use(function (req, res, next) {
   }
   next();
 });
+
 
 // Passport Middleware
 passport.use(localStrategy);

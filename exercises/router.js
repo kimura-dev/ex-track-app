@@ -1,8 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
+const localAuth = passport.authenticate('local', {session: false});
+const jwtAuth = passport.authenticate('jwt', {session: false});
 const bodyParser = require('body-parser');
-const {ensureAuthenticated, ensurePublicOrOwner} = require('../helpers/auth');
+const {ensurePublicOrOwner} = require('../helpers/auth');
+const {
+  truncate,
+  stripTags
+} = require('../helpers/helpers');
 const {Exercise} = require('./models');
 
 
@@ -34,7 +40,7 @@ router.get('/:id', (req, res) => {
 });
 
 // List exercises from a user
-router.get('/user/:userId', ensureAuthenticated, ensurePublicOrOwner,   (req, res) => {
+router.get('/user/:userId', localAuth, ensurePublicOrOwner,   (req, res) => {
   Exercise.find({user: req.params.userId, status: 'public'})
     .populate('user')
     .then(exercises => {
@@ -48,7 +54,7 @@ router.get('/user/:userId', ensureAuthenticated, ensurePublicOrOwner,   (req, re
 });
 
 // Logged in users exercises
-router.get('/', ensureAuthenticated, ensurePublicOrOwner,  (req, res) => {
+router.get('/', localAuth, ensurePublicOrOwner,  (req, res) => {
   Exercise.find({user: req.user.id})
     .populate('user')
     .then(exercises => {
@@ -65,7 +71,7 @@ router.get('/', ensureAuthenticated, ensurePublicOrOwner,  (req, res) => {
 // });
 
 // Edit Exercise Form
-router.get('/edit/:id', ensureAuthenticated, ensurePublicOrOwner, (req, res) => {
+router.get('/edit/:id', localAuth, ensurePublicOrOwner, (req, res) => {
   Exercise.findOne({
     _id: req.params.id
   })
@@ -79,31 +85,36 @@ router.get('/edit/:id', ensureAuthenticated, ensurePublicOrOwner, (req, res) => 
 });
 
 // Process Add Exercises
-router.post('/', (req, res) => {
-  // let allowComments;
+router.post('/', jwtAuth, (req, res) => {
+  let allowComments;
 
-  // if(req.body.allowComments){
-  //   allowComments = true;
-  // } else {
-  //   allowComments = false;
-  // }
+  if(req.body.allowComments){
+    allowComments = true;
+  } else {
+    allowComments = false;
+  }
   
   if(req.body.videos.length > 0){
     videos = req.body.videos;
+    // console.log(req.body.videos);
   } else {
     videos = null 
   }
+
   console.log(req.body);
 
   const newExercise = {
     title: req.body.title,
-    description: req.body.description,
+    description: stripTags(
+      truncate(req.body.description,150)
+    ),
     status: req.body.status,
-    // allowComments: allowComments,
+    allowComments: allowComments,
     // user: req.user.id, 
     videos: JSON.parse(videos)
   }
-
+  console.log('-------------------------------------------');
+  console.log(newExercise);
   // Create Exercise
   new Exercise(newExercise)
     .save()
@@ -117,34 +128,38 @@ router.post('/', (req, res) => {
 });
 
 // Edit Form Process
-router.put('/:id',ensureAuthenticated,  (req, res) => {
-  Exercise.findOne({
-    _id: req.params.id
-  })
-  .then(exercise => {
-    let allowComments;
-    
-    if(req.body.allowComments){
-      allowComments = true;
-    } else {
-      allowComments = false;
-    }
-
-    // New values
-    exercise.title = req.body.title;
-    exercise.body = req.body.body;
-    exercise.status = req.body.status;
-    // exercise.allowComments = allowComments;
-
-    exercise.save()
-      .then(exercise => {
-        res.status(200).json(exercise);
-      });
+router.put('/:id', jwtAuth, (req, res) => {
+  Exercise.findByIdAndUpdate(req.params.id, {
+      ...req.body, videos: JSON.parse(req.body.videos)
+  }).then((data) =>{
+    console.log(data);
+    res.status(200).json(data);
+  }).catch((err) => {
+    console.log(err);
   });
-});
+  // .then(exercise => {
+  //   let allowComments;
+  //   console.log(exercise);
+  //   if(req.body.allowComments){
+  //     allowComments = true;
+  //   } else {
+  //     allowComments = false;
+  //   }
+
+  //   // Add to comments array
+  //   // exercise.videos.push(videos);
+
+  //   // New values
+  //   exercise.title = req.body.title;
+  //   exercise.description = req.body.description; 
+  //   exercise.status = req.body.status;
+  //   exercise.allowComments = allowComments;
+  //   exercise.videos = req.body.videos;
+  });
+
 
 // Delete Exercise
-router.delete('/:id', ensureAuthenticated,  (req, res) => {
+router.delete('/:id', localAuth,  (req, res) => {
   Exercise.remove({_id: req.params.id})
     .then(() => {
       res.status(200).json({message:'Succussfully deleted'});
@@ -155,7 +170,7 @@ router.delete('/:id', ensureAuthenticated,  (req, res) => {
 });
 
 // Add Comment
-router.post('exercises/comment/:id', ensureAuthenticated, (req, res) => {
+router.post('exercises/comment/:id', localAuth, (req, res) => {
   Exercise.findOne({
     _id: req.params.id
   })
@@ -179,25 +194,25 @@ router.post('exercises/comment/:id', ensureAuthenticated, (req, res) => {
 });
 
 // Add Rating
-router.post('exercises/rating/:id', (req, res) => {
-  Exercise.findOne({
-    _id: req.params.id
-  })
-  .then(exercise => {
-    const newRating = {
-      date: req.body.ratingDate, // not sure if req.body will work for date
-      user: req.user.id
-    }
+// router.post('exercises/rating/:id', (req, res) => {
+//   Exercise.findOne({
+//     _id: req.params.id
+//   })
+//   .then(exercise => {
+//     const newRating = {
+//       date: req.body.ratingDate, // not sure if req.body will work for date
+//       user: req.user.id
+//     }
 
-    // Add to Ratings Array
-    exercise.ratings.unshift(newRatings);
+//     // Add to Ratings Array
+//     exercise.ratings.unshift(newRatings);
 
-    exercise.save()
-      .then(exercise => {
-        res.json(exercise);
-      });
-  });
-});
+//     exercise.save()
+//       .then(exercise => {
+//         res.json(exercise);
+//       });
+//   });
+// });
 
 
 module.exports = router;

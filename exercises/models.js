@@ -7,10 +7,10 @@ const ExerciseSchema = new Schema({
     type:String,
     required: true
   },
-  // description:{
-  //   type: String,
-  //   required: true
-  // },
+  description:{
+    type: String,
+    required: true
+  },
   status: {
     type: String,
     default:'public'
@@ -19,7 +19,7 @@ const ExerciseSchema = new Schema({
     title: String,
     videoID: String,
     url: String
-  }]
+  }],
   // ratings: [{
   //   date:{
   //     type: Date,
@@ -31,28 +31,28 @@ const ExerciseSchema = new Schema({
   //   },
   //   value: Number
   // }],
-  // allowComments: {
-  //   type: Boolean,
-  //   default:true
-  // },
-  // comments: [{
-  //   body: {
-  //     type: String,
-  //     // required: true
-  //   },
-  //   date:{
-  //     type: Date,
-  //     default: Date.now
-  //   },
-  //   user:{
-  //     type: Schema.Types.ObjectId,
-  //     ref:'User'
-  //   }
-  // }],
+  allowComments: {
+    type: Boolean,
+    default:true
+  },
+  comments: [{
+    body: {
+      type: String,
+      // required: true
+    },
+    date:{
+      type: Date,
+      default: Date.now
+    },
+    user:{
+      type: Schema.Types.ObjectId,
+      ref:'User'
+    }
+  }]
   // user:{
   //   type: Schema.Types.ObjectId,
   //   ref:'User'
-  // },
+  // }
   // date:{
   //   type: Date,
   //   default: Date.now

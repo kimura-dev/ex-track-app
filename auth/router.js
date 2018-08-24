@@ -13,7 +13,7 @@ const createAuthToken = function(user) {
     algorithm: 'HS256'
   });
 };
-
+ 
 const router = express.Router();
 
 const localAuth = passport.authenticate('local', {session: false});

@@ -153,10 +153,18 @@ p{
   
 }
 
-.card {
+.exercise {
   background-color: #D0E892;
 }
 
+.exercise-show {
+  font-size: 20px;
+  color: rgb(189, 121, 32);
+}
+
+.vid-selected {
+  opacity: 0.3;
+}
 
 
 

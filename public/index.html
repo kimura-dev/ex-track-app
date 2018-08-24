@@ -14,7 +14,8 @@
   <header>
     <nav>
       <div class="navbar">
-        <!-- <a class="active" href="#"><i class="fa fa-fw fa-home"></i> Home</a>  -->
+        <img src="styles/imgs/boxing-gloves.png" class="logo">
+        <a class="active" href="#"><i class="fa fa-fw fa-home"></i>Home</a> 
         <a href="#" class="nav-search-exercise"><i class="fa fa-fw fa-search"></i> Search</a> 
         <a href="#" class="nav-logs"> Logs</a> 
         <a href="#" class="nav-exercises"> Techniques</a> 
@@ -102,7 +103,7 @@
     </form>
   </section>
 
-  <section class="add-exercise-form" hidden>
+  <section class="exercise-form" hidden>
     <div class="row">
       <div class="col-12">
           <form>
@@ -116,6 +117,8 @@
                     </div>
                   </div>
               </div>
+
+              <input type="hidden" class="exercise-id">
       
               <div class="row">
                 <div class="input-field">
@@ -134,38 +137,32 @@
                 </div>
               </div>
       
-              <div class="row">
+              <div class="row allowComments">
                 <p>
                   <label for="allowComments">Allow Comments
-                      <input type="checkbox" name="allowComments" class="allowComments" checked="checked">
+                      <input type="checkbox" name="allowComments" class="allowComments" checked>
                   </label>
                 </p>
               </div>
 
-              <button class="add-video">Add Video</button> 
+              <hr>
 
-              <!-- <section class="ratings">
-                <h3>Rate this:</h3>
-                <span class="fa fa-star checked" data-rating-value="1"></span>
-                <span class="fa fa-star checked" data-rating-value="2"></span>
-                <span class="fa fa-star" data-rating-value="3"></span>
-                <span class="fa fa-star" data-rating-value="4"></span>
-                <span class="fa fa-star" data-rating-value="5"></span>
-              </section> -->
+              <button class="add-video">Add Video</button> 
 
               <button type="submit" value="save" class="save-exercise-btn">Save Exercise</button>
 
               <section class="added-videos"><div class="row"></div></section>
 
+              <hr>
 
-              <section class="commentSection" hidden>
+              <section class="comment-section">
                 <div class="row">
-                    <p>Please <a href="/auth/google">log</a> in to leave a comment</p>
+                    <p>Please <a href="#" class="a-login">log</a> in to leave a comment</p>
                   <form method="POST" action="/exercises/comment/">
                     <fieldset>
                       <legend>
                         <div class="input-field">
-                          <textarea name="body" class="textarea"></textarea>
+                          <textarea name="body" class="comments"></textarea>
                           <label> Add Comment</label>
                         </div>
                         <button value="submit" name="submit">Submit</button>
@@ -209,111 +206,20 @@
         </div>
     </section>
 
-    <!-- <section class="edit-exercise-page" hidden>
-        <div class="row">
-          <div class="col-12">
-              <form>
-                <fieldset>
-                  <legend>Technique</legend>
-                  <div class="row">
-                    <div class="input-field">
-                      
-                        </div>
-                      </div>
-                  </div>
-          
-                  <div class="row">
-                    <div class="input-field">
-                      <h5>Tell us about it:</h5>
-                      <textarea name="body" rows="5" cols="60" class="exercise-description"></textarea>
-                    </div>
-                  </div>
-          
-                  <div class="row">
-                    <div class="col-4">
-                      <select name="status" class="status">
-                        <option value="public" name="public" class="public">Public</option>
-                        <option value="private" name="private" class="private">Private</option>
-                      </select>
-                      <label for="status">Status</label>
-                    </div>
-                  </div>
-          
-                  <div class="row">
-                    <p>
-                      <label for="allowComments">Allow Comments
-                          <input type="checkbox" name="allowComments" class="allowComments" checked="checked">
-                      </label>
-                    </p>
-                  </div>
-    
-                  <button class="add-video">Add Video</button> 
-    
-    
-                  <button type="submit" value="save" class="save-exercise-btn">Save Exercise</button>
-    
-                  <section class="added-videos"><div class="row"></div></section>
-    
-    
-                  <section class="commentSection" hidden>
-                    <div class="row">
-                        <p>Please <a href="/auth/google">log</a> in to leave a comment</p>
-                      <form method="POST" action="/exercises/comment/">
-                        <fieldset>
-                          <legend>
-                            <div class="input-field">
-                              <textarea name="body" class="textarea"></textarea>
-                              <label> Add Comment</label>
-                            </div>
-                            <button value="submit" name="submit">Submit</button>
-                          </legend>
-                        </fieldset>
-                      </form>
-                    </div>
-                  </section>
-              </section>
-              </fieldset>
-              
-            </form>
-        </div> -->
-    
-    
-    <section class="userExercise" hidden>
-      <div class="row">
-        <div class="col-12">
-          <p>Click exercise to view</p>
-        </div>
-      </div>
-
-      <!-- <div class="col-12">  -->
-         <!-- <form>
-            <fieldset> -->
-              <!-- <legend>Technique</lengend> -->
-              <h3 class="user-ex-title"></h3>
-              
-              
-              <div class="user-ex-videos">
-                  
-              </div>
-              
-
-              <!-- <div class="row">
-                <div class="col-4">
-                  <select name="status" class="user-ex-status">
-                    <option value="public" name="public" class="public">Public</option>
-                    <option value="private" name="private" class="private">Private</option>
-                  </select>
-                  <label for="status">Status</label>
+     <section class="user-exercise-page" hidden>
+       <div class="row">
+        <!-- <div class="row">
+            <div class="col-4">
+              <div class="exercise">
+                <h3 class="exercise-title"></h3>
+                <img class="exercise-image" src="" />
+                <div class="exercise-content">
+                  <p> description</p>
                 </div>
-              </div> -->
-            
-            
-            <!-- </fieldset> -->
-          <!-- <button class="editTech">Edit Technique</button> -->
-          <!-- <button class="deleteTech">Delete Technique</button> -->
-        <!-- </form>
-        </div> -->
-    </section>
+              </div>
+            </div> -->
+        </div>
+     </section>
 
     <section class="exercise-logs" hidden>
       <form method="POST" action="#">
