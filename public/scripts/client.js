@@ -79,6 +79,11 @@ function submitSignupForm(){
   });
 };
 
+
+//THESES STAY HERE
+
+
+
 /**------------------------------------ */
 /*  Hide & Show Users exercise Page
 /**------------------------------------ */
@@ -102,7 +107,7 @@ function hideIntroPage(){
 }
 
 /**-------------------------------- */
-/*  Hide & Show Log In Btn
+/*  Hide & Show Add Exercise Btn
 /**--------------------------------- */
 
 function showAddExerciseBtn(){
@@ -327,28 +332,28 @@ function populateFormWExerciseData(exercise) {
   }
 };
 
-function getAllExercises(){
-  let authToken = '';
+// function getAllExercises(){
+//   let authToken = '';
 
-  if(window.localStorage){
-    authToken = window.localStorage.getItem('authToken');
-  }
-  // console.log(authToken);
+//   if(window.localStorage){
+//     authToken = window.localStorage.getItem('authToken');
+//   }
+//   // console.log(authToken);
 
-  // AJAX To Exercises
-  return $.ajax({
-    type: 'GET',
-    cache: false,
-    url: API_URL+ '/exercises',
-    headers: {
-      Authorization: `Bearer ${authToken}`
-    }
-  }).done(function(_exercises){
-    exercises = [..._exercises];
-    // exercises = _exercises;
-  });
+//   // AJAX To Exercises
+//   return $.ajax({
+//     type: 'GET',
+//     cache: false,
+//     url: API_URL+ '/exercises',
+//     headers: {
+//       Authorization: `Bearer ${authToken}`
+//     }
+//   }).done(function(_exercises){
+//     exercises = [..._exercises];
+//     // exercises = _exercises;
+//   });
 
-}
+// }
 
 
 /**----------------------------- */
@@ -369,9 +374,9 @@ function hideMoviePicker(){
   $('.video-picker').hide();
 }
 
-/**-------------------------------- */
-/*   YouTube Search Movie Picker 
-/**-------------------------------- */
+// /**-------------------------------- */
+// /*   YouTube Search Movie Picker 
+// /**-------------------------------- */
 
 function youtubeOutput(data) {
   // $('.video-search-input').val('');
@@ -417,9 +422,9 @@ function previewVideos(){
   });
 }; 
 
-/**---------------------------- */
-/*     Add Videos to Profile
-/**---------------------------- */
+// /**---------------------------- */
+// /*     Add Videos to Profile
+// /**---------------------------- */
 
 function addSelectedVideoToForm(e) {
   let button = $( this );
@@ -514,10 +519,13 @@ function loggingIn(){
     $('.usersname').val('');
     $('.password').val('');
     hideLoginForm();
-    getAllExercises().then(function(){
+    // getAllExercises().then(function(){
+    //   renderUserExercisesPage();
+    //   showUserExercisesPage();
+    // });
       renderUserExercisesPage();
       showUserExercisesPage();
-    });
+      showAddExerciseBtn();
   }).fail(function(data) {
     $(formMessages).removeClass('success');
     $(formMessages).addClass('error');
