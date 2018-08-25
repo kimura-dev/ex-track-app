@@ -17,8 +17,8 @@ router.get('/', (req, res) => {
   Exercise.find({status:'public'})
     .populate('user')
     .then(exercises => {
+      console.log(exercises);
       res.status(200).json(exercises);
-      res.send('Connected');
     }).catch(err => {
       res.status(500).json({message: 'Internal server error'});
     });
@@ -114,7 +114,7 @@ router.post('/', jwtAuth, (req, res) => {
     videos: JSON.parse(videos)
   }
   console.log('-------------------------------------------');
-  console.log(newExercise);
+  console.log(newExercise); 
   // Create Exercise
   new Exercise(newExercise)
     .save()
@@ -130,7 +130,10 @@ router.post('/', jwtAuth, (req, res) => {
 // Edit Form Process
 router.put('/:id', jwtAuth, (req, res) => {
   Exercise.findByIdAndUpdate(req.params.id, {
+
       ...req.body, videos: JSON.parse(req.body.videos)
+  }, {
+    new: true
   }).then((data) =>{
     console.log(data);
     res.status(200).json(data);
@@ -159,7 +162,7 @@ router.put('/:id', jwtAuth, (req, res) => {
 
 
 // Delete Exercise
-router.delete('/:id', localAuth,  (req, res) => {
+router.delete('/:id', jwtAuth,  (req, res) => {
   Exercise.remove({_id: req.params.id})
     .then(() => {
       res.status(200).json({message:'Succussfully deleted'});

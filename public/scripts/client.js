@@ -10,7 +10,7 @@ let video = [];
 let exercises = []; 
 let exerciseId = '';
 let currentExerciseIndex = -1;
-
+const API_URL = 'http://localhost:8080/api';
 
 /**----------------------------- */
 /* Show & Hide Sign Up Section
@@ -24,7 +24,6 @@ function showSignupForm(){
 function hideSignupForm(){
   $('#sign-up-form').hide();
 }
-
 
 /**----------------------------- */
 /*   AJAX Submit Signup Form
@@ -83,11 +82,11 @@ function submitSignupForm(){
 /**------------------------------------ */
 /*  Hide & Show Users exercise Page
 /**------------------------------------ */
-function showUserExercisePage(){
+function showUserExercisesPage(){
   $(".user-exercise-page").show()
 }
 
-function hideUserExercisePage(){
+function hideUserExercisesPage(){
   $(".user-exercise-page").hide()
 }
 
@@ -142,6 +141,7 @@ function hideExerciseForm(){
 function jsonforVideo(videoElement){
   let target = $(videoElement);
   return {
+    _id: target.find('.video-title').attr('objectID'),
     title: target.find('.video-title').text(),
     url: target.find('.thumbnail').attr('src'),
     videoID: target.find('.thumbnail').attr('videoID')
@@ -268,10 +268,18 @@ function renderUserExercisesPage(){
 
 function htmlForExercisePreview(exercise){
   // console.log(exercise);
+  let videoSrc = '';
+  let videoID = '';
+
+  if(exercise.videos && exercise.videos.length){
+    videoSrc = exercise.videos[0].url;
+    videoID = exercise.videos[0].videoID;
+  };
+
   return ` <div class="col-4">
                 <div class="exercise">
                   <a class="exercise-show" href="#">View
-                  <img class="exercise-image" src="${exercise.videos[0].url}" videoID="${exercise.videos[0].videoID}" />
+                  <img class="exercise-image" src="${videoSrc}" videoID="${videoID}" />
                   </a>
                   <h3 class="user-exercise-title">${exercise.title}</h3>
                 <div class="exercise-content">
@@ -292,14 +300,14 @@ function getExerciseIndexFromClick(e){
 };
 
 function renderVideosOnExercisesForm(exercise){
-  let htmlForVideo = exercise.videos.map(htmlForVideosOnExerciseForm).join('');
+  let htmlForVideo = exercise.videos.map(htmlForVideoOnExerciseForm).join('');
   $('.added-videos').html(htmlForVideo); 
 };
 
-function htmlForVideosOnExerciseForm(video){
+function htmlForVideoOnExerciseForm(video){
   // console.log(exercise);
   return `<div class="col-4">
-            <h3 class="video-title">${video.title}</h3>
+            <h3 class="video-title" objectID="${video._id}">${video.title}</h3>
             <img  class="thumbnail" src="${video.url}" videoID="${video.videoID}">
             <p class="url"><a href="https://www.youtube.com/watch?v=${video.videoID}" target="_blank"> ${video.videoID}</a></p>
             <div class="video-controls">
@@ -318,6 +326,30 @@ function populateFormWExerciseData(exercise) {
     showExerciseForm();
   }
 };
+
+function getAllExercises(){
+  let authToken = '';
+
+  if(window.localStorage){
+    authToken = window.localStorage.getItem('authToken');
+  }
+  // console.log(authToken);
+
+  // AJAX To Exercises
+  return $.ajax({
+    type: 'GET',
+    cache: false,
+    url: API_URL+ '/exercises',
+    headers: {
+      Authorization: `Bearer ${authToken}`
+    }
+  }).done(function(_exercises){
+    exercises = [..._exercises];
+    // exercises = _exercises;
+  });
+
+}
+
 
 /**----------------------------- */
 /*    Movie Picker Controls
@@ -482,8 +514,10 @@ function loggingIn(){
     $('.usersname').val('');
     $('.password').val('');
     hideLoginForm();
-    showUserExercisePage();
-    showAddExerciseBtn();
+    getAllExercises().then(function(){
+      renderUserExercisesPage();
+      showUserExercisesPage();
+    });
   }).fail(function(data) {
     $(formMessages).removeClass('success');
     $(formMessages).addClass('error');
@@ -495,7 +529,7 @@ function loggingIn(){
   });
 };
 
-function deleteExerciseAJAX(){
+function deleteExercise(){
   $.ajax({
     type: 'DELETE',
     url: `http://localhost:8080/api/exercises/${exercise_id}`,
@@ -503,6 +537,7 @@ function deleteExerciseAJAX(){
     console.log(response);
   });
 };
+
 
 /**--------------------- */
 /*    On Page Ready/
@@ -618,7 +653,7 @@ $(function onPageReady(){
   });
 
   // Delete Exercise
-  $('.delete-exercise-btn').click(deleteExerciseAJAX);
+  $('.delete-exercise-btn').click(deleteExercise);
   
   $('.returnToProfileBtn').click(function(){
     hideMoviePicker();
