@@ -9,11 +9,11 @@ let pageToken = {};
 function showMoviePicker(){
   hideExerciseForm();
   $('.video-picker').show();
+  searchVideoForExerciseTitle();
 };
 
 function searchMoviePicker(){
   searchYoutube();
-  $('.button-options').show();
 }
 
 function hideMoviePicker(){
@@ -26,6 +26,7 @@ function hideMoviePicker(){
 
 function youtubeOutput(data) {
   // $('.video-search-input').val('');
+  // $('.button-options').show();
   pageToken.nextPage = data.nextPageToken;
   pageToken.prevPage = data.prevPageToken;
   let html = "";
@@ -49,7 +50,18 @@ function searchYoutube() {
           , pageToken: pageToken.current
       }
   }).done(youtubeOutput);
+  
 };
+
+
+function searchVideoForExerciseTitle(){
+  let title = $('.exercise-title').val();
+
+  if(title && !$('.added-videos > .row').children().length) {
+    $('.video-search-input').val(title);
+    $('.video-search-btn').focus().click();
+  }
+}
 
 /**------------------------- */
 /*     Preview Videos
@@ -85,14 +97,28 @@ function jsonforVideo(videoElement){
 /*     Add Videos to Profile
 /**---------------------------- */
 
-function addSelectedVideoToForm(e) {
+function selectVideoResult(e) {
   let button = $( this );
   let videoResult = button.closest('.video-result');
-  let video = jsonforVideo(videoResult);
-  $('.added-videos').append(htmlForVideo(video));
-  // exercises[currentExerciseIndex].videos.push(video);
-  // console.log(currentExerciseIndex);
+  videoResult.addClass('selected');
+}
+
+function unselectVideoResult(e) {
+  let button = $( this );
+  let videoResult = button.closest('.video-result');
+  videoResult.removeClass('selected');
+}
+
+function addSelectedVideosToForm(){
+  $('.video-result.selected').each(function(index, videoResult){
+    let video = jsonforVideo($(videoResult));
+    $('.added-videos').append(htmlForVideo(video));
+  });
 };
+
+// function (e){
+//   let button = $(this);
+// }
 
 /**---------------------------- */
 /*    HTML For Videos 
@@ -128,7 +154,8 @@ function videoControls(isAdded){
     <button class="deleteVideo">Delete Video</button>`
   } 
     return `<button class="preview-video">Preview</button>
-            <button class="select-video-btn">Select</button>`
+            <button class="select-video-btn">Select</button>
+            <button class="unselect-video-btn">Unselect</button>`
   
 };
 

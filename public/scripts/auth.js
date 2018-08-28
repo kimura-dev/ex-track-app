@@ -17,6 +17,12 @@ function hideSignupForm(){
 /*   AJAX Submit Signup Form
 /**----------------------------- */  
 function submitSignupForm(){
+  // let password = '';
+  // if(password === password2){
+  //   password = password;
+  // } else {
+  //   return `<div>Your passwords dont match!</div>`
+  // }
   let data = {
     firstName:$('.first').val(),
     lastName: $('.last').val(),
@@ -24,8 +30,9 @@ function submitSignupForm(){
     email: $('.email').val(),
     rank: $('.rank > option:selected').val(),
     affiliates: $('.affiliates').val(),
+    // password: password,
     password: $('.password').val(),
-    password2: $('.password2').val()
+    // password2: $('.password2').val()
   };
   let formMessages = $('#form-messages');
   
@@ -34,7 +41,7 @@ function submitSignupForm(){
     type: 'POST',
     url: 'http://localhost:8080/api/users',
     data: data
-  }).done(function(response) {
+  }).then(function(response) {
     // console.log(data);
     // Make sure that the formMessages div has the 'success' class.
     $(formMessages).removeClass('error');
@@ -105,19 +112,23 @@ function loggingIn(){
     type: 'POST',
     url: 'http://localhost:8080/api/auth/login',
     data: data
-  }).done(function(response) {
+  }).then(function(response) {
+    let username =  $('.usersname').val();
     // console.log(response);
     let authToken = response;
     if(window.localStorage){
       window.localStorage.setItem('authToken', authToken.authToken);
     }
     $(formMessages).removeClass('error');
-    $(formMessages).addClass('success');
-    $(formMessages).text(`Welcome ${response.username}`);
+    $(formMessages).addClass('user-name');
+    $(formMessages).text(`Welcome ${username}`);
     $('.usersname').val('');
     $('.password').val('');
     hideLoginForm();
-    getAllExercises().then(function(){
+    hideIntroPage();
+    hideLogInBtn();
+    return getAllExercises().then(function(){
+      showAddExerciseBtn();
       renderUserExercisesPage();
       showUserExercisesPage();
     });
@@ -131,3 +142,10 @@ function loggingIn(){
     }
   });
 };
+
+function isAuthenticated(authToken){
+  if(authToken){
+    
+  }
+   
+}

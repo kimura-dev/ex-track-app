@@ -68,7 +68,7 @@ function submitExerciseForm(){
     headers: {
       Authorization: `Bearer ${authToken}`
     }
-  }).done(function(response) {
+  }).then(function(response) {
     console.log(exercises);
     
     // Make sure that the formMessages div has the 'success' class.
@@ -86,7 +86,6 @@ function submitExerciseForm(){
     // Create Exercise Array
     if(exerciseId){
       $(formMessages).text(`${response.title} was edited successfully!`);
-      // exercises[currentExerciseIndex].videos.push(video);
       const index = exercises.findIndex((exercise) => {
         return exercise._id === exerciseId;
       });
@@ -122,8 +121,14 @@ function submitExerciseForm(){
 /*    Get Exercise Data Displays Users Page
 /**---------------------------------------------------- */
 function showUserExercisesPage(){
-  $('.user-exercise-page').removeAttr('hidden');
-  $('.user-exercise-page').show();
+  if(exercises.length === 0){
+    return getAllExercises().then(function(){
+      $('.user-exercise-page').removeAttr('hidden');
+      $('.user-exercise-page').show();
+      showAddExerciseBtn();
+      renderUserExercisesPage();
+    });
+  }
 };
 
 function hideUserExercisesPage(){
@@ -146,15 +151,16 @@ function htmlForExercisePreview(exercise){
     videoID = exercise.videos[0].videoID;
   };
 
-  return ` <div class="col-4">
-                <div class="exercise">
-                  <a class="exercise-show" href="#">View
-                  <img class="exercise-image" src="${videoSrc}" videoID="${videoID}" />
-                  </a>
-                  <h3 class="user-exercise-title">${exercise.title}</h3>
-                <div class="exercise-content">
-                  <p>${exercise.description}</p>
-                </div>
+  return `<div class="col-4">
+                 <div class="exercise">
+                     <a class="exercise-show" href="#">View
+                     <img class="exercise-image" src="${videoSrc}" videoID="${videoID}" />
+                     </a>
+                     <h3 class="user-exercise-title">${exercise.title}</h3>
+                   <div class="exercise-content">
+                     <p>${exercise.description}</p>
+                   </div>
+                 </div>
               </div>`;
 };
 
@@ -213,10 +219,25 @@ function getAllExercises(){
     headers: {
       Authorization: `Bearer ${authToken}`
     }
-  }).done(function(_exercises){
+  }).then(function(_exercises){
     exercises = [..._exercises];
     // exercises = _exercises;
   });
 
 };
 
+function deleteExercise(){
+  $.ajax({
+    type: 'DELETE',
+    url: `http://localhost:8080/api/exercises/${exercise_id}`,
+  }).then(function(response){
+    console.log(response);
+  });
+};
+
+function clearExerciseForm(){
+  $('.exercise-id').val('') ;
+  $('.exercise-title').val('') ;
+  $('.exercise-description').val('');
+  $('.added-videos').html('');
+}

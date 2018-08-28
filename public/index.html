@@ -6,39 +6,44 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Technique Tracker</title>
  <!-- Load an icon library to show a hamburger menu (bars) on small screens -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="styles/float-grid.css">
   <link rel="stylesheet" type="text/css" href="styles/styles.css">
 </head>
-<body>
-  <header>
-    <nav>
-      <div class="navbar">
-        <!-- <img src="styles/imgs/boxing-gloves.png" class="logo"> -->
-        <!-- <a class="active" href="#"><i class="fa fa-fw fa-home"></i>Home</a>  -->
-        <!-- <a href="#" class="nav-search-exercise"><i class="fa fa-fw fa-search"></i> Search</a>  -->
-        <a href="#" class="nav-logs"> Logs</a> 
-        <a href="#" class="nav-exercises">Exercises</a> 
-        <!-- <a href="#"><i class="fa fa-fw fa-envelope"></i> Logs</a>  -->
-        <a href="#" class="nav-login"><i class="fa fa-fw fa-user"></i> Login</a>
-        <a href="#" class="nav-signup"><i class="fa fa-fw fa-user-plus"></i> Sign Up</a>
+ <body>
+
+  <header role="banner">
+    <nav role="navigation">
+      <div class="topnav" id="myTopnav">
+        <a href="#home" class="active">Home</a>
+        <a href="#" class="nav-exercise-page">Exercises</a>
+        <a href="#" class="nav-login">Login</a>
+        <a href="#" class="nav-signup">Register</a>
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+          <i class="fa fa-bars"></i>
+        </a>
       </div>
     </nav>
   </header>
+    
+  <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
+  <!-- <div id="animation"></div> -->
 
   <section class="introduction-page">
     <div class="row">
-      <h1 >Exercise Tracker</h1>
-      <p>Welcome to Exercise Tracker 1.0.0</p>
-      <p>Search, add and track your favorite exercises, using our exercise tracker. Choose for your exercises to be viewed by the world or completley private as your own personal for tracking.</p>
-      <!-- <button class="begin">Begin</button> -->
+      <div class="intro-content">
+        <h1 class="intro-title">Exercise Tracker</h1>
+        <p class="intro-content">Search, add and track your favorite exercises, using our exercise tracker. Choose for your exercises to be viewed by the world or completley private as your own personal exercise for tracking.</p>
+        <!-- <button class="begin">Begin</button> -->
+      </div>
     </div>
       <div class="row">
           <button class="login-btn">Login</button>
         </div>
   </section>
 
-  <section class="search-exercise" hidden>
+  <!-- <section class="search-exercise" hidden>
       <form method="GET" action="/exercises">
         <fieldset>
           <legend>Search A Technique:</legend>
@@ -48,11 +53,20 @@
             <button type="submit">Search</button>
         </fieldset>
       </form>
-  </section>
+  </section> -->
 
-  <button class="add-exercise-btn" hidden>Add Exercise</button>
+  <div class="add-btn-box">
+      <button class="add-exercise-btn" hidden>Add New Exercise</button>
+  </div>
+    <!-- <button class="view-user-exercise-btn" hidden>Your Exercise</button> -->
+
+
+  <div class="row">
+    <button type="previous" class="prev-btn" hidden>Previous Page</button>
+  </div>
 
   <div id="form-messages"></div>
+
   <section id="sign-up-form" hidden>
     <form method="POST" action="/auth/users">
       <fieldset>
@@ -84,9 +98,9 @@
         <label for="password">Password
           <input type="password" name="password" class="password">
         </label>
-        <label for="password2">Confirm Password
+        <!-- <label for="password2">Confirm Password
             <input type="password" name="password2" class="password2">
-        </label>
+        </label> -->
         <button type="submit-signup-btn">Submit</button>
         <button class="log-in">Log In</button>
       </fieldset>
@@ -97,10 +111,10 @@
     <form>
       <fieldset>
         <legend>Log In</legend>
-        <label for="user-name">User name:
-            <input type="text" name="username" class="login-username" value="Scott_R">
+        <label for="login-username">User name:
+            <input type="text" name="username" class="login-username" value="mrlucky">
           </label>
-          <label for="user-password">Password:
+          <label for="login-password">Password:
             <input type="password" name="password" class="login-password" value="123456">
           </label>
           <button type="submit" class="logIn">Log In</button>
@@ -108,32 +122,33 @@
     </form>
   </section>
 
-  <section class="exercise-form" hidden>
+  <section role="main" class="exercise-form" hidden>
     <div class="row">
       <div class="col-12">
           <form>
             <fieldset>
-              <legend>Technique</legend>
+              <legend>Exercise</legend>
               <div class="row">
                 <div class="input-field">
                   <label for="exercise-title" name="exercise-title">Title:
                     <input type="text" name="title" class="exercise-title" value="Test">
                   </label>
-                    </div>
-                  </div>
+                </div>
+                </div>
               </div>
+            </div>
 
               <input type="hidden" class="exercise-id">
       
               <div class="row">
                 <div class="input-field">
-                  <h5>Tell us about it:</h5>
+                  <h5>Tell us about the exercise:</h5>
                   <textarea name="body" rows="5" cols="60" class="exercise-description"></textarea>
                 </div>
               </div>
       
               <div class="row">
-                <div class="col-4">
+                <div class="col-4 status-col">
                   <select name="status" class="status">
                     <option value="public" name="public" class="public" checked>Public</option>
                     <option value="private" name="private" class="private">Private</option>
@@ -167,14 +182,14 @@
 
               <hr>
 
-              <section class="comment-section">
+              <!-- <section class="comment-section">
                 <div class="row">
                     <p>Please <a href="#" class="a-login">log</a> in to leave a comment</p>
                   <form method="POST" action="/exercises/comment/">
                     <fieldset>
                       <legend>
                         <div class="input-field">
-                          <textarea name="body" class="comments"></textarea>
+                          <textarea name="body" class="comments" col="30" rows="6"></textarea>
                           <label> Add Comment</label>
                         </div>
                         <button value="submit" name="submit">Submit</button>
@@ -182,25 +197,27 @@
                     </fieldset>
                   </form>
                 </div>
-              </section>
-
+              </section> -->
                
-          </section>
-          </fieldset>
-          
+          </fieldset>     
         </form>
-    </div>
+    <!-- </div> -->
+  </section>
 
     <section class="video-picker" hidden>
       <form method="POST" action="#">
         <fieldset>
           <legend>Video Picker</legend>
-          <p>Search for videos to add to your exercise</p>
-          <label for="search">Search
-            <input type="text" name="search" class="video-search-input" placeholder="Search videos...">
+          <h2 class="vid-picker-title">Video Picker</h2>
+          <div class="vid-picker-content">
+            <p> Use the video picker below to search for videos to add to your exercise.</p>
+            <p>Use the <strong>Preview</strong> &amp; <strong>Select</strong> buttons to check out the videos before you add them to your exercise.</p>
+          </div>
+          <label for="search">Search for videos:
+            <input type="text" name="search" class="video-search-input" placeholder="e.g.,kettle bells...">
             <button type="search" class="video-search-btn">Search</button>
-            <button type="cancel" class="closePickerBtn">Cancel</button>
-            <button type="return" class="returnToProfileBtn">Return to Profile</button>
+            <button type="cancel" class="closePickerBtn">Go Back</button>
+            <button type="return" class="returnToProfileBtn">Add Your Videos</button>
 
           </label>
         </fieldset>
@@ -248,15 +265,19 @@
       </form>
     </section>
 
+    <!-- <footer role="contentinfo">
+        <small>&copy; Copyright 2018 by Scott Reyell</small>
+    </footer> -->
+
   <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous"></script>
   <script src="https://cdn.ckeditor.com/4.10.0/standard/ckeditor.js"></script>
   <script src="scripts/client.js"></script>
-  <!-- <script src="scripts/auth.js"></script>
+  <script src="scripts/auth.js"></script>
   <script src="scripts/exercises.js"></script>
-  <script src="scripts/videos.js"></script> -->
+  <script src="scripts/videos.js"></script>
 
 
 </body>
