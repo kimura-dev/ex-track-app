@@ -14,7 +14,7 @@ const {Exercise} = require('./models');
 
 // Exercise Index
 router.get('/', (req, res) => {
-  Exercise.find({status:'public'})
+  Exercise.find({status:'Public'})
     .populate('user')
     .then(exercises => {
       console.log(exercises);

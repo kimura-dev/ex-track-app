@@ -39,6 +39,10 @@ function submitExerciseForm(){
 
   let exerciseId = $('.exercise-id').val() || undefined;
 
+  // if(exerciseId === undefined){
+  //   hideDeleteExerciseBtn();
+  // }
+
   let data = {
     _id: exerciseId,
     title: $('.exercise-title').val(),
@@ -82,7 +86,7 @@ function submitExerciseForm(){
     $('.added-videos').html('');
     $('.allow-comments').val('');
     hideExerciseForm();
-
+    showDeleteExerciseBtn();
     // Create Exercise Array
     if(exerciseId){
       $(formMessages).text(`${response.title} was edited successfully!`);
@@ -122,11 +126,13 @@ function submitExerciseForm(){
 /**---------------------------------------------------- */
 function showUserExercisesPage(){
   if(exercises.length === 0){
+
     return getAllExercises().then(function(){
+    console.log('Connected');
       $('.user-exercise-page').removeAttr('hidden');
       $('.user-exercise-page').show();
       showAddExerciseBtn();
-      renderUserExercisesPage();
+      // renderUserExercisesPage();
     });
   }
 };
@@ -137,7 +143,9 @@ function hideUserExercisesPage(){
 };
 
 function renderUserExercisesPage(){
+  // console.log(exercises);
   let htmlForPage = exercises.map(htmlForExercisePreview).join('');
+  console.log(htmlForPage);
   $('.user-exercise-page > .row').html(htmlForPage); 
 };
 
@@ -209,7 +217,6 @@ function getAllExercises(){
   if(window.localStorage){
     authToken = window.localStorage.getItem('authToken');
   }
-  // console.log(authToken);
 
   // AJAX To Exercises
   return $.ajax({
@@ -220,7 +227,10 @@ function getAllExercises(){
       Authorization: `Bearer ${authToken}`
     }
   }).then(function(_exercises){
-    exercises = [..._exercises];
+     exercises = [..._exercises];
+    console.log(_exercises);
+
+     return exercises;
     // exercises = _exercises;
   });
 

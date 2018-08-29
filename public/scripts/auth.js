@@ -60,6 +60,7 @@ function submitSignupForm(){
     $('.password').val('');
     $('.password2').val('');
     hideSignupForm();
+    showAddExerciseBtn();
   }).fail(function(data) {
     // Make sure that the formMessages div has the 'error' class.
     $(formMessages).removeClass('success');
@@ -67,7 +68,7 @@ function submitSignupForm(){
 
     // Set the message text.
     if (data.responseText !== '') {
-        $(formMessages).text(data.responseText);
+        $(formMessages).text('Successfully created account');
     } else {
         $(formMessages).text('Oops! An error occured and your message could not be sent.');
     }
@@ -114,20 +115,22 @@ function loggingIn(){
     data: data
   }).then(function(response) {
     let username =  $('.usersname').val();
-    // console.log(response);
-    let authToken = response;
+    console.log(response);
+    // console.log(username);
+    let authToken = response.authToken;
     if(window.localStorage){
-      window.localStorage.setItem('authToken', authToken.authToken);
+      window.localStorage.setItem('authToken', authToken);
     }
     $(formMessages).removeClass('error');
-    $(formMessages).addClass('user-name');
-    $(formMessages).text(`Welcome ${username}`);
+    $(formMessages).addClass('success');
+    $(formMessages).text('');
     $('.usersname').val('');
     $('.password').val('');
     hideLoginForm();
-    hideIntroPage();
+    // hideIntroPage();
     hideLogInBtn();
     return getAllExercises().then(function(){
+      // console.log('Working!');
       showAddExerciseBtn();
       renderUserExercisesPage();
       showUserExercisesPage();
@@ -142,10 +145,3 @@ function loggingIn(){
     }
   });
 };
-
-function isAuthenticated(authToken){
-  if(authToken){
-    
-  }
-   
-}

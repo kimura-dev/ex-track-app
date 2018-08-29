@@ -9,6 +9,7 @@ const morgan = require('morgan');
 const passport = require('passport');
 const {DATABASE_URL, PORT} = require('./config');
 const bcrypt = require('bcryptjs');
+// var jwtDecode = require('jwt-decode');
 
 // Load Models
 const {Exercise} = require('./exercises/models');

@@ -26,7 +26,7 @@ function hideMoviePicker(){
 
 function youtubeOutput(data) {
   // $('.video-search-input').val('');
-  // $('.button-options').show();
+  showButtonOptions();
   pageToken.nextPage = data.nextPageToken;
   pageToken.prevPage = data.prevPageToken;
   let html = "";
@@ -153,9 +153,9 @@ function videoControls(isAdded){
     <button class="watchVideo">Watch Video</button>
     <button class="deleteVideo">Delete Video</button>`
   } 
-    return `<button class="preview-video">Preview</button>
-            <button class="select-video-btn">Select</button>
-            <button class="unselect-video-btn">Unselect</button>`
+    return `<button class="preview-video"><ion-icon name="play-circle"></ion-icon>Preview</button>
+            <button class="select-video-btn"><ion-icon name="add-circle"></ion-icon>Select</button>
+            <button class="unselect-video-btn"><ion-icon name="undo"></ion-icon>Unselect</button>`
   
 };
 

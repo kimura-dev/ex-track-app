@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Technique Tracker</title>
+  <title>Exercise Tracker</title>
  <!-- Load an icon library to show a hamburger menu (bars) on small screens -->
   <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -17,9 +17,10 @@
     <nav role="navigation">
       <div class="topnav" id="myTopnav">
         <a href="#home" class="active">Home</a>
-        <a href="#" class="nav-exercise-page">Exercises</a>
-        <a href="#" class="nav-login">Login</a>
-        <a href="#" class="nav-signup">Register</a>
+        <a href="#" class="nav-exercise-page"><ion-icon name="fitness"></ion-icon>Exercises</a>
+        <a href="#" class="nav-login"><ion-icon name="person"></ion-icon>Login</a>
+        <a href="#" class="nav-signup"><ion-icon name="person-add"></ion-icon>Register</a>
+        <a href="#" class="nav-logout"><ion-icon name="arrow-round-forward"></ion-icon>Logout</a>
         <a href="javascript:void(0);" class="icon" onclick="myFunction()">
           <i class="fa fa-bars"></i>
         </a>
@@ -56,7 +57,7 @@
   </section> -->
 
   <div class="add-btn-box">
-      <button class="add-exercise-btn" hidden>Add New Exercise</button>
+      <button class="add-exercise-btn" hidden><ion-icon name="add-circle-outline"></ion-icon>Add New Exercise</button>
   </div>
     <!-- <button class="view-user-exercise-btn" hidden>Your Exercise</button> -->
 
@@ -69,7 +70,7 @@
 
   <section id="sign-up-form" hidden>
     <form method="POST" action="/auth/users">
-      <fieldset>
+      <fieldset class="sign-up-fieldset">
         <legend>Sign Up</legend>
         <label for="firstname" name="firstName" >First Name
           <input type="text" name="firstName" class="first">
@@ -83,7 +84,7 @@
         <label for="email">Email
           <input type="email" name="email" class="email">
         </label>
-        <label for="rank">Rank
+        <!-- <label for="rank">Rank
         <select name="rank" class="rank">
           <option value="white" name="white" class="white">White</option>
           <option value="blue" name="blue" class="blue">Blue</option>
@@ -91,18 +92,17 @@
           <option value="brown" name="brown" class="brown">Brown</option>
           <option value="black" name="black" class="black">Black</option>
         </select>
-        </label>
-        <label for="affiliates">Affiliations
+        </label> -->
+        <!-- <label for="affiliates">Affiliations
           <input type="text" name="affiliates" class="affiliates">
-        </label>
+        </label> -->
         <label for="password">Password
           <input type="password" name="password" class="password">
         </label>
         <!-- <label for="password2">Confirm Password
             <input type="password" name="password2" class="password2">
         </label> -->
-        <button type="submit-signup-btn">Submit</button>
-        <button class="log-in">Log In</button>
+        <button class="signup-btn" type="submit">Submit</button>
       </fieldset>
     </form>
   </section>
@@ -112,7 +112,7 @@
       <fieldset>
         <legend>Log In</legend>
         <label for="login-username">User name:
-            <input type="text" name="username" class="login-username" value="mrlucky">
+            <input type="text" name="username" class="login-username" value="Scott_R">
           </label>
           <label for="login-password">Password:
             <input type="password" name="password" class="login-password" value="123456">
@@ -167,11 +167,11 @@
 
               <hr>
 
-              <button class="add-video-btn">Add Video</button> 
+              <button class="add-video-btn"><ion-icon name="add-circle-outline"></ion-icon>Add Video</button> 
 
-              <button type="submit" value="save" class="save-exercise-btn">Save Exercise</button>
+              <button type="submit" value="save" class="save-exercise-btn"><ion-icon name="save"></ion-icon>Save Exercise</button>
 
-              <button type="submit" value="delete" class="delete-exercise-btn">Delete Exercise</button>
+              <button type="submit" value="delete" class="delete-exercise-btn" hidden><ion-icon name="trash"></ion-icon>Delete Exercise</button>
 
 
               <section class="added-videos">
@@ -215,17 +215,19 @@
           </div>
           <label for="search">Search for videos:
             <input type="text" name="search" class="video-search-input" placeholder="e.g.,kettle bells...">
-            <button type="search" class="video-search-btn">Search</button>
-            <button type="cancel" class="closePickerBtn">Go Back</button>
-            <button type="return" class="returnToProfileBtn">Add Your Videos</button>
-
+            <button type="search" class="video-search-btn"><ion-icon name="search"></ion-icon>Search</button>
+            <button type="return" class="returnToProfileBtn"><ion-icon name="add-circle"></ion-icon>Add Your Videos</button>
+            <button type="cancel" class="closePickerBtn"><ion-icon name="undo"></ion-icon>Go Back</button>
           </label>
         </fieldset>
       </form>
 
       <div class="button-options" hidden>
-          <input type="button" class="tokenClass" value="Previous">
-          <input type="button" class="tokenClass" value="Next"> 
+          <!-- <input type="button" class="tokenClass" value="Previous"> -->
+          <!-- <input type="button" class="tokenClass" value="Next">  -->
+          <button class="tokenClass" name="previous"><ion-icon name="arrow-round-back"></ion-icon>Prev</button>
+          <button class="tokenClass" name="next"><ion-icon name="arrow-round-forward"></ion-icon>Next</button>
+
       </div>
      
       <section class="video-results"><div class="row"></div></section>
@@ -269,6 +271,7 @@
         <small>&copy; Copyright 2018 by Scott Reyell</small>
     </footer> -->
 
+  <script src="https://unpkg.com/ionicons@4.4.2/dist/ionicons.js"></script>
   <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="

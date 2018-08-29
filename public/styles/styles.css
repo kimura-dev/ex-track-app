@@ -14,7 +14,8 @@ body {
 	height: 100vh;
 	background-repeat: no-repeat;
 	background-size: contain, cover;
-	background-attachment: fixed;
+  background-attachment: fixed;
+  margin: 0;
 }
 
 /*-------------------------------*/
@@ -32,6 +33,10 @@ fieldset legend {
   padding: 5px 10px;
   font-size: 26px;
 
+}
+
+input {
+  display: block;
 }
 
 strong {
@@ -64,7 +69,8 @@ legend {
 }
 
 /* Change the color of links on hover */
-.topnav a:hover {
+.topnav a:hover,
+.topnav a:focus {
   background-color: rgb(238, 122, 13);    
   color: #000;
 }
@@ -83,13 +89,14 @@ legend {
 /*-----------------------------------*/
 /*   Error or Succes Form Messages 
 /*----------------------------------*/
-.user-name {
+/* .user-name {
   font-size: 24px;
   margin: 20px;
-}
+  text-align: center;
+} */
 
 .success {
-  background-color: rgb(146, 216, 100);
+  text-align: center;
 }
 
 .error {
@@ -139,10 +146,33 @@ legend {
   cursor: pointer;
 }
 
-.login-btn:hover {
+.login-btn:hover,
+.login-btn:focus {
   background-color: rgb(238, 122, 13);  
 }
 
+/*-------------------------------*/
+/*      Sign Up Form
+/*-------------------------------*/
+.sign-up-fieldset {
+  margin: auto;
+  width: 40%;
+  height: 500px;
+}
+
+
+.signup-btn {
+  background-color: rgb(17, 69, 243);
+  color: #E5E5E5;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.signup-btn:hover,
+.signup-btn:focus {
+  background-color: rgb(238, 122, 13);  
+  cursor: pointer;
+}
 /*-------------------------------*/
 /*      Add Exercise Btn
 /*-------------------------------*/
@@ -160,7 +190,8 @@ legend {
 .add-btn-box {
   text-align: center;
 }
-.add-exercise-btn:hover {
+.add-exercise-btn:hover,
+.add-exercise-btn:focus {
   background-color: rgb(238, 122, 13); 
   cursor: pointer;
 }
@@ -185,12 +216,20 @@ legend {
   cursor: pointer; 
 }
 
+.add-video-btn:focus,
+.save-exercise-btn:focus,
+.delete-exercise-btn:focus {
+  background-color: rgb(238, 122, 13);  
+  cursor: pointer; 
+}
+
 .status {
   padding: 2px;
   font-size: 16px;
 }
 
-.status:hover {
+.status:hover,
+.status:focus {
   cursor: pointer;
 }
 
@@ -207,7 +246,8 @@ input[type='checkbox'] {
   height: 18px;
 }
 
-input[type='checkbox']:hover {
+input[type='checkbox']:hover,
+input[type='checkbox']:focus {
   cursor: pointer;
 }
 
@@ -222,7 +262,8 @@ input[type='checkbox']:hover {
   background-color: rgb(17, 69, 243);
 }
 
-.logIn:hover {
+.logIn:hover,
+.logIn:focus {
   background-color: rgb(238, 122, 13);   
 }
 /*-------------------------------*/
@@ -289,9 +330,9 @@ p {
   height: 100%;
 }
 
-.button-options {
+/* .button-options {
   display: block;
-}
+} */
 
 .tokenClass {
   margin-right: 40px;
@@ -302,7 +343,8 @@ p {
   color: #E5E5E5;
 }
 
-.tokenClass:hover {
+.tokenClass:hover,
+.tokenClass:focus {
   cursor: pointer;
   background-color: rgb(238, 122, 13);
 }
@@ -317,6 +359,7 @@ p {
   color:rgb(238, 122, 13);
   text-shadow: 2px 2px  rgb(6, 31, 252);
   font-weight: 700;
+  letter-spacing: 0.2em;
 }
 
 .vid-picker-content {
@@ -363,7 +406,9 @@ p {
 }
 
 .preview-video:hover,
-.select-video-btn:hover {
+.preview-video:focus,
+.select-video-btn:hover,
+.select-video-btn:focus {
   background-color: rgb(238, 122, 13);  
 }
 
@@ -398,7 +443,7 @@ p {
 /*------------------------------------------*/
 
 .video-search-btn {
-  background-color: rgb(119, 212, 119);
+  background-color: rgb(238, 122, 13);  
   padding:8px;
   font-size: 16px;
   color: #E5E5E5;
@@ -422,6 +467,13 @@ p {
 .video-search-btn:hover,
 .closePickerBtn:hover,
 .returnToProfileBtn:hover {
+  cursor: pointer;
+  border: 3px solid white;
+}
+
+.video-search-btn:focus,
+.closePickerBtn:focus,
+.returnToProfileBtn:focus {
   cursor: pointer;
   border: 3px solid white;
 }

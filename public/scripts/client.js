@@ -1,33 +1,5 @@
 "use strict";
 
-// const state = {
-//   loggedIn: false
-// }
-
-// function renderHomePage() {
- 
-//   if (state.loggedIn) {
-//     console.log('You are logged in.')
-//   } else {
-//     console.log('You are not logged in.')
-//   }
-// }
-
-// function logIn() {
-//   state.loggedIn = true;
-// }
-
-// renderHomePage()
-// logIn()
-// renderHomePage()
-
-  // if key in local storage
-  // make AJAX request to API to validate
-  // then set proper state
-
-/**------------------------------------ */ 
-/*  Hide & Show Users exercise Page
-/**------------------------------------ */
 function showUserExercisesPage(){
   $(".user-exercise-page").show()
 }
@@ -36,9 +8,7 @@ function hideUserExercisesPage(){
   $(".user-exercise-page").hide()
 }
 
-/**-------------------------------- */
-/*  Hide & Show Introduction Page
-/**--------------------------------- */
+
 function showIntroPage(){
   $('.introduction-page').show();
 }
@@ -47,9 +17,26 @@ function hideIntroPage(){
   $('.introduction-page').hide();
 }
 
-/**-------------------------------- */
-/*  Hide & Show Add Exercise Btn
-/**--------------------------------- */
+
+function showDeleteExerciseBtn(){
+  $('.delete-exercise-btn').removeAttr('hidden');
+  $('.delete-exercise-btn').show();
+}
+
+function hideDeleteExerciseBtn(){
+  $('.delete-exercise-btn').attr('hidden');
+  $('.delete-exercise-btn').hide();
+}
+
+function showButtonOptions(){
+  $('.button-options').removeAttr('hidden');
+  $('.button-options').show();
+}
+
+function hideButtonOptions(){
+  $('.button-options').attr('hidden');
+  $('.button-options').hide();
+}
 
 function showAddExerciseBtn(){
   $('.add-exercise-btn').show();
@@ -112,6 +99,7 @@ function myFunction() {
 $(function onPageReady(){
   let authToken = '';
 
+  // Check Authtentication
   if(window.localStorage){
     authToken = window.localStorage.getItem('authToken');
     loggingIn();
@@ -268,6 +256,13 @@ $(function onPageReady(){
     renderVideosOnExercisesForm(exercises[currentExerciseIndex]);
   });
 
+  // Delete Exercise Click
+  $('.delete-exercise-btn').click(function(){
+    console.log('works');
+    // deleteExercise();
+  });
+
+  // getAllExercises();
   previewVideos(); 
 
 });
