@@ -25,8 +25,6 @@ function hideMoviePicker(){
 /**-------------------------------- */
 
 function youtubeOutput(data) {
-  // $('.video-search-input').val('');
-  showButtonOptions();
   pageToken.nextPage = data.nextPageToken;
   pageToken.prevPage = data.prevPageToken;
   let html = "";
@@ -66,13 +64,28 @@ function searchVideoForExerciseTitle(){
 /**------------------------- */
 /*     Preview Videos
 /**------------------------- */
+
+/* <div class="col-4 video-result">
+            <h3 class="video-title">${value.snippet.title}</h3>
+            <img  class="thumbnail" src="${value.snippet.thumbnails.medium.url}" videoID="${value.id.videoId}">
+            <p class="url"><a href="https://www.youtube.com/watch?v=${value.id.videoId}" target="_blank"> ${value.id.videoId}</a></p>  
+            <div class="video-controls">
+              ${videoControls(false)}
+            </div>
+          </div> */
+
 function previewVideos(){
-  $('.video-results').on('click', '.preview-video', function () {
-    console.log('clicked');
+  $('.video-results').on('click', '.preview-video', function (e) {
+    let target = $( e.target );
+    let videoID = $(target).parent().parent().find('img').attr('videoID');  
+    // let target = e.target;
+    // let videoID = target.parent();
+    console.log(videoID);
     $('.popup').show()
     $('.overlayBg').show();
     $(window).scrollTop(0)
-    $('.popup iframe').attr('src', 'https://www.youtube.com/embed/' + $(this).attr('videoID'));
+    // $('.popup iframe').attr('src', 'https://www.youtube.com/embed/' + $(this).attr('videoID'));
+    $('.popup iframe').attr('src', `https://www.youtube.com/embed/${videoID}`);
   });
   $('.overlayBg').click(function () {
     $('.popup').hide()

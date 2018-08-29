@@ -115,8 +115,7 @@ function loggingIn(){
     data: data
   }).then(function(response) {
     let username =  $('.usersname').val();
-    console.log(response);
-    // console.log(username);
+    // console.log(response);
     let authToken = response.authToken;
     if(window.localStorage){
       window.localStorage.setItem('authToken', authToken);

@@ -73,7 +73,7 @@ function submitExerciseForm(){
       Authorization: `Bearer ${authToken}`
     }
   }).then(function(response) {
-    console.log(exercises);
+    // console.log(exercises);
     
     // Make sure that the formMessages div has the 'success' class.
     $(formMessages).removeClass('error');
@@ -86,10 +86,10 @@ function submitExerciseForm(){
     $('.added-videos').html('');
     $('.allow-comments').val('');
     hideExerciseForm();
-    showDeleteExerciseBtn();
     // Create Exercise Array
     if(exerciseId){
       $(formMessages).text(`${response.title} was edited successfully!`);
+      showDeleteExerciseBtn();
       const index = exercises.findIndex((exercise) => {
         return exercise._id === exerciseId;
       });
@@ -125,16 +125,16 @@ function submitExerciseForm(){
 /*    Get Exercise Data Displays Users Page
 /**---------------------------------------------------- */
 function showUserExercisesPage(){
-  if(exercises.length === 0){
-
-    return getAllExercises().then(function(){
-    console.log('Connected');
-      $('.user-exercise-page').removeAttr('hidden');
-      $('.user-exercise-page').show();
-      showAddExerciseBtn();
-      // renderUserExercisesPage();
-    });
-  }
+  // if(exercises.length === 0){
+  //   return getAllExercises().then(function(){
+  //   console.log('Connected');
+  //     // renderUserExercisesPage();
+  //   });
+  // }
+  $('.user-exercise-page').removeAttr('hidden');
+  $('.user-exercise-page').show();
+  renderUserExercisesPage();
+  showAddExerciseBtn();
 };
 
 function hideUserExercisesPage(){
@@ -145,7 +145,7 @@ function hideUserExercisesPage(){
 function renderUserExercisesPage(){
   // console.log(exercises);
   let htmlForPage = exercises.map(htmlForExercisePreview).join('');
-  console.log(htmlForPage);
+  // console.log(htmlForPage);
   $('.user-exercise-page > .row').html(htmlForPage); 
 };
 
@@ -228,7 +228,7 @@ function getAllExercises(){
     }
   }).then(function(_exercises){
      exercises = [..._exercises];
-    console.log(_exercises);
+    // console.log(_exercises);
 
      return exercises;
     // exercises = _exercises;

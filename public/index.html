@@ -13,14 +13,14 @@
 </head>
  <body>
 
-  <header role="banner">
+  <header role="banner" aria-live="polite">
     <nav role="navigation">
       <div class="topnav" id="myTopnav">
         <a href="#home" class="active">Home</a>
-        <a href="#" class="nav-exercise-page"><ion-icon name="fitness"></ion-icon>Exercises</a>
-        <a href="#" class="nav-login"><ion-icon name="person"></ion-icon>Login</a>
-        <a href="#" class="nav-signup"><ion-icon name="person-add"></ion-icon>Register</a>
-        <a href="#" class="nav-logout"><ion-icon name="arrow-round-forward"></ion-icon>Logout</a>
+        <a href="#" class="nav-exercise-page"><ion-icon name="fitness" class="ion"></ion-icon>Exercises</a>
+        <a href="#" class="nav-login"><ion-icon name="person" class="ion"></ion-icon>Login</a>
+        <a href="#" class="nav-signup"><ion-icon name="person-add" class="ion"></ion-icon>Register</a>
+        <a href="#" class="nav-logout"><ion-icon name="arrow-round-forward" class="ion"></ion-icon>Logout</a>
         <a href="javascript:void(0);" class="icon" onclick="myFunction()">
           <i class="fa fa-bars"></i>
         </a>
@@ -31,7 +31,7 @@
   <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
   <!-- <div id="animation"></div> -->
 
-  <section class="introduction-page">
+  <section class="introduction-page" aria-live="polite">
     <div class="row">
       <div class="intro-content">
         <h1 class="intro-title">Exercise Tracker</h1>
@@ -56,19 +56,19 @@
       </form>
   </section> -->
 
-  <div class="add-btn-box">
+  <div class="add-btn-box" aria-live="polite">
       <button class="add-exercise-btn" hidden><ion-icon name="add-circle-outline"></ion-icon>Add New Exercise</button>
   </div>
     <!-- <button class="view-user-exercise-btn" hidden>Your Exercise</button> -->
 
 
-  <div class="row">
+  <div class="row" aria-live="polite">
     <button type="previous" class="prev-btn" hidden>Previous Page</button>
   </div>
 
-  <div id="form-messages"></div>
+  <div id="form-messages" aria-live="polite"></div>
 
-  <section id="sign-up-form" hidden>
+  <section id="sign-up-form" hidden aria-live="polite">
     <form method="POST" action="/auth/users">
       <fieldset class="sign-up-fieldset">
         <legend>Sign Up</legend>
@@ -107,7 +107,7 @@
     </form>
   </section>
 
-  <section id="login-form" hidden>
+  <section id="login-form" hidden aria-live="polite">
     <form>
       <fieldset>
         <legend>Log In</legend>
@@ -122,7 +122,7 @@
     </form>
   </section>
 
-  <section role="main" class="exercise-form" hidden>
+  <section role="main" class="exercise-form" hidden aria-live="polite">
     <div class="row">
       <div class="col-12">
           <form>
@@ -130,7 +130,7 @@
               <legend>Exercise</legend>
               <div class="row">
                 <div class="input-field">
-                  <label for="exercise-title" name="exercise-title">Title:
+                  <label for="exercise-title" name="exercise-title">Title of Exercise:
                     <input type="text" name="title" class="exercise-title" value="Test">
                   </label>
                 </div>
@@ -149,6 +149,7 @@
       
               <div class="row">
                 <div class="col-4 status-col">
+                  <p>Make your exercise public to allow other users to see it</p>
                   <select name="status" class="status">
                     <option value="public" name="public" class="public" checked>Public</option>
                     <option value="private" name="private" class="private">Private</option>
@@ -166,7 +167,7 @@
               </div>
 
               <hr>
-
+ 
               <button class="add-video-btn"><ion-icon name="add-circle-outline"></ion-icon>Add Video</button> 
 
               <button type="submit" value="save" class="save-exercise-btn"><ion-icon name="save"></ion-icon>Save Exercise</button>
@@ -174,22 +175,22 @@
               <button type="submit" value="delete" class="delete-exercise-btn" hidden><ion-icon name="trash"></ion-icon>Delete Exercise</button>
 
 
-              <section class="added-videos">
+              <section class="added-videos" aria-live="polite">
                 <div class="row">
 
                 </div>
               </section>
 
               <hr>
-
-              <!-- <section class="comment-section">
+<!-- 
+              <section class="comment-section">
                 <div class="row">
                     <p>Please <a href="#" class="a-login">log</a> in to leave a comment</p>
                   <form method="POST" action="/exercises/comment/">
                     <fieldset>
                       <legend>
                         <div class="input-field">
-                          <textarea name="body" class="comments" col="30" rows="6"></textarea>
+                          <textarea name="body" class="comments" col="100" rows="10"></textarea>
                           <label> Add Comment</label>
                         </div>
                         <button value="submit" name="submit">Submit</button>
@@ -204,7 +205,7 @@
     <!-- </div> -->
   </section>
 
-    <section class="video-picker" hidden>
+    <section class="video-picker" hidden aria-live="polite">
       <form method="POST" action="#">
         <fieldset>
           <legend>Video Picker</legend>
@@ -222,15 +223,16 @@
         </fieldset>
       </form>
 
-      <div class="button-options" hidden>
-          <!-- <input type="button" class="tokenClass" value="Previous"> -->
-          <!-- <input type="button" class="tokenClass" value="Next">  -->
-          <button class="tokenClass" name="previous"><ion-icon name="arrow-round-back"></ion-icon>Prev</button>
-          <button class="tokenClass" name="next"><ion-icon name="arrow-round-forward"></ion-icon>Next</button>
+      
+      <section class="video-results" aria-live="polite"><div class="row"></div></section>
 
-      </div>
-     
-      <section class="video-results"><div class="row"></div></section>
+      <div class="button-options" hidden aria-live="polite">
+        <!-- <input type="button" class="tokenClass" value="Previous"> -->
+        <!-- <input type="button" class="tokenClass" value="Next">  -->
+        <button class="tokenClass" name="previous"><ion-icon name="arrow-round-back"></ion-icon>Prev</button>
+        <button class="tokenClass" name="next"><ion-icon name="arrow-round-forward"></ion-icon>Next</button>
+    </div>
+   
 
     </section>
 
@@ -242,7 +244,7 @@
         </div>
     </section>
 
-     <section class="user-exercise-page" hidden>
+     <section class="user-exercise-page" hidden aria-live="polite">
        <div class="row">
         <!-- <div class="row">
             <div class="col-4">
