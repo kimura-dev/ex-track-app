@@ -27,11 +27,15 @@ function hideMoviePicker(){
 function youtubeOutput(data) {
   pageToken.nextPage = data.nextPageToken;
   pageToken.prevPage = data.prevPageToken;
+  // console.log(data);
+  console.log(pageToken);
+
   let html = "";
   $.each(data['items'], function (index, value) {
     html += htmlForVideoResult(value);     
   });
   $('.video-results > .row').html(html);
+  showButtonOptions();
 };
 
 function searchYoutube() {
@@ -46,11 +50,11 @@ function searchYoutube() {
           , part: 'snippet'
           , maxResults: 6
           , pageToken: pageToken.current
+          // , pageToken: 'CAYQAA'
       }
   }).done(youtubeOutput);
   
 };
-
 
 function searchVideoForExerciseTitle(){
   let title = $('.exercise-title').val();
@@ -65,22 +69,12 @@ function searchVideoForExerciseTitle(){
 /*     Preview Videos
 /**------------------------- */
 
-/* <div class="col-4 video-result">
-            <h3 class="video-title">${value.snippet.title}</h3>
-            <img  class="thumbnail" src="${value.snippet.thumbnails.medium.url}" videoID="${value.id.videoId}">
-            <p class="url"><a href="https://www.youtube.com/watch?v=${value.id.videoId}" target="_blank"> ${value.id.videoId}</a></p>  
-            <div class="video-controls">
-              ${videoControls(false)}
-            </div>
-          </div> */
-
 function previewVideos(){
   $('.video-results').on('click', '.preview-video', function (e) {
     let target = $( e.target );
-    let videoID = $(target).parent().parent().find('img').attr('videoID');  
-    // let target = e.target;
-    // let videoID = target.parent();
-    console.log(videoID);
+    // let videoID = $(target).closest('.video-result').find('img').attr('videoID');   
+    let videoID = $(target).parent().parent().find('img').attr('videoID');
+    // console.log(videoID);
     $('.popup').show()
     $('.overlayBg').show();
     $(window).scrollTop(0)

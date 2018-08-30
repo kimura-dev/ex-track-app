@@ -25,7 +25,7 @@ router.get('/', (req, res) => {
 });
 
 // Show Single Exercise
-router.get('/:id', (req, res) => {
+router.get('/:id',ensurePublicOrOwner, (req, res) => {
   Exercise.findOne({
     _id: req.params.id
   })
@@ -40,21 +40,21 @@ router.get('/:id', (req, res) => {
 });
 
 // List exercises from a user
-router.get('/user/:userId', localAuth, ensurePublicOrOwner,   (req, res) => {
-  Exercise.find({user: req.params.userId, status: 'public'})
-    .populate('user')
-    .then(exercises => {
-      res.status(200).json(exercises, {
-        exercises:exercises
-      }).catch(err => {
-        console.error(err);
-        res.status(500).json({message:'Internal server error'});
-      })
-    });
-});
+// router.get('/user/:userId', localAuth,  (req, res) => {
+//   Exercise.find({user: req.params.userId, status: 'public'})
+//     .populate('user')
+//     .then(exercises => {
+//       res.status(200).json(exercises, {
+//         exercises:exercises
+//       }).catch(err => {
+//         console.error(err);
+//         res.status(500).json({message:'Internal server error'});
+//       })
+//     });
+// });
 
 // Logged in users exercises
-router.get('/', localAuth, ensurePublicOrOwner,  (req, res) => {
+router.get('/my', localAuth, (req, res) => {
   Exercise.find({user: req.user.id})
     .populate('user')
     .then(exercises => {
@@ -110,7 +110,7 @@ router.post('/', jwtAuth, (req, res) => {
     ),
     status: req.body.status,
     allowComments: allowComments,
-    // user: req.user.id, 
+    user: req.user.id, 
     videos: JSON.parse(videos)
   }
   console.log('-------------------------------------------');

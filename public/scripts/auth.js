@@ -99,6 +99,14 @@ function hideLoginForm(){
   $('#login-form').hide();
 };
 
+// function getAuthToken(){
+//   let authToken = '';
+
+//   if(window.localStorage){
+//     authToken = window.localStorage.getItem('authToken');
+//   }
+// };
+
 /**------------------------------- */
 /*    Logging In Users
 /**-------------------------------- */
@@ -126,14 +134,11 @@ function loggingIn(){
     $('.usersname').val('');
     $('.password').val('');
     hideLoginForm();
-    // hideIntroPage();
+    hideIntroPage();
     hideLogInBtn();
-    return getAllExercises().then(function(){
-      // console.log('Working!');
-      showAddExerciseBtn();
-      renderUserExercisesPage();
-      showUserExercisesPage();
-    });
+
+    return showMyExercisesPage();
+    
   }).fail(function(data) {
     $(formMessages).removeClass('success');
     $(formMessages).addClass('error');

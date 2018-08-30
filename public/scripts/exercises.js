@@ -3,9 +3,13 @@
 let videosSelected = [];
 let video = []; 
 let exercises = []; 
+let myExercises = [];
 let exerciseId = '';
+const REFRESH_PERIOD = 1000 * 60; // 60,000 milliseconds
+let lastExercisePage = '';
 let currentExerciseIndex = -1;
 const API_URL = 'http://localhost:8080/api';
+// let url = '';
 
 /**-------------------------------- */
 /* Exercise Form Hide & Show 
@@ -38,10 +42,6 @@ function submitExerciseForm(){
   });
 
   let exerciseId = $('.exercise-id').val() || undefined;
-
-  // if(exerciseId === undefined){
-  //   hideDeleteExerciseBtn();
-  // }
 
   let data = {
     _id: exerciseId,
@@ -80,11 +80,12 @@ function submitExerciseForm(){
     $(formMessages).addClass('success');
 
     // Clear the form.
-    $('.exercise-title').val('');
-    $('.exercise-id').val('');
-    $('.exercise-description').val('');
-    $('.added-videos').html('');
-    $('.allow-comments').val('');
+    // $('.exercise-title').val('');
+    // $('.exercise-id').val('');
+    // $('.exercise-description').val('');
+    // $('.added-videos').html('');
+    // $('.allow-comments').val('');
+    clearExerciseForm();
     hideExerciseForm();
     // Create Exercise Array
     if(exerciseId){
@@ -103,9 +104,10 @@ function submitExerciseForm(){
       $(formMessages).text(`${response.title} was added successfully!`);
       exercises.push(response);
     }
-    
-    renderUserExercisesPage();
-    showUserExercisesPage();
+
+    // Comment add the new exercise to my exercises array as well
+    // showLastExercisesPage(); 
+    showExercisesPage();
 
   }).fail(function(data) {
     // Make sure that the formMessages div has the 'error' class.
@@ -121,36 +123,46 @@ function submitExerciseForm(){
   });
 };
 
+function showLastExercisesPage(){
+   
+}
+
 /**--------------------------------------------------- */
-/*    Get Exercise Data Displays Users Page
+/*    Show All and Show My Exercise Pages
 /**---------------------------------------------------- */
-function showUserExercisesPage(){
-  // if(exercises.length === 0){
-  //   return getAllExercises().then(function(){
-  //   console.log('Connected');
-  //     // renderUserExercisesPage();
-  //   });
-  // }
-  $('.user-exercise-page').removeAttr('hidden');
-  $('.user-exercise-page').show();
-  renderUserExercisesPage();
-  showAddExerciseBtn();
+function showExercisesPage(){
+  showExercisesPage(exercises, '/exercises');
 };
 
-function hideUserExercisesPage(){
-  $('.user-exercise-page').attr('hidden');
-  $('.user-exercise-page').hide();
+function showMyExercisesPage(){
+  showExercisesPage(myExercises, '/exercises/my');
+}
+
+function showExercisesPage(exercises, url){
+  let timeSince = Date.now() - (exercises.lastModified || 0);
+  lastExercisePage = url;
+  let doUI = function(){
+    $('.user-exercise-page').removeAttr('hidden');
+    $('.user-exercise-page').show();
+    renderAllExercisesPage(exercises, url);
+    showAddExerciseBtn();
+  }
+
+  if(timeSince >= REFRESH_PERIOD){
+    return getAllExercises(exercises).then(doUI);
+  } else {
+    doUI();
+    return Promise.resolve();
+  }
 };
 
-function renderUserExercisesPage(){
-  // console.log(exercises);
-  let htmlForPage = exercises.map(htmlForExercisePreview).join('');
+function renderAllExercisesPage(exercises, url){
+  let htmlForPage = exercises.map(htmlForAllExercisesPage).join('');
   // console.log(htmlForPage);
   $('.user-exercise-page > .row').html(htmlForPage); 
 };
 
-function htmlForExercisePreview(exercise){
-  // console.log(exercise);
+function htmlForAllExercisesPage(exercise){
   let videoSrc = '';
   let videoID = '';
 
@@ -177,9 +189,10 @@ function htmlForExercisePreview(exercise){
 /**---------------------------------------------------- */
 
 function getExerciseIndexFromClick(e){
-  const target = $(e.currentTarget);
+  const target = $(e.currentTarget).closest('.exercise').closest('.col-4');
+  
   let index = target.index();
-  // console.log(index);
+
   return index;
 };
 
@@ -189,7 +202,7 @@ function renderVideosOnExercisesForm(exercise){
 };
 
 function htmlForVideoOnExerciseForm(video){
-  // console.log(exercise);
+
   return `<div class="col-4">
             <h3 class="video-title" objectID="${video._id}">${video.title}</h3>
             <img  class="thumbnail" src="${video.url}" videoID="${video.videoID}">
@@ -201,38 +214,65 @@ function htmlForVideoOnExerciseForm(video){
 };
 
 function populateFormWExerciseData(exercise) {
-  // console.log(exercise._id);
+
   if(exercise){
     $('.exercise-id').val(exercise._id || '') ;
     $('.exercise-title').val(exercise.title || '') ;
     $('.exercise-description').val(exercise.description || '');
-    hideUserExercisesPage();
+    hideAllExercisesPagee();
     showExerciseForm();
   }
 };
 
-function getAllExercises(){
+function getAllExercises(exercises, url){
+  let authToken = '';
+
+  if(window.localStorage){
+    authToken = window.localStorage.getItem('authToken');
+  }
+  // getAuthToken();
+
+  // AJAX To Exercises
+  return $.ajax({
+    type: 'GET',
+    cache: false,
+    url: API_URL + ( url || '/exercises' ),
+    headers: {
+      Authorization: `Bearer ${authToken}`
+    }
+  }).then(function(_exercises){
+     exercises.length = 0;
+     _exercises.forEach((_exercise) => {
+        exercises.push(_exercise);
+     });
+     exercises.lastModified = Date.now();
+     return exercises;
+  });
+
+};
+
+function getMyExercises(){
   let authToken = '';
 
   if(window.localStorage){
     authToken = window.localStorage.getItem('authToken');
   }
 
-  // AJAX To Exercises
   return $.ajax({
     type: 'GET',
     cache: false,
-    url: API_URL+ '/exercises',
+    url: API_URL + '/exercises/my',
     headers: {
       Authorization: `Bearer ${authToken}`
     }
   }).then(function(_exercises){
-     exercises = [..._exercises];
-    // console.log(_exercises);
-
-     return exercises;
-    // exercises = _exercises;
-  });
+    exercises.length = 0;
+    _exercises.forEach((_exercise) => {
+       exercises.push(_exercise);
+    });
+    exercises.lastModified = Date.now();
+    return myExercises;
+ });
 
 };
 
@@ -246,8 +286,9 @@ function deleteExercise(){
 };
 
 function clearExerciseForm(){
-  $('.exercise-id').val('') ;
-  $('.exercise-title').val('') ;
+  $('.exercise-title').val('');
+  $('.exercise-id').val('');
   $('.exercise-description').val('');
   $('.added-videos').html('');
+  $('.allow-comments').val('');
 }

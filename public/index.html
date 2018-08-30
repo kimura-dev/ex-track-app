@@ -16,8 +16,8 @@
   <header role="banner" aria-live="polite">
     <nav role="navigation">
       <div class="topnav" id="myTopnav">
-        <a href="#home" class="active">Home</a>
-        <a href="#" class="nav-exercise-page"><ion-icon name="fitness" class="ion"></ion-icon>Exercises</a>
+        <a href="#home" class="active all-exercises-btn">All Exercises</a>
+        <a href="#" class="nav-exercise-page"><ion-icon name="fitness" class="ion"></ion-icon>Your Exercises</a>
         <a href="#" class="nav-login"><ion-icon name="person" class="ion"></ion-icon>Login</a>
         <a href="#" class="nav-signup"><ion-icon name="person-add" class="ion"></ion-icon>Register</a>
         <a href="#" class="nav-logout"><ion-icon name="arrow-round-forward" class="ion"></ion-icon>Logout</a>
@@ -223,16 +223,17 @@
         </fieldset>
       </form>
 
-      
+      <div class="button-options" hidden aria-live="polite">
+        <button class="tokenClass" name="previous" value="Previous"><ion-icon name="arrow-round-back"></ion-icon>Prev</button>
+        <button class="tokenClass" name="next" value="Next"><ion-icon name="arrow-round-forward"></ion-icon>Next</button>
+      </div>
+  
+      <!-- <input type="button" class="tokenClass" value="Previous">
+     <input type="button" class="tokenClass" value="Next">   -->
+   
       <section class="video-results" aria-live="polite"><div class="row"></div></section>
 
-      <div class="button-options" hidden aria-live="polite">
-        <!-- <input type="button" class="tokenClass" value="Previous"> -->
-        <!-- <input type="button" class="tokenClass" value="Next">  -->
-        <button class="tokenClass" name="previous"><ion-icon name="arrow-round-back"></ion-icon>Prev</button>
-        <button class="tokenClass" name="next"><ion-icon name="arrow-round-forward"></ion-icon>Next</button>
-    </div>
-   
+      
 
     </section>
 
@@ -244,7 +245,7 @@
         </div>
     </section>
 
-     <section class="user-exercise-page" hidden aria-live="polite">
+     <section class="user-exercise-page" hidden aria-live="polite" hidden>
        <div class="row">
         <!-- <div class="row">
             <div class="col-4">

@@ -1,13 +1,16 @@
 "use strict";
 
-function showUserExercisesPage(){
-  $(".user-exercise-page").show()
-}
 
-function hideUserExercisesPage(){
-  $(".user-exercise-page").hide()
-}
+function hideAllExercisesPage(){
+  $('.user-exercise-page').attr('hidden');
+  $('.user-exercise-page').hide();
+};
 
+function hideExercisePage(){
+  $('.user-exercise-page').attr('hidden');
+  $('.user-exercise-page').hide();
+
+}
 
 function showIntroPage(){
   $('.introduction-page').show();
@@ -103,6 +106,7 @@ $(function onPageReady(){
   if(window.localStorage){
     authToken = window.localStorage.getItem('authToken');
     loggingIn();
+    // getMyExerices.then(doUI);
   }
   // CK Editor
   CKEDITOR.replace('body',{
@@ -115,6 +119,8 @@ $(function onPageReady(){
 
   // Youtube Toggle Search Pages
   $('.tokenClass').click(function () {
+    console.log($(this).val());
+
     pageToken.current = $(this).val() == 'Next' ? pageToken.nextPage : pageToken.prevPage;
     searchYoutube();
   });
@@ -124,27 +130,15 @@ $(function onPageReady(){
     showSignupForm();
     hideIntroPage();
     hideLogInBtn();
+    hideAllExercisesPage();
+  });
+
+  $('.all-exercises-btn').click(function(){
+    showExercisesPage();
   });
 
   $('.nav-exercise-page').click(function(){
-    // if(authToken){
-    //   renderUserExercisesPage();
-    //   showUserExercisesPage();
-    //   showAddExerciseBtn();
-    // } else {
-    //   showLoginForm();
-    // }
-    
-  });
-
-  $('.nav-logs').click(function(){
-    console.log('Logs Page');
-    
-  });
-
-  $('.nav-exercises').click(function(){
-    showLoginForm();
-    
+    showMyExercisesPage();
   });
 
   $('.nav-login').click(function(){
@@ -160,17 +154,17 @@ $(function onPageReady(){
 
   $('.add-exercise-btn').click(function(){
     hideIntroPage();
-    hideUserExercisesPage();
+    hideAllExercisesPage();
     hideAddExerciseBtn();
     showExerciseForm();
-    clearExerciseForm();
+    // clearExerciseForm();
   })
 
   // Previous Button Click
   $(".prev-btn").click(function(){
     hideExerciseForm();
     hidePrevBtn();
-    showUserExercisesPage();
+    // showExercisesPage();
     showAddExerciseBtn();
   })
 
@@ -255,6 +249,8 @@ $(function onPageReady(){
     populateFormWExerciseData(exercises[currentExerciseIndex]);
     renderVideosOnExercisesForm(exercises[currentExerciseIndex]);
   });
+
+
 
   // Delete Exercise Click
   $('.delete-exercise-btn').click(function(){

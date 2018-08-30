@@ -48,11 +48,11 @@ const ExerciseSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref:'User'
     }
-  }]
-  // user:{
-  //   type: Schema.Types.ObjectId,
-  //   ref:'User'
-  // }
+  }],
+  user:{
+    type: Schema.Types.ObjectId,
+    ref:'User'
+  }
   // date:{
   //   type: Date,
   //   default: Date.now
