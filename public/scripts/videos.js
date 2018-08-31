@@ -28,7 +28,7 @@ function youtubeOutput(data) {
   pageToken.nextPage = data.nextPageToken;
   pageToken.prevPage = data.prevPageToken;
   // console.log(data);
-  console.log(pageToken);
+  // console.log(pageToken);
 
   let html = "";
   $.each(data['items'], function (index, value) {
@@ -81,6 +81,26 @@ function previewVideos(){
     // $('.popup iframe').attr('src', 'https://www.youtube.com/embed/' + $(this).attr('videoID'));
     $('.popup iframe').attr('src', `https://www.youtube.com/embed/${videoID}`);
   });
+  $('.overlayBg').click(function () {
+    $('.popup').hide()
+    $('.overlayBg').hide()
+  });
+}; 
+
+/**------------------------- */
+/*     Preview Videos
+/**------------------------- */
+
+function previewVideosOnExercisePage(){
+  let target = $( e.target );
+  // let videoID = $(target).closest('.video-result').find('img').attr('videoID');   
+  let videoID = $(target).parent().parent().find('img').attr('videoID');
+  console.log(videoID);
+  $('.popup').show()
+  $('.overlayBg').show();
+  $(window).scrollTop(0)
+  // $('.popup iframe').attr('src', 'https://www.youtube.com/embed/' + $(this).attr('videoID'));
+  $('.popup iframe').attr('src', `https://www.youtube.com/embed/${videoID}`);
   $('.overlayBg').click(function () {
     $('.popup').hide()
     $('.overlayBg').hide()
@@ -165,6 +185,8 @@ function videoControls(isAdded){
             <button class="unselect-video-btn"><ion-icon name="undo"></ion-icon>Unselect</button>`
   
 };
+
+
 
 /**------------------------------- */
 /*     Delete Video from Profile

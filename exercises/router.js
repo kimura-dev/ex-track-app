@@ -24,8 +24,21 @@ router.get('/', (req, res) => {
     });
 });
 
+// Logged in users exercises
+router.get('/my', jwtAuth, (req, res) => {
+  Exercise.find({user: req.user.id})
+    .populate('user')
+    .then(exercises => {
+      res.status(200).json(exercises);
+      console.log(req.user.id);
+    }).catch(err => {
+      console.error(err);
+      res.status(500).json({message:'Internal server error'});
+    });
+});
+
 // Show Single Exercise
-router.get('/:id',ensurePublicOrOwner, (req, res) => {
+router.get('/:id', (req, res) => {
   Exercise.findOne({
     _id: req.params.id
   })
@@ -39,31 +52,22 @@ router.get('/:id',ensurePublicOrOwner, (req, res) => {
   });
 });
 
-// List exercises from a user
-// router.get('/user/:userId', localAuth,  (req, res) => {
-//   Exercise.find({user: req.params.userId, status: 'public'})
-//     .populate('user')
-//     .then(exercises => {
-//       res.status(200).json(exercises, {
-//         exercises:exercises
-//       }).catch(err => {
-//         console.error(err);
-//         res.status(500).json({message:'Internal server error'});
-//       })
-//     });
-// });
 
-// Logged in users exercises
-router.get('/my', localAuth, (req, res) => {
-  Exercise.find({user: req.user.id})
+
+// List exercises from a user
+router.get('/user/:userId', localAuth,  (req, res) => {
+  Exercise.find({user: req.params.userId, status: 'public'})
     .populate('user')
     .then(exercises => {
-      res.status(200).json(exercises);
-    }).catch(err => {
-      console.error(err);
-      res.status(500).json({message:'Internal server error'});
+      res.status(200).json(exercises, {
+        exercises:exercises
+      }).catch(err => {
+        console.error(err);
+        res.status(500).json({message:'Internal server error'});
+      })
     });
 });
+
 
 // Add Exercise Form
 // router.get('/add', ensureAuthenticated, (req, res) => {
@@ -71,18 +75,18 @@ router.get('/my', localAuth, (req, res) => {
 // });
 
 // Edit Exercise Form
-router.get('/edit/:id', localAuth, ensurePublicOrOwner, (req, res) => {
-  Exercise.findOne({
-    _id: req.params.id
-  })
-  .then(exercise => {
-    if(exercise.user != req.user.id){
-      res.status(400).json({message:'Invalid request'});
-    } else {
-      res.status(200).json(exercise);
-    }
-  });
-});
+// router.get('/edit/:id', localAuth, ensurePublicOrOwner, (req, res) => {
+//   Exercise.findOne({
+//     _id: req.params.id
+//   })
+//   .then(exercise => {
+//     if(exercise.user != req.user.id){
+//       res.status(400).json({message:'Invalid request'});
+//     } else {
+//       res.status(200).json(exercise);
+//     }
+//   });
+// });
 
 // Process Add Exercises
 router.post('/', jwtAuth, (req, res) => {

@@ -139,6 +139,7 @@ function loggingIn(){
 
     return showMyExercisesPage();
     
+    
   }).fail(function(data) {
     $(formMessages).removeClass('success');
     $(formMessages).addClass('error');
@@ -149,3 +150,8 @@ function loggingIn(){
     }
   });
 };
+
+function logoutUser(){
+  localStorage.removeItem('authToken');
+  location.reload();
+}

@@ -112,10 +112,10 @@
       <fieldset>
         <legend>Log In</legend>
         <label for="login-username">User name:
-            <input type="text" name="username" class="login-username" value="Scott_R">
+            <input type="text" name="username" class="login-username">
           </label>
           <label for="login-password">Password:
-            <input type="password" name="password" class="login-password" value="123456">
+            <input type="password" name="password" class="login-password">
           </label>
           <button type="submit" class="logIn">Log In</button>
       </fieldset>
@@ -131,7 +131,7 @@
               <div class="row">
                 <div class="input-field">
                   <label for="exercise-title" name="exercise-title">Title of Exercise:
-                    <input type="text" name="title" class="exercise-title" value="Test">
+                    <input type="text" name="title" class="exercise-title">
                   </label>
                 </div>
                 </div>
@@ -222,18 +222,19 @@
           </label>
         </fieldset>
       </form>
+   
+      <section class="video-results" aria-live="polite">
+        <div class="row">
+
+        </div>
+      </section>
+
+      <hr>
 
       <div class="button-options" hidden aria-live="polite">
         <button class="tokenClass" name="previous" value="Previous"><ion-icon name="arrow-round-back"></ion-icon>Prev</button>
-        <button class="tokenClass" name="next" value="Next"><ion-icon name="arrow-round-forward"></ion-icon>Next</button>
+        <button class="tokenClass" name="next" value="Next">Next<ion-icon name="arrow-round-forward"></ion-icon></button>
       </div>
-  
-      <!-- <input type="button" class="tokenClass" value="Previous">
-     <input type="button" class="tokenClass" value="Next">   -->
-   
-      <section class="video-results" aria-live="polite"><div class="row"></div></section>
-
-      
 
     </section>
 

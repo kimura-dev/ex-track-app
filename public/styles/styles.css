@@ -357,18 +357,19 @@ p {
 } */
 
 .tokenClass {
-  margin-right: 40px;
+  margin-right: 40%;
   margin-left: 40px;
   padding: 10px;
   font-size: 18px;
-  background-color: rgb(6, 31, 252);
+  background-color: rgb(238, 122, 13);
+
   color: #E5E5E5;
 }
 
 .tokenClass:hover,
 .tokenClass:focus {
   cursor: pointer;
-  background-color: rgb(238, 122, 13);
+  background-color: rgb(6, 31, 252);
 }
 
 /*------------------------------------------*/
@@ -444,6 +445,7 @@ p {
 /*------------------------------------------*/
 
 .exercise {
+  margin-bottom: 30px;
   background-color: rgb(238, 122, 13);
   overflow: hidden;
 }

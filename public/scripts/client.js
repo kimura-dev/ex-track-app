@@ -1,6 +1,7 @@
 "use strict";
 
 
+
 function hideAllExercisesPage(){
   $('.user-exercise-page').attr('hidden');
   $('.user-exercise-page').hide();
@@ -100,14 +101,14 @@ function myFunction() {
        Click Events
 /**--------------------- */
 $(function onPageReady(){
-  let authToken = '';
+  // let authToken = '';
 
   // Check Authtentication
   if(window.localStorage){
     authToken = window.localStorage.getItem('authToken');
     loggingIn();
-    // getMyExerices.then(doUI);
   }
+
   // CK Editor
   CKEDITOR.replace('body',{
     plugins: 'wysiwygarea,toolbar,basicstyles,link' 
@@ -120,7 +121,6 @@ $(function onPageReady(){
   // Youtube Toggle Search Pages
   $('.tokenClass').click(function () {
     console.log($(this).val());
-
     pageToken.current = $(this).val() == 'Next' ? pageToken.nextPage : pageToken.prevPage;
     searchYoutube();
   });
@@ -134,7 +134,7 @@ $(function onPageReady(){
   });
 
   $('.all-exercises-btn').click(function(){
-    showExercisesPage();
+     return showExercisesPage();
   });
 
   $('.nav-exercise-page').click(function(){
@@ -147,6 +147,11 @@ $(function onPageReady(){
     
   });
 
+  $('.nav-logout').click(function(){
+    console.log('Logout Click')
+    logoutUser();
+  });
+  
   // Prevent Form Event Default
   $('form').submit(function(e){
     e.preventDefault();
@@ -241,16 +246,26 @@ $(function onPageReady(){
     showExerciseForm();
   });
 
-  // Edit Exercise Form Page 
+  //Edit Exercise Form Page 
   $('.user-exercise-page').on('click','.exercise-show', function(e){
     hideFormMessage();
     showAddExerciseBtn();
     currentExerciseIndex = getExerciseIndexFromClick(e);
+    // checkIfExercisePopulated();
     populateFormWExerciseData(exercises[currentExerciseIndex]);
     renderVideosOnExercisesForm(exercises[currentExerciseIndex]);
   });
 
+  // function checkIfExercisePopulated(){
+  //   if(!window.localStorage.getItem('exercises')){
+  //     setTimeout(checkIfExercisePopulated, 300);
+  //     return false;
+  //   }
 
+  //   const exercises = window.localStorage.getItem('exercises');
+  //   populateFormWExerciseData(exercises[currentExerciseIndex]);
+  //   renderVideosOnExercisesForm(exercises[currentExerciseIndex]);
+  // }
 
   // Delete Exercise Click
   $('.delete-exercise-btn').click(function(){
@@ -258,7 +273,13 @@ $(function onPageReady(){
     // deleteExercise();
   });
 
-  // getAllExercises();
+   // Watch Videos On Exercise Form
+  $('.video-results').on('click','.watchvideo',function(e){
+    console.log('click');
+    previewVideosOnExercisePage();
+  });
+
   previewVideos(); 
+
 
 });

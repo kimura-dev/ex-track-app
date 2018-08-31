@@ -42,13 +42,13 @@ const UserSchema = mongoose.Schema({
   //     email        : String,
   //     name         : String
   // },
-  level: {
-    type:String, 
-    default: 'white'
-  },
-  affiliates: {
-    type:String, default: ''
-  },
+  // level: {
+  //   type:String, 
+  //   default: 'white'
+  // },
+  // affiliates: {
+  //   type:String, default: ''
+  // },
   // image: {
   //   type:String
   // },

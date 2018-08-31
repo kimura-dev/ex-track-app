@@ -9,6 +9,8 @@ const REFRESH_PERIOD = 1000 * 60; // 60,000 milliseconds
 let lastExercisePage = '';
 let currentExerciseIndex = -1;
 const API_URL = 'http://localhost:8080/api';
+
+
 // let url = '';
 
 /**-------------------------------- */
@@ -62,7 +64,7 @@ function submitExerciseForm(){
   if(window.localStorage){
     authToken = window.localStorage.getItem('authToken');
   }
-  // console.log(authToken);
+  console.log(authToken);
 
   // AJAX To Exercises
   $.ajax({
@@ -73,7 +75,7 @@ function submitExerciseForm(){
       Authorization: `Bearer ${authToken}`
     }
   }).then(function(response) {
-    // console.log(exercises);
+    console.log('post exercises'+response);
     
     // Make sure that the formMessages div has the 'success' class.
     $(formMessages).removeClass('error');
@@ -85,29 +87,16 @@ function submitExerciseForm(){
     // $('.exercise-description').val('');
     // $('.added-videos').html('');
     // $('.allow-comments').val('');
+    // CKEDITOR.replace( 'body' );
     clearExerciseForm();
     hideExerciseForm();
-    // Create Exercise Array
-    if(exerciseId){
-      $(formMessages).text(`${response.title} was edited successfully!`);
-      showDeleteExerciseBtn();
-      const index = exercises.findIndex((exercise) => {
-        return exercise._id === exerciseId;
-      });
-
-      if (index >= 0){
-        exercises[index] = response;
-        // console.log(response);
-      }
-     
-    } else {
-      $(formMessages).text(`${response.title} was added successfully!`);
-      exercises.push(response);
-    }
+   
+    addExerciseToLocalArrays(response, exerciseId);
+    console.log(exercises);
 
     // Comment add the new exercise to my exercises array as well
     // showLastExercisesPage(); 
-    showExercisesPage();
+      return showMyExercisesPage();
 
   }).fail(function(data) {
     // Make sure that the formMessages div has the 'error' class.
@@ -123,6 +112,37 @@ function submitExerciseForm(){
   });
 };
 
+function addExerciseToLocalArrays(exercise, exerciseId){
+  // Create Exercise Array
+  if(exerciseId){
+    $('#form-messages').text(`${exercise.title} was edited successfully!`);
+    showDeleteExerciseBtn();
+    const index = exercises.findIndex((exercise) => {
+      return exercise._id === exerciseId;
+    });
+
+    const myIndex = myExercises.findIndex((exercise) => {
+      return exercise._id === exerciseId;
+    });
+
+    if (index >= 0){
+      exercises[index] = exercise;
+      // console.log(response);
+    }
+
+    if (myIndex >= 0){
+      myExercises[myIndex] = exercise;
+      // console.log(response);
+    }
+   
+  } else {
+    $('#form-messages').text(`${exercise.title} was added successfully!`);
+    exercises.push(exercise);
+    myExercises.push(exercise);
+  }
+
+}
+
 function showLastExercisesPage(){
    
 }
@@ -136,12 +156,13 @@ function showExercisesPage(){
 
 function showMyExercisesPage(){
   showExercisesPage(myExercises, '/exercises/my');
-}
+};
 
 function showExercisesPage(exercises, url){
   let timeSince = Date.now() - (exercises.lastModified || 0);
   lastExercisePage = url;
   let doUI = function(){
+    console.log('On view click',exercises)
     $('.user-exercise-page').removeAttr('hidden');
     $('.user-exercise-page').show();
     renderAllExercisesPage(exercises, url);
@@ -149,12 +170,13 @@ function showExercisesPage(exercises, url){
   }
 
   if(timeSince >= REFRESH_PERIOD){
-    return getAllExercises(exercises).then(doUI);
+    return getAllExercises(exercises, url).then(doUI);
   } else {
     doUI();
     return Promise.resolve();
-  }
+  } 
 };
+
 
 function renderAllExercisesPage(exercises, url){
   let htmlForPage = exercises.map(htmlForAllExercisesPage).join('');
@@ -219,10 +241,15 @@ function populateFormWExerciseData(exercise) {
     $('.exercise-id').val(exercise._id || '') ;
     $('.exercise-title').val(exercise.title || '') ;
     $('.exercise-description').val(exercise.description || '');
-    hideAllExercisesPagee();
+    hideAllExercisesPage();
     showExerciseForm();
   }
 };
+
+// function sendExerciseData(){
+//   console.log(exercises);
+//   return exercises;
+// };
 
 function getAllExercises(exercises, url){
   let authToken = '';
@@ -242,37 +269,15 @@ function getAllExercises(exercises, url){
     }
   }).then(function(_exercises){
      exercises.length = 0;
+     console.log('.')
      _exercises.forEach((_exercise) => {
         exercises.push(_exercise);
+        console.log('==',exercises);
      });
+    //  window.localStorage.setItem('exercises', JSON.stringify(exercises))
      exercises.lastModified = Date.now();
      return exercises;
   });
-
-};
-
-function getMyExercises(){
-  let authToken = '';
-
-  if(window.localStorage){
-    authToken = window.localStorage.getItem('authToken');
-  }
-
-  return $.ajax({
-    type: 'GET',
-    cache: false,
-    url: API_URL + '/exercises/my',
-    headers: {
-      Authorization: `Bearer ${authToken}`
-    }
-  }).then(function(_exercises){
-    exercises.length = 0;
-    _exercises.forEach((_exercise) => {
-       exercises.push(_exercise);
-    });
-    exercises.lastModified = Date.now();
-    return myExercises;
- });
 
 };
 
@@ -280,8 +285,8 @@ function deleteExercise(){
   $.ajax({
     type: 'DELETE',
     url: `http://localhost:8080/api/exercises/${exercise_id}`,
-  }).then(function(response){
-    console.log(response);
+  }).then( (exercise) => {
+    // code here
   });
 };
 
@@ -291,4 +296,6 @@ function clearExerciseForm(){
   $('.exercise-description').val('');
   $('.added-videos').html('');
   $('.allow-comments').val('');
+  CKEDITOR.instances['body'].setData('');
+  // CKEDITOR.replace( 'body' );
 }
