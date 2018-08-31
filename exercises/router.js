@@ -55,24 +55,19 @@ router.get('/:id', (req, res) => {
 
 
 // List exercises from a user
-router.get('/user/:userId', localAuth,  (req, res) => {
-  Exercise.find({user: req.params.userId, status: 'public'})
-    .populate('user')
-    .then(exercises => {
-      res.status(200).json(exercises, {
-        exercises:exercises
-      }).catch(err => {
-        console.error(err);
-        res.status(500).json({message:'Internal server error'});
-      })
-    });
-});
-
-
-// Add Exercise Form
-// router.get('/add', ensureAuthenticated, (req, res) => {
-//   res.json(exercise);
+// router.get('/user/:userId', localAuth,  (req, res) => {
+//   Exercise.find({user: req.params.userId, status: 'Public'})
+//     .populate('user')
+//     .then(exercises => {
+//       res.status(200).json(exercises, {
+//         exercises:exercises
+//       }).catch(err => {
+//         console.error(err);
+//         res.status(500).json({message:'Internal server error'});
+//       })
+//     });
 // });
+
 
 // Edit Exercise Form
 // router.get('/edit/:id', localAuth, ensurePublicOrOwner, (req, res) => {

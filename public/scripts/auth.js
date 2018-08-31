@@ -122,7 +122,7 @@ function loggingIn(){
     url: 'http://localhost:8080/api/auth/login',
     data: data
   }).then(function(response) {
-    let username =  $('.usersname').val();
+    // let username =  $('.usersname').val();
     // console.log(response);
     let authToken = response.authToken;
     if(window.localStorage){

@@ -101,13 +101,13 @@ function myFunction() {
        Click Events
 /**--------------------- */
 $(function onPageReady(){
-  // let authToken = '';
+  let authToken = '';
 
   // Check Authtentication
-  if(window.localStorage){
-    authToken = window.localStorage.getItem('authToken');
-    loggingIn();
-  }
+  // if(window.localStorage){
+  //   authToken = window.localStorage.getItem('authToken');
+  //   loggingIn();
+  // }
 
   // CK Editor
   CKEDITOR.replace('body',{
