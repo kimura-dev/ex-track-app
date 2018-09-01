@@ -1,7 +1,7 @@
 "use strict";
 
 let videosSelected = [];
-let video = []; 
+let video = [];
 let exercises = []; 
 let myExercises = [];
 let exerciseId = '';
@@ -10,39 +10,27 @@ let lastExercisePage = '';
 let currentExerciseIndex = -1;
 const API_URL = 'http://localhost:8080/api';
 
-
-// let url = '';
-
-/**-------------------------------- */
-/* Exercise Form Hide & Show 
-/**--------------------------------- */
-function showExerciseForm(){
-  $('.exercise-form').show();
-};
-
-function hideExerciseForm(){
-  $('.exercise-form').hide();
-};
-
 /**-------------------------------- */
 /* Exercise Form Submit 
 /**--------------------------------- */
 function submitExerciseForm(){
 
   let videos = [];
-  let allowComments;
-  if ( $( '.allowComments' ).prop( "checked" ) ) {
-    allowComments = true;
-    $('.comment-section').removeAttr('hidden');
-    $('.comment-section').show();
-  } else {
-    allowComments = false;
-  }
-     
+
   $('.added-videos .col-4').each(function(){
     videos.push(jsonforVideo(this));
   });
 
+  // let allowComments;
+
+  // if ( $( '.allowComments' ).prop( "checked" ) ) {
+  //   allowComments = true;
+  //   $('.comment-section').removeAttr('hidden');
+  //   $('.comment-section').show();
+  // } else {
+  //   allowComments = false;
+  // }
+   
   let exerciseId = $('.exercise-id').val() || undefined;
 
   let data = {
@@ -50,15 +38,11 @@ function submitExerciseForm(){
     title: $('.exercise-title').val(),
     description: CKEDITOR.instances['body'].getData(), 
     status: $('.status > option:selected').text(),
-    allowComments: allowComments,
+    // allowComments: allowComments,
     videos: JSON.stringify(videos)
   };
 
-  // console.log(data);
-
   let formMessages = $('#form-messages');
-  // console.log('This is the request data'+ data);
-
   let authToken = '';
 
   if(window.localStorage){
@@ -75,25 +59,13 @@ function submitExerciseForm(){
       Authorization: `Bearer ${authToken}`
     }
   }).then(function(response) {
-    console.log('post exercises'+response);
-    
+    console.log('post exercises' + response);
     // Make sure that the formMessages div has the 'success' class.
     $(formMessages).removeClass('error');
     $(formMessages).addClass('success');
-
-    // Clear the form.
-    // $('.exercise-title').val('');
-    // $('.exercise-id').val('');
-    // $('.exercise-description').val('');
-    // $('.added-videos').html('');
-    // $('.allow-comments').val('');
-    // CKEDITOR.replace( 'body' );
     clearExerciseForm();
     hideExerciseForm();
-   
     addExerciseToLocalArrays(response, exerciseId);
-    console.log(exercises);
-
     // Comment add the new exercise to my exercises array as well
     // showLastExercisesPage(); 
       return showMyExercisesPage();
@@ -111,6 +83,14 @@ function submitExerciseForm(){
     }
   });
 };
+
+function videosOnExerciseForm(){
+ 
+};
+
+function exerciseDataForForm(){
+ 
+}
 
 function addExerciseToLocalArrays(exercise, exerciseId){
   // Create Exercise Array
@@ -141,7 +121,7 @@ function addExerciseToLocalArrays(exercise, exerciseId){
     myExercises.push(exercise);
   }
 
-}
+};
 
 function showLastExercisesPage(){
    
@@ -150,7 +130,7 @@ function showLastExercisesPage(){
 /**--------------------------------------------------- */
 /*    Show All and Show My Exercise Pages
 /**---------------------------------------------------- */
-function showExercisesPage(){
+function showAllExercisesPage(){
   showExercisesPage(exercises, '/exercises');
 };
 
@@ -162,7 +142,7 @@ function showExercisesPage(exercises, url){
   let timeSince = Date.now() - (exercises.lastModified || 0);
   lastExercisePage = url;
   let doUI = function(){
-    console.log('On view click',exercises)
+    console.log('showExercisesPage: ',exercises)
     $('.user-exercise-page').removeAttr('hidden');
     $('.user-exercise-page').show();
     renderAllExercisesPage(exercises, url);
@@ -214,7 +194,7 @@ function getExerciseIndexFromClick(e){
   const target = $(e.currentTarget).closest('.exercise').closest('.col-4');
   
   let index = target.index();
-
+  console.log('Index' + index);
   return index;
 };
 
@@ -246,10 +226,10 @@ function populateFormWExerciseData(exercise) {
   }
 };
 
-// function sendExerciseData(){
-//   console.log(exercises);
-//   return exercises;
-// };
+// // function sendExerciseData(){
+// //   console.log(exercises);
+// //   return exercises;
+// // };
 
 function getAllExercises(exercises, url){
   let authToken = '';
@@ -272,7 +252,7 @@ function getAllExercises(exercises, url){
      console.log('.')
      _exercises.forEach((_exercise) => {
         exercises.push(_exercise);
-        console.log('==',exercises);
+        // console.log('==',exercises);
      });
     //  window.localStorage.setItem('exercises', JSON.stringify(exercises))
      exercises.lastModified = Date.now();
@@ -281,11 +261,21 @@ function getAllExercises(exercises, url){
 
 };
 
+/**--------------------------------------- */
+/*     Delete Exercises & Videos
+/**--------------------------------------- */
+
 function deleteExercise(){
+  let authToken = '';
+
+  if(window.localStorage){
+    authToken = window.localStorage.getItem('authToken');
+  }
+
   $.ajax({
     type: 'DELETE',
     url: `http://localhost:8080/api/exercises/${exercise_id}`,
-  }).then( (exercise) => {
+  }).then(() => {
     // code here
   });
 };
@@ -297,5 +287,5 @@ function clearExerciseForm(){
   $('.added-videos').html('');
   $('.allow-comments').val('');
   CKEDITOR.instances['body'].setData('');
-  // CKEDITOR.replace( 'body' );
 }
+

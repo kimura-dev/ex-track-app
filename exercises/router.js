@@ -43,7 +43,7 @@ router.get('/:id', (req, res) => {
     _id: req.params.id
   })
   .populate('user')
-  .populate('comments.user')
+  // .populate('comments.user')
   .then(exercise => {
    res.status(200).json(exercise);
   }).catch(err => {
@@ -85,13 +85,13 @@ router.get('/:id', (req, res) => {
 
 // Process Add Exercises
 router.post('/', jwtAuth, (req, res) => {
-  let allowComments;
+  // let allowComments;
 
-  if(req.body.allowComments){
-    allowComments = true;
-  } else {
-    allowComments = false;
-  }
+  // if(req.body.allowComments){
+  //   allowComments = true;
+  // } else {
+  //   allowComments = false;
+  // }
   
   if(req.body.videos.length > 0){
     videos = req.body.videos;
@@ -108,7 +108,7 @@ router.post('/', jwtAuth, (req, res) => {
       truncate(req.body.description,150)
     ),
     status: req.body.status,
-    allowComments: allowComments,
+    // allowComments: allowComments,
     user: req.user.id, 
     videos: JSON.parse(videos)
   }
@@ -172,28 +172,28 @@ router.delete('/:id', jwtAuth,  (req, res) => {
 });
 
 // Add Comment
-router.post('exercises/comment/:id', localAuth, (req, res) => {
-  Exercise.findOne({
-    _id: req.params.id
-  })
-  .then(exercise => {
-    const newComment = {
-      body: req.body.commentBody,
-      user: req.user.id
-    }.catch(err => {
-      console.log(err);
-      res.status(404).json({message:'Not found'});
-    });
+// router.post('exercises/comment/:id', localAuth, (req, res) => {
+//   Exercise.findOne({
+//     _id: req.params.id
+//   })
+//   .then(exercise => {
+//     const newComment = {
+//       body: req.body.commentBody,
+//       user: req.user.id
+//     }.catch(err => {
+//       console.log(err);
+//       res.status(404).json({message:'Not found'});
+//     });
 
-    // Add to comments array
-    exercise.comments.unshift(newComment);
+//     // Add to comments array
+//     exercise.comments.unshift(newComment);
 
-    exercise.save()
-      .then(exercise => {
-        res.redirect(`/exercises/show/${exercise.id}`);
-      });
-  });
-});
+//     exercise.save()
+//       .then(exercise => {
+//         res.redirect(`/exercises/show/${exercise.id}`);
+//       });
+//   });
+// });
 
 // Add Rating
 // router.post('exercises/rating/:id', (req, res) => {

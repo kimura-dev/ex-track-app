@@ -79,6 +79,10 @@ legend {
   color: #000;
 }
 
+.hydrated {
+  margin-right: 10px;
+}
+
 /* Add an active class to highlight the current page */
 .active {
   background-color: rgb(238, 122, 13);

@@ -31,24 +31,24 @@ const ExerciseSchema = new Schema({
   //   },
   //   value: Number
   // }],
-  allowComments: {
-    type: Boolean,
-    default:true
-  },
-  comments: [{
-    body: {
-      type: String,
-      // required: true
-    },
-    date:{
-      type: Date,
-      default: Date.now
-    },
-    user:{
-      type: Schema.Types.ObjectId,
-      ref:'User'
-    }
-  }],
+  // allowComments: {
+  //   type: Boolean,
+  //   default:true
+  // },
+  // comments: [{
+  //   body: {
+  //     type: String,
+  //     // required: true
+  //   },
+  //   date:{
+  //     type: Date,
+  //     default: Date.now
+  //   },
+  //   user:{
+  //     type: Schema.Types.ObjectId,
+  //     ref:'User'
+  //   }
+  // }],
   user:{
     type: Schema.Types.ObjectId,
     ref:'User'

@@ -1,5 +1,16 @@
 "use strict";
 
+/**-------------------------------- */
+/*     Hide & Show Functions
+/**--------------------------------- */
+function showExerciseForm(){
+  $('.exercise-form').show();
+};
+
+function hideExerciseForm(){
+  $('.exercise-form').hide();
+};
+
 
 
 function hideAllExercisesPage(){
@@ -107,7 +118,7 @@ $(function onPageReady(){
   // if(window.localStorage){
   //   authToken = window.localStorage.getItem('authToken');
   //   loggingIn();
-  // }
+  // } 
 
   // CK Editor
   CKEDITOR.replace('body',{
@@ -134,7 +145,7 @@ $(function onPageReady(){
   });
 
   $('.all-exercises-btn').click(function(){
-     return showExercisesPage();
+     return showAllExercisesPage();
   });
 
   $('.nav-exercise-page').click(function(){
@@ -233,12 +244,15 @@ $(function onPageReady(){
   })
 
   // Delete Videos Click 
-  $('.added-videos').on('click','.deleteVideo',function(e){
-    deleteVideo(e);
+  $('.added-videos').on('click','.deleteVideo', function(){
+    console.log(currentExerciseIndex);
+    console.log(exercises);
+
+    deleteVideoFromExercise(exercises[currentExerciseIndex]);
   });
 
   // Delete Exercise
-  $('.delete-exercise-btn').click(deleteExercise);
+  // $('.delete-exercise-btn').click(deleteExercise);
   
   $('.returnToProfileBtn').click(function(){
     addSelectedVideosToForm();
@@ -251,10 +265,12 @@ $(function onPageReady(){
     hideFormMessage();
     showAddExerciseBtn();
     currentExerciseIndex = getExerciseIndexFromClick(e);
-    // checkIfExercisePopulated();
     populateFormWExerciseData(exercises[currentExerciseIndex]);
     renderVideosOnExercisesForm(exercises[currentExerciseIndex]);
   });
+
+
+    // checkIfExercisePopulated();
 
   // function checkIfExercisePopulated(){
   //   if(!window.localStorage.getItem('exercises')){

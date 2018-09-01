@@ -186,6 +186,20 @@ function videoControls(isAdded){
   
 };
 
+  function deleteVideoFromExercise(exercise){
+  let authToken = '';
+
+  if(window.localStorage){
+    authToken = window.localStorage.getItem('authToken');
+  }
+  $.ajax({
+    type: 'DELETE',
+    url: `http://localhost:8080/api/exercises/${exercise_id}/videos/${video_id}`,
+  }).then(() => {
+    console.log('Deleted Video from exercise')
+  });
+};
+
 
 
 /**------------------------------- */
