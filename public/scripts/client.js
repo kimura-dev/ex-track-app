@@ -220,10 +220,11 @@ $(function onPageReady(){
 
   // Nav Bar Icon Click Events
   $('.nav-signup').click(function(){
-    showSignupForm();
-    hideIntroPage();
-    hideLogInBtn();
-    hideExercisesPage();
+    showScreen('signupForm');
+    // showSignupForm();
+    // hideIntroPage();
+    // hideLogInBtn();
+    // hideExercisesPage();
   });
 
   $('.all-exercises-btn').click(function(){
