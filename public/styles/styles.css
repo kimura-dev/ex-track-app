@@ -4,6 +4,9 @@
   box-sizing: border-box;
 }
 
+/* Orange rgb(238, 122, 13) */
+/* Blue rgb(42, 59, 212); */
+
 body {
   color: rgb(255, 255, 255);
   font-family: 'Raleway', sans-serif;
@@ -54,9 +57,13 @@ legend {
 /*-------------------------------*/
 /*   Fixed Top Nav
 /*-------------------------------*/
+
+/* Orange rgb(238, 122, 13) */
+/* Blue rgb(42, 59, 212); */
+
 /* Add a black background color to the top navigation */
 .topnav {
-  background-color: rgb(17, 69, 243);
+  background-color: rgb(42, 59, 212);
   overflow: hidden;
 }
 
@@ -64,19 +71,21 @@ legend {
 .topnav a {
   float: left;
   display: block;
-  color: #f2f2f2;
+  color: #E5E5E5;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
   text-transform: uppercase;
+  font-weight: 700;
+  text-shadow: 2px 2px #000;
   font-size: 17px;
 }
 
 /* Change the color of links on hover */
 .topnav a:hover,
 .topnav a:focus {
-  background-color: rgb(238, 122, 13);    
-  color: #000;
+  background-color: rgb(238, 122, 13);   
+  color: #E5E5E5;
 }
 
 .hydrated {
@@ -93,6 +102,31 @@ legend {
 .topnav .icon {
   display: none;
 }
+
+/* .flexbox {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  overflow: hidden;
+  background-color: #ccc;
+}
+
+.flexbox .col {
+  flex: 1;
+}
+
+.flexbox .col:nth-child(1) {
+  background: #ccc;
+  order: 1;
+}
+.flexbox .col:nth-child(2) {
+  background: #eee;
+  order: 0;
+}
+.flexbox .col:nth-child(3) {
+  background: #eee;
+  order: 2;
+} */
 
 /*-----------------------------------*/
 /*   Error or Succes Form Messages 
@@ -119,12 +153,24 @@ legend {
   margin-bottom: 20px;
 }
 /*-------------------------------*/
+/*      Animations
+/*-------------------------------*/
+/* #js-wp-1 {
+  opacity: 0;
+}
+
+#js-wp-1.animated {
+  opacity: 1;
+} */
+
+
+/*-------------------------------*/
 /*   Intro Content
 /*-------------------------------*/
 .intro-title {
   margin-top: 125px;
   margin-bottom: 40px;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.4em;
   text-shadow:2px 2px rgb(71, 93, 218);
   color: rgb(238, 122, 13);  
   font-weight: 700;
@@ -151,7 +197,10 @@ legend {
   padding: 20px;
   font-size: 22px;
   font-size: 18px;
+  width: 15%;
   text-transform: uppercase;
+  letter-spacing: 0.25em;
+  font-weight: 600;
   cursor: pointer;
 }
 

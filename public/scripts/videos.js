@@ -125,6 +125,8 @@ function jsonforVideo(videoElement){
 /**---------------------------- */
 
 function selectVideoResult(e) {
+  let videosArray = [];
+
   let button = $( this );
   let videoResult = button.closest('.video-result');
   videoResult.addClass('selected');
@@ -150,6 +152,18 @@ function addSelectedVideosToForm(){
 /**---------------------------- */
 /*    HTML For Videos 
 /**---------------------------- */
+
+// function htmlForVideo(video){
+//   return `<div class="col-4">
+//               <h3 class="video-title">${video.title}</h3>
+//               <img  class="thumbnail" src="${video.url}" videoID="${video.videoID}">
+//               <p class="url"><a href="https://www.youtube.com/watch?v=${video.videoID}" target="_blank"> ${video.videoID}</a></p>
+//               <div class="video-controls">
+//             ${videoControls(true)}
+
+//               </div>
+//             </div>`
+// }
 
 function htmlForVideo(video){
   return `<div class="col-4">
@@ -192,6 +206,7 @@ function videoControls(isAdded){
   if(window.localStorage){
     authToken = window.localStorage.getItem('authToken');
   }
+
   $.ajax({
     type: 'DELETE',
     url: `http://localhost:8080/api/exercises/${exercise_id}/videos/${video_id}`,

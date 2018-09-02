@@ -60,6 +60,15 @@ function showAddExerciseBtn(){
 function hideAddExerciseBtn(){
   $('.add-exercise-btn').hide();
 }
+
+/**-------------------------------- */
+/*  Hide & Show Nav Items
+/**--------------------------------- */
+function hideLoginItems(){
+  $('.nav-login').hide();
+  $('.nav-signup').hide();
+}
+
 /**-------------------------------- */
 /*  Hide & Show Log In Btn
 /**--------------------------------- */
@@ -119,6 +128,10 @@ $(function onPageReady(){
   //   authToken = window.localStorage.getItem('authToken');
   //   loggingIn();
   // } 
+
+  // $('#js-wp-1').waypoint(function(direction){
+  //   $('#jw-wp-1').addClass('animated fadeIn');
+  // });
 
   // CK Editor
   CKEDITOR.replace('body',{
@@ -229,6 +242,7 @@ $(function onPageReady(){
 
   // Log In Click Event
   $('.logIn').click(function(){
+    hideLoginItems();
     loggingIn();
   })
 
