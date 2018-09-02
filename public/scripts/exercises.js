@@ -1,14 +1,12 @@
 "use strict";
 
-let videosSelected = [];
 let video = [];
-let exercises = []; 
-let myExercises = [];
 let exerciseId = '';
 const REFRESH_PERIOD = 1000 * 60; // 60,000 milliseconds
 let lastExercisePage = '';
 let currentExerciseIndex = -1;
 const API_URL = 'http://localhost:8080/api';
+
 
 /**-------------------------------- */
 /* Exercise Form Submit 
@@ -221,7 +219,7 @@ function populateFormWExerciseData(exercise) {
     $('.exercise-id').val(exercise._id || '') ;
     $('.exercise-title').val(exercise.title || '') ;
     $('.exercise-description').val(exercise.description || '');
-    hideAllExercisesPage();
+    hideExercisesPage();
     showExerciseForm();
   }
 };
@@ -288,4 +286,3 @@ function clearExerciseForm(){
   $('.allow-comments').val('');
   CKEDITOR.instances['body'].setData('');
 }
-
