@@ -1,6 +1,81 @@
 "use strict";
 
 /**-------------------------------- */
+/*     Global App State
+/**--------------------------------- */
+let exercises = []; // todo:  refactor so it is defined inside APP 
+let myExercises = []; // todo: replace all references to exercises and myExercises with APP.exercises.all and APP.exercises.all
+
+// Make general APP structure
+const APP = {
+  exercises: {},            // exercises.my, exercises.all, etc...
+  currentScreen: 'intro',   // name of screen in APP.screens' keys
+  screens: {},              // screens are UI components and also track state
+  authToken: '',
+  user: undefined
+}
+
+// Make specific exercise arrays
+APP.exercises.all = exercises;
+APP.exercises.my = myExercises;
+
+// Helper functions for data access into global app object
+
+// gets the current screen object from APP.screens
+function currentScreen(){
+  if( APP.currentScreen 
+    && APP.screens 
+    && APP.currentScreen in APP.screens
+  ){
+    return APP.screens[APP.currentScreen];
+  }
+  return undefined;
+}
+
+function showScreen(screenName){
+  if( screenName && screenName in APP.screens ){
+    APP.currentScreen = screenName;
+        
+    Object.keys(APP.screens).forEach(screen => {
+      const thisScreen = APP.screens[screen];
+      if( thisScreen !== currentScreen() ){
+        if( typeof thisScreen.hide === 'function' ){
+          thisScreen.hide();
+        }
+      }
+    });
+    // only calls .show() if the screen exists
+    redrawCurrentScreen();
+  }  
+}
+
+function redrawCurrentScreen(){
+  const screen = currentScreen();
+  if( screen ) screen.show();
+  else {
+    if( APP.screens.intro ){
+      APP.screens.intro.show();
+    } else {
+      console.log("No intro page to show.")
+    }
+  }
+}
+
+// Example: show current page title
+// console.log( currentScreen().title )
+
+function currentExercise(){
+  if( !exercises || !exercises.length || currentExerciseIndex < 0 ){
+    return undefined;
+  }
+  return exercises[currentExerciseIndex];
+}
+
+// Example: showAllExercises if on exercises page, showMy.. if on my page, etc.
+// currentScreen().render();
+
+
+/**-------------------------------- */
 /*     Hide & Show Functions
 /**--------------------------------- */
 function showExerciseForm(){
@@ -13,16 +88,10 @@ function hideExerciseForm(){
 
 
 
-function hideAllExercisesPage(){
+function hideExercisesPage(){
   $('.user-exercise-page').attr('hidden');
   $('.user-exercise-page').hide();
 };
-
-function hideExercisePage(){
-  $('.user-exercise-page').attr('hidden');
-  $('.user-exercise-page').hide();
-
-}
 
 function showIntroPage(){
   $('.introduction-page').show();
@@ -154,15 +223,17 @@ $(function onPageReady(){
     showSignupForm();
     hideIntroPage();
     hideLogInBtn();
-    hideAllExercisesPage();
+    hideExercisesPage();
   });
 
   $('.all-exercises-btn').click(function(){
-     return showAllExercisesPage();
+    showScreen('allExercises');
+    //  return showAllExercisesPage();
   });
 
   $('.nav-exercise-page').click(function(){
-    showMyExercisesPage();
+    showScreen('myExercises');
+    // showMyExercisesPage();
   });
 
   $('.nav-login').click(function(){
@@ -183,7 +254,7 @@ $(function onPageReady(){
 
   $('.add-exercise-btn').click(function(){
     hideIntroPage();
-    hideAllExercisesPage();
+    hideExercisesPage();
     hideAddExerciseBtn();
     showExerciseForm();
     // clearExerciseForm();
