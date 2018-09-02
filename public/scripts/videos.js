@@ -1,6 +1,5 @@
 "use strict";
 
-let pageToken = {};
 
 /**----------------------------- */
 /*    Movie Picker Controls
@@ -124,10 +123,30 @@ function jsonforVideo(videoElement){
 /*     Add Videos to Profile
 /**---------------------------- */
 
+function getVideoDataFromResultElement(videoResultElement){
+  const videoJSON = jsonforVideo(videoResultElement);
+  const videos = APP.screens.videoPicker.videos.results;
+  return videos.find(result => result.video_id === videoJSON.video_id)
+}
+
 function selectVideoResult(e) {
   let button = $( this );
   let videoResult = button.closest('.video-result');
+  
+  // old DOM-centric implementation
   videoResult.addClass('selected');
+
+  // new APP state-centric implementation
+  
+  //1. find actual video object based on videoResult element
+  let videoData = getVideoDataFromResultElement(videoResult);
+  
+  //2. add videoData to our APP state
+  APP.screens.videoPicker.videos.selected.push(videoData);
+
+  //3. redraw our UI based on the changed APP state
+  redrawCurrentScreen();
+  
 }
 
 function unselectVideoResult(e) {
@@ -164,7 +183,10 @@ function htmlForVideo(video){
 }
 
 function htmlForVideoResult(value){
-  return  `<div class="col-4 video-result">
+  const videos = APP.screens.videoPicker.videos.selected;
+  let selecteMatch = videos.find(video => video.videoID === value.id.videoId);
+  let selectedAttribute = selectedMatch ? ' selected' : '';
+  return  `<div class="col-4 video-result${selectedAttribute}">
             <h3 class="video-title">${value.snippet.title}</h3>
             <img  class="thumbnail" src="${value.snippet.thumbnails.medium.url}" videoID="${value.id.videoId}">
             <p class="url"><a href="https://www.youtube.com/watch?v=${value.id.videoId}" target="_blank"> ${value.id.videoId}</a></p>  
