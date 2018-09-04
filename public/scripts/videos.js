@@ -34,7 +34,7 @@ function youtubeOutput(data) {
     html += htmlForVideoResult(value);     
   });
   $('.video-results > .row').html(html);
-  showPrevNextBtn();
+  // showPrevNextBtn();
 };
 
 function searchYoutube() {

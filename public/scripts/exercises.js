@@ -86,7 +86,6 @@ function addExerciseToLocalArrays(exercise, exerciseId){
   // Create Exercise Array
   if(exerciseId){
     $('#form-messages').text(`${exercise.title} was edited successfully!`);
-    showDeleteExerciseBtn();
     const index = exercises.findIndex((exercise) => {
       return exercise._id === exerciseId;
     });
@@ -117,10 +116,12 @@ function addExerciseToLocalArrays(exercise, exerciseId){
 /*    Show All and Show My Exercise Pages
 /**---------------------------------------------------- */
 function showAllExercisesPage(){
+  console.log('ShowAllExercisesPage', exercises);
   showExercisesPage(exercises, '/exercises');
 };
 
 function showMyExercisesPage(){
+  console.log('ShowMyExercisesPage', exercises);
   showExercisesPage(myExercises, '/exercises/my');
 };
 
@@ -128,7 +129,7 @@ function showExercisesPage(exercises, url){
   let timeSince = Date.now() - (exercises.lastModified || 0);
   lastExercisePage = url;
   let doUI = function(){
-    console.log('showExercisesPage: ',exercises)
+    // console.log('showExercisesPage: ',exercises)
     $('.user-exercise-page').removeAttr('hidden');
     $('.user-exercise-page').show();
     renderAllExercisesPage(exercises, url);
@@ -178,9 +179,7 @@ function htmlForAllExercisesPage(exercise){
 
 function getExerciseIndexFromClick(e){
   const target = $(e.currentTarget).closest('.exercise').closest('.col-4');
-  
   let index = target.index();
-  console.log('Index' + index);
   return index;
 };
 
@@ -232,11 +231,11 @@ function getAllExercises(exercises, url){
     }
   }).then(function(_exercises){
      exercises.length = 0;
-     console.log('.')
      _exercises.forEach((_exercise) => {
         exercises.push(_exercise);
      });
      exercises.lastModified = Date.now();
+     console.log('getAllExercises',exercises);
      return exercises;
   });
 

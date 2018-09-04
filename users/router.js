@@ -97,7 +97,7 @@ router.post('/', jsonParser, (req, res) => {
   firstName = firstName.trim();
   lastName = lastName.trim();
 
-  return User.find({username})
+  return User.find({'username': username, 'email': email})
     .count()
     .then(count => {
       if (count > 0) {
@@ -108,11 +108,13 @@ router.post('/', jsonParser, (req, res) => {
           message: 'Username already taken',
           location: 'username'
         });
+        
       }
       // If there is no existing user, hash the password
       return User.hashPassword(password);
     })
     .then(hash => {
+
       return User.create({
         username,
         password: hash,

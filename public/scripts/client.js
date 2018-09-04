@@ -35,7 +35,7 @@ function currentScreen(){
 function showScreen(screenName){
   if( screenName && screenName in APP.screens ){
     APP.currentScreen = screenName;
-    console.log('screenName ' + screenName);
+    // console.log('screenName ' + screenName);
     Object.keys(APP.screens).forEach(screen => {
       const thisScreen = APP.screens[screen];
       if( thisScreen !== currentScreen() ){
@@ -64,11 +64,11 @@ function redrawCurrentScreen(){
 // Example: show current page title
 // console.log( currentScreen().title )
 
-function currentExercise(){
-  if( !exercises || !exercises.length || currentExerciseIndex < 0 ){
+function getCurrentExercise(currentExerciseIndex){
+  if( !myExercises || !myExercises.length || currentExerciseIndex < 0 ){
     return undefined;
   }
-  return exercises[currentExerciseIndex];
+  return myExercises[currentExerciseIndex];
 }
 
 // Example: showAllExercises if on exercises page, showMy.. if on my page, etc.
@@ -84,6 +84,7 @@ function showExerciseForm(){
 };
 
 function hideExerciseForm(){
+  // console.log( $('.exercise-form'));
   $('.exercise-form').attr('hidden');
   $('.exercise-form').hide();
 };
@@ -308,18 +309,6 @@ $(function onPageReady(){
     loggingIn();
   })
 
-  // A href Log In
-  // $(".a-login").click(function(){
-  //   showScreen('login')
-  //   showLoginForm();
-  // });
-
-  // Submit Sign Up Form
-  // $('.signup-btn').click(function(e){
-  //   // submitSignupForm();
-  //   hideExerciseForm();
-  // })
-
   // Delete Videos Click 
   $('.added-videos').on('click','.deleteVideo', function(){
     deleteVideoFromExercise(currentExercise);
@@ -336,26 +325,16 @@ $(function onPageReady(){
 
   //Edit Exercise Form Page 
   $('.user-exercise-page').on('click','.exercise-show', function(e){
+    console.log('Click on exercise ',exercises);
     hideFormMessage();
     showAddExerciseBtn();
     currentExerciseIndex = getExerciseIndexFromClick(e);
+    // console.log(currentExerciseIndex);
+    const currentExercise = getCurrentExercise(currentExerciseIndex);
+    // console.log(currentExercise);
     populateFormWExerciseData(currentExercise);
     renderVideosOnExercisesForm(currentExercise);
   });
-
-
-    // checkIfExercisePopulated();
-
-  // function checkIfExercisePopulated(){
-  //   if(!window.localStorage.getItem('exercises')){
-  //     setTimeout(checkIfExercisePopulated, 300);
-  //     return false;
-  //   }
-
-  //   const exercises = window.localStorage.getItem('exercises');
-  //   populateFormWExerciseData(exercises[currentExerciseIndex]);
-  //   renderVideosOnExercisesForm(exercises[currentExerciseIndex]);
-  // }
 
   // Delete Exercise Click
   $('.delete-exercise-btn').click(function(){

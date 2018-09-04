@@ -36,8 +36,7 @@ function submitSignupForm(){
     // affiliates: $('.affiliates').val(),
     password: password
   };
- 
-  
+
   // Submit the form using AJAX.
   $.ajax({
     type: 'POST',
@@ -52,6 +51,7 @@ function submitSignupForm(){
     // Set the message text.
     $(formMessages).text(response);
 
+    showAddExerciseBtn();
     // Clear the form.
     $('.first').val('');
     $('.last').val('');
