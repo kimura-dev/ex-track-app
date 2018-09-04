@@ -6,7 +6,7 @@
 /**------------------------------ */
 
 function showMoviePicker(){
-  hideExerciseForm();
+  // hideExerciseForm();
   $('.video-picker').show();
   searchVideoForExerciseTitle();
 };
@@ -34,7 +34,7 @@ function youtubeOutput(data) {
     html += htmlForVideoResult(value);     
   });
   $('.video-results > .row').html(html);
-  showButtonOptions();
+  showPrevNextBtn();
 };
 
 function searchYoutube() {
@@ -47,7 +47,7 @@ function searchYoutube() {
           key: 'AIzaSyA9YIeJMUAUAO5QaCo0wzfbdGlLIbjo1D4'
           , q: query
           , part: 'snippet'
-          , maxResults: 6
+          , maxResults: 4
           , pageToken: pageToken.current
           // , pageToken: 'CAYQAA'
       }
@@ -130,6 +130,7 @@ function getVideoDataFromResultElement(videoResultElement){
 }
 
 function selectVideoResult(e) {
+
   let videosArray = [];
 
   let button = $( this );
@@ -160,9 +161,30 @@ function unselectVideoResult(e) {
 function addSelectedVideosToForm(){
   $('.video-result.selected').each(function(index, videoResult){
     let video = jsonforVideo($(videoResult));
-    $('.added-videos').append(htmlForVideo(video));
+    if( !isVideoAddedToForm(video.videoID) ){
+      $('.added-videos > .row').append(htmlForVideo(video));
+    }
   });
 };
+
+function isVideoAddedToForm(videoID){
+  return $(`.added-videos *[videoID="${videoID}"]`).length > 0;
+}
+
+function markSelectedVideos(){
+  $('.added-videos > .row > .col-4').each(function(index, selectedVideo){
+    selectedVideo = jsonforVideo($(selectedVideo));
+    let videoResult =isVideoInResults(selectedVideo.videoID);
+    if( videoResult ){
+      $(videoResult).addClass('selected');
+    }
+  });
+};
+
+function isVideoInResults(videoID){
+  let videoResult = $(`.video-result *[videoID="${videoID}"]`);
+  return videoResult.length ? videoResult : false;
+}
 
 // function (e){
 //   let button = $(this);
@@ -171,18 +193,6 @@ function addSelectedVideosToForm(){
 /**---------------------------- */
 /*    HTML For Videos 
 /**---------------------------- */
-
-// function htmlForVideo(video){
-//   return `<div class="col-4">
-//               <h3 class="video-title">${video.title}</h3>
-//               <img  class="thumbnail" src="${video.url}" videoID="${video.videoID}">
-//               <p class="url"><a href="https://www.youtube.com/watch?v=${video.videoID}" target="_blank"> ${video.videoID}</a></p>
-//               <div class="video-controls">
-//             ${videoControls(true)}
-
-//               </div>
-//             </div>`
-// }
 
 function htmlForVideo(video){
   return `<div class="col-4">
@@ -198,9 +208,12 @@ function htmlForVideo(video){
 
 function htmlForVideoResult(value){
   const videos = APP.screens.videoPicker.videos.selected;
-  let selecteMatch = videos.find(video => video.videoID === value.id.videoId);
-  let selectedAttribute = selectedMatch ? ' selected' : '';
-  return  `<div class="col-4 video-result${selectedAttribute}">
+  // let selectedMatch = videos.find(video => video.videoID === value.id.videoId);
+
+  // let selectedAttribute = selectedMatch ? ' selected' : '';
+  
+  
+    return  `<div class="col-4 video-result${ /*selectedAttribute*/ '' }">
             <h3 class="video-title">${value.snippet.title}</h3>
             <img  class="thumbnail" src="${value.snippet.thumbnails.medium.url}" videoID="${value.id.videoId}">
             <p class="url"><a href="https://www.youtube.com/watch?v=${value.id.videoId}" target="_blank"> ${value.id.videoId}</a></p>  
@@ -208,7 +221,22 @@ function htmlForVideoResult(value){
             ${videoControls(false)}
             </div>
           </div>`
+  
 };
+
+    // return `<div class="col-4 video-result${ /*selectedAttribute*/ '' }">
+    //   <div class="video">
+    //     <img class="video-image" src="${value.snippet.thumbnails.medium.url}" videoID="${value.id.videoId}" />
+    //     <div class="video-content">
+    //       <h3 class="video-title">${value.snippet.title}</h3>
+    //       <p class="url"><a href="https://www.youtube.com/watch?v=${value.id.videoId}" target="_blank">${value.id.videoId}</a></p>
+    //     </div>
+    //     <div class="video-controls">
+    //       ${videoControls(false)}
+    //     </div>
+    //   </div>
+    // </div>`;
+
 
 function videoControls(isAdded){
   if(isAdded){

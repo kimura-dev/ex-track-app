@@ -214,8 +214,9 @@ legend {
 /*-------------------------------*/
 .sign-up-fieldset {
   margin: auto;
+  margin-top: 5em;
   width: 40%;
-  height: 500px;
+  /* height: 500px; */
 }
 
 
@@ -224,6 +225,7 @@ legend {
   color: #E5E5E5;
   padding: 10px;
   font-size: 16px;
+  margin: 3em 0;
 }
 
 .signup-btn:hover,
@@ -308,6 +310,10 @@ input[type='checkbox'] {
 input[type='checkbox']:hover,
 input[type='checkbox']:focus {
   cursor: pointer;
+}
+
+.exerciseOnForm {
+  background-color: rgb(238, 134, 183);
 }
 
 .watchVideo,
@@ -510,6 +516,7 @@ p {
 
 .video-result {
   margin: 2px;
+  background-color: rgb(13, 167, 238)
 }
 
 .video-result .select-video-btn {

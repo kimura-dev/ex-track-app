@@ -5,6 +5,7 @@ let exerciseId = '';
 const REFRESH_PERIOD = 1000 * 60; // 60,000 milliseconds
 let lastExercisePage = '';
 let currentExerciseIndex = -1;
+let pageToken = {};
 const API_URL = 'http://localhost:8080/api';
 
 
@@ -64,9 +65,7 @@ function submitExerciseForm(){
     clearExerciseForm();
     hideExerciseForm();
     addExerciseToLocalArrays(response, exerciseId);
-    // Comment add the new exercise to my exercises array as well
-    // showLastExercisesPage(); 
-      return showMyExercisesPage();
+    return showMyExercisesPage();
 
   }).fail(function(data) {
     // Make sure that the formMessages div has the 'error' class.
@@ -82,13 +81,6 @@ function submitExerciseForm(){
   });
 };
 
-function videosOnExerciseForm(){
- 
-};
-
-function exerciseDataForForm(){
- 
-}
 
 function addExerciseToLocalArrays(exercise, exerciseId){
   // Create Exercise Array
@@ -120,10 +112,6 @@ function addExerciseToLocalArrays(exercise, exerciseId){
   }
 
 };
-
-function showLastExercisesPage(){
-   
-}
 
 /**--------------------------------------------------- */
 /*    Show All and Show My Exercise Pages
@@ -204,12 +192,14 @@ function renderVideosOnExercisesForm(exercise){
 function htmlForVideoOnExerciseForm(video){
 
   return `<div class="col-4">
-            <h3 class="video-title" objectID="${video._id}">${video.title}</h3>
-            <img  class="thumbnail" src="${video.url}" videoID="${video.videoID}">
-            <p class="url"><a href="https://www.youtube.com/watch?v=${video.videoID}" target="_blank"> ${video.videoID}</a></p>
-            <div class="video-controls">
-              ${videoControls(true)}
-            </div>
+           <div class="exerciseOnForm">
+              <h3 class="video-title" objectID="${video._id}">${video.title}</h3>
+              <img  class="thumbnail" src="${video.url}" videoID="${video.videoID}">
+              <p class="url"><a href="https://www.youtube.com/watch?v=${video.videoID}" target="_blank"> ${video.videoID}</a></p>
+              <div class="video-controls">
+                ${videoControls(true)}
+              </div>
+           </div>
           </div>`;
 };
 
@@ -219,15 +209,11 @@ function populateFormWExerciseData(exercise) {
     $('.exercise-id').val(exercise._id || '') ;
     $('.exercise-title').val(exercise.title || '') ;
     $('.exercise-description').val(exercise.description || '');
-    hideExercisesPage();
+    hideUserExercisePage();
+    // hideScreen('exerciseForm')
     showExerciseForm();
   }
 };
-
-// // function sendExerciseData(){
-// //   console.log(exercises);
-// //   return exercises;
-// // };
 
 function getAllExercises(exercises, url){
   let authToken = '';
@@ -235,8 +221,7 @@ function getAllExercises(exercises, url){
   if(window.localStorage){
     authToken = window.localStorage.getItem('authToken');
   }
-  // getAuthToken();
-
+  
   // AJAX To Exercises
   return $.ajax({
     type: 'GET',
@@ -250,9 +235,7 @@ function getAllExercises(exercises, url){
      console.log('.')
      _exercises.forEach((_exercise) => {
         exercises.push(_exercise);
-        // console.log('==',exercises);
      });
-    //  window.localStorage.setItem('exercises', JSON.stringify(exercises))
      exercises.lastModified = Date.now();
      return exercises;
   });

@@ -13,28 +13,30 @@ function hideSignupForm(){
   $('#sign-up-form').hide();
 }
 
+
+
 /**----------------------------- */
 /*   AJAX Submit Signup Form
 /**----------------------------- */  
 function submitSignupForm(){
-  // let password = '';
-  // if(password === password2){
-  //   password = password;
-  // } else {
-  //   return `<div>Your passwords dont match!</div>`
-  // }
+  let password = '';
+  let formMessages = $('#form-messages');
+  if($('.password').val() === $('.password2').val()){
+    password = $('.password').val();
+  } else {
+    showScreen('signup');
+    $(formMessages).text('Please make sure passwords match'); 
+  }
   let data = {
     firstName:$('.first').val(),
     lastName: $('.last').val(),
     username: $('.username').val(),
     email: $('.email').val(),
-    rank: $('.rank > option:selected').val(),
-    affiliates: $('.affiliates').val(),
-    // password: password,
-    password: $('.password').val(),
-    // password2: $('.password2').val()
+    // rank: $('.rank > option:selected').val(),
+    // affiliates: $('.affiliates').val(),
+    password: password
   };
-  let formMessages = $('#form-messages');
+ 
   
   // Submit the form using AJAX.
   $.ajax({
@@ -59,8 +61,7 @@ function submitSignupForm(){
     $('.affiliates').val('');
     $('.password').val('');
     $('.password2').val('');
-    hideSignupForm();
-    showAddExerciseBtn();
+   
   }).fail(function(data) {
     // Make sure that the formMessages div has the 'error' class.
     $(formMessages).removeClass('success');
@@ -133,11 +134,13 @@ function loggingIn(){
     $(formMessages).text('');
     $('.usersname').val('');
     $('.password').val('');
+    hideLoginItems();
     hideLoginForm();
     hideIntroPage();
     hideLogInBtn();
 
-    return showMyExercisesPage();
+    // return showMyExercisesPage();
+    showScreen('myExercises');
     
     
   }).fail(function(data) {
