@@ -164,6 +164,7 @@ router.put('/:id', jwtAuth, (req, res) => {
 router.delete('/:id', jwtAuth,  (req, res) => {
   Exercise.remove({_id: req.params.id})
     .then(() => {
+      console.log(req.params.id);
       res.status(200).json({message:'Succussfully deleted'});
     }).catch(err => {
       console.log(err);

@@ -325,21 +325,26 @@ $(function onPageReady(){
 
   //Edit Exercise Form Page 
   $('.user-exercise-page').on('click','.exercise-show', function(e){
-    console.log('Click on exercise ',exercises);
+    // console.log('Click on exercise ',exercises);
     hideFormMessage();
     showAddExerciseBtn();
     currentExerciseIndex = getExerciseIndexFromClick(e);
     // console.log(currentExerciseIndex);
     const currentExercise = getCurrentExercise(currentExerciseIndex);
-    // console.log(currentExercise);
+    console.log(currentExercise);
     populateFormWExerciseData(currentExercise);
     renderVideosOnExercisesForm(currentExercise);
   });
 
   // Delete Exercise Click
-  $('.delete-exercise-btn').click(function(){
-    console.log('works');
-    // deleteExercise();
+  $('.delete-exercise-btn').click(function(e){
+    e.preventDefault();
+    let button = $(e.target);
+    let deleted = button.closest('.exercise');
+    // deleted.remove();
+    console.log(deleted);
+    console.log( $('.exercise-id').val() );
+    deleteExercise( $('.exercise-id').val() );
   });
 
    // Watch Videos On Exercise Form

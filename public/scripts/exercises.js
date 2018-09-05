@@ -116,12 +116,12 @@ function addExerciseToLocalArrays(exercise, exerciseId){
 /*    Show All and Show My Exercise Pages
 /**---------------------------------------------------- */
 function showAllExercisesPage(){
-  console.log('ShowAllExercisesPage', exercises);
+  // console.log('ShowAllExercisesPage', exercises);
   showExercisesPage(exercises, '/exercises');
 };
 
 function showMyExercisesPage(){
-  console.log('ShowMyExercisesPage', exercises);
+  // console.log('ShowMyExercisesPage', exercises);
   showExercisesPage(myExercises, '/exercises/my');
 };
 
@@ -211,6 +211,7 @@ function populateFormWExerciseData(exercise) {
     hideUserExercisePage();
     // hideScreen('exerciseForm')
     showExerciseForm();
+    showDeleteExerciseBtn();
   }
 };
 
@@ -235,7 +236,7 @@ function getAllExercises(exercises, url){
         exercises.push(_exercise);
      });
      exercises.lastModified = Date.now();
-     console.log('getAllExercises',exercises);
+    //  console.log('getAllExercises',exercises);
      return exercises;
   });
 
@@ -245,7 +246,8 @@ function getAllExercises(exercises, url){
 /*     Delete Exercises & Videos
 /**--------------------------------------- */
 
-function deleteExercise(){
+function deleteExercise(exercise_id){
+  console.log( $('.exercise-id').val() );
   let authToken = '';
 
   if(window.localStorage){
@@ -255,8 +257,13 @@ function deleteExercise(){
   $.ajax({
     type: 'DELETE',
     url: `http://localhost:8080/api/exercises/${exercise_id}`,
-  }).then(() => {
-    // code here
+    headers: {
+      Authorization: `Bearer ${authToken}`
+    }
+  }).then((response) => {
+    showScreen('allExercises');
+    console.log(response);
+    // $('.exercise').remove();
   });
 };
 
@@ -266,5 +273,7 @@ function clearExerciseForm(){
   $('.exercise-description').val('');
   $('.added-videos').html('');
   $('.allow-comments').val('');
+
+  // setData my be erasing and resetting the original value
   CKEDITOR.instances['body'].setData('');
 }

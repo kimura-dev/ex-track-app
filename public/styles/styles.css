@@ -347,6 +347,12 @@ deleteVideo:focus,
 .logIn:focus {
   background-color: rgb(238, 122, 13);   
 }
+
+.login-fieldset {
+  width: 40%;
+  margin: 25px auto;
+}
+
 /*-------------------------------*/
 /*   Sign Up Form Style
 /*-------------------------------*/
@@ -416,19 +422,16 @@ p {
 } */
 
 .tokenClass {
-  margin-right: 40%;
-  margin-left: 40px;
   padding: 10px;
   font-size: 18px;
   background-color: rgb(238, 122, 13);
-
   color: #E5E5E5;
 }
 
 .tokenClass:hover,
 .tokenClass:focus {
   cursor: pointer;
-  background-color: rgb(6, 31, 252);
+  background-color:  rgb(17, 69, 243);
 }
 
 /*------------------------------------------*/
@@ -454,6 +457,17 @@ p {
 .video-search-input {
   margin: 10px 0px 25px 5px;
 }
+
+.video-results {
+  display: flex;
+}
+
+.flexbox {
+  background-color:  rgb(17, 69, 243);;
+  flex: 1;
+  display: flex;
+}
+
 /*------------------------------------------*/
 /* Video Section */
 /*------------------------------------------*/
@@ -516,7 +530,8 @@ p {
 
 .video-result {
   margin: 2px;
-  background-color: rgb(13, 167, 238)
+  background-color: rgb(238, 122, 13);
+  flex: 1;
 }
 
 .video-result .select-video-btn {

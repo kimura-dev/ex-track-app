@@ -47,7 +47,7 @@ function searchYoutube() {
           key: 'AIzaSyA9YIeJMUAUAO5QaCo0wzfbdGlLIbjo1D4'
           , q: query
           , part: 'snippet'
-          , maxResults: 4
+          , maxResults: 5
           , pageToken: pageToken.current
           // , pageToken: 'CAYQAA'
       }
