@@ -103,31 +103,6 @@ legend {
   display: none;
 }
 
-/* .flexbox {
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  overflow: hidden;
-  background-color: #ccc;
-}
-
-.flexbox .col {
-  flex: 1;
-}
-
-.flexbox .col:nth-child(1) {
-  background: #ccc;
-  order: 1;
-}
-.flexbox .col:nth-child(2) {
-  background: #eee;
-  order: 0;
-}
-.flexbox .col:nth-child(3) {
-  background: #eee;
-  order: 2;
-} */
-
 /*-----------------------------------*/
 /*   Error or Succes Form Messages 
 /*----------------------------------*/
@@ -141,13 +116,10 @@ legend {
   text-align: center;
 }
 
-.error {
-  background-color: rgb(216, 100, 100);
-}
-
 .success,
 .error {
-  font-size: 20px;
+  text-align: center;
+  font-size: 1.5em;
   width: 100%;
   margin-top: 20px;
   margin-bottom: 20px;
@@ -250,6 +222,7 @@ legend {
 .add-btn-box {
   text-align: center;
 }
+
 .add-exercise-btn:hover,
 .add-exercise-btn:focus {
   background-color: rgb(238, 122, 13); 
@@ -424,19 +397,29 @@ p {
 .tokenClass {
   padding: 10px;
   font-size: 18px;
-  background-color: rgb(238, 122, 13);
+  background-color: rgb(17, 69, 243);
   color: #E5E5E5;
 }
 
 .tokenClass:hover,
 .tokenClass:focus {
   cursor: pointer;
-  background-color:  rgb(17, 69, 243);
+  background-color:  rgb(238, 122, 13);
 }
 
 /*------------------------------------------*/
 /*         VideoPicker Style
 /*------------------------------------------*/
+.videoPickerFieldSet{
+
+}
+
+.vid-picker-on-form {
+  margin-top: 2.5em;
+  margin-bottom: 2.5em;
+
+}
+
 .vid-picker-title {
   text-align: center;
   text-transform: uppercase;
@@ -458,15 +441,48 @@ p {
   margin: 10px 0px 25px 5px;
 }
 
+
+.video-result {
+  margin: 2px;
+  background-color: rgb(238, 122, 13);
+  display: inline-block;
+  width: 33%;
+  float: left;
+} 
+
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+
+/*------------------------------------------*/
+/* Flexbox display on Video Results */
+/*------------------------------------------*/
+
+/* .flexbox {
+  float: left;
+} */
+
+/* .flexbox {
+  background-color:  rgb(17, 69, 243);;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 .video-results {
   display: flex;
 }
 
-.flexbox {
-  background-color:  rgb(17, 69, 243);;
+.video-result {
+  margin: 2px;
+  background-color: rgb(238, 122, 13);
   flex: 1;
-  display: flex;
-}
+  min-width: 200px;
+} */
 
 /*------------------------------------------*/
 /* Video Section */
@@ -528,12 +544,6 @@ p {
   color: rgb(238, 232, 224);
 }
 
-.video-result {
-  margin: 2px;
-  background-color: rgb(238, 122, 13);
-  flex: 1;
-}
-
 .video-result .select-video-btn {
   display: inline;
 }
@@ -585,7 +595,7 @@ p {
 }
 
 .video-result.selected {
-  background-color: rgb(238, 122, 13);
+  background-color: rgb(71, 93, 218);
 }
 
 .video-result.selected .select-video-btn {
@@ -615,6 +625,9 @@ footer {
   /* margin-top: 100px; */
 }
 
+@media screen and (max-width: 600px){
+
+}
 /* When the screen is less than 600 pixels wide, hide all links, except for the first one ("Home"). Show the link that contains should open and close the topnav (.icon) */
 @media screen and (max-width: 600px) {
   .topnav a:not(:first-child) {display: none;}

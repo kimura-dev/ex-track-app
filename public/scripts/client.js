@@ -136,10 +136,30 @@ function hideAddExerciseBtn(){
 /**-------------------------------- */
 /*  Hide & Show Nav Items
 /**--------------------------------- */
-function hideLoginItems(){
+function hideNavItemsWhenLoggedIn(){
   $('.nav-login').hide();
   $('.nav-signup').hide();
 }
+
+function hideNavItemsBeforeLogin(){
+  console.log('hideNavItems!');
+  $('.navShowAllBtn').hide();
+  $('.navShowMyBtn').hide();
+  $('.nav-logout').hide();
+}
+
+function showNavItemsAfterLogin(){
+  console.log('showNavItems!');
+  $('.navShowAllBtn').removeAttr('hidden');
+  $('.navShowAllBtn').show();
+  $('.navShowMyBtn').removeAttr('hidden');
+  $('.navShowMyBtn').show();
+  $('.nav-logout').removeAttr('hidden');
+  $('.nav-logout').show();
+}
+
+
+
 
 /**-------------------------------- */
 /*  Hide & Show Log In Btn
@@ -157,6 +177,8 @@ function hideLogInBtn(){
 /**-------------------------------- */
 /*  Hide & Show Form Message
 /**--------------------------------- */
+hideNavItemsBeforeLogin();
+
 function hideFormMessage(){
   $('#form-messages').attr('hidden');
   $('#form-messages').show();
@@ -182,13 +204,18 @@ function myFunction() {
 /**--------------------- */
 $(function onPageReady(){
   let authToken = '';
-
+  // console.log('on page ready');
   // Check Authtentication
-  // if(window.localStorage){
-  //   authToken = window.localStorage.getItem('authToken');
-  //   loggingIn();
-  // } 
+  if(window.localStorage){
+    authToken = window.localStorage.getItem('authToken');
+    // loggingIn();
+  } 
 
+  // if(authToken == null){
+  //   showLoginForm();
+  // }
+
+ 
   // $('#js-wp-1').waypoint(function(direction){
   //   $('#jw-wp-1').addClass('animated fadeIn');
   // });
@@ -204,7 +231,7 @@ $(function onPageReady(){
 
   // Youtube Toggle Search Pages
   $('.tokenClass').click(function () {
-    console.log($(this).val());
+    // console.log($(this).val());
     pageToken.current = $(this).val() == 'Next' ? pageToken.nextPage : pageToken.prevPage;
     searchYoutube();
   });
@@ -219,14 +246,14 @@ $(function onPageReady(){
     // hideExercisesPage();
   });
 
-  $('.all-exercises-btn').click(function(){
-    showScreen('allExercises');
-    //  return showAllExercisesPage();
+  $('.navShowAllExercisesBtn').click(function(){
+    // showScreen('allExercises');
+     return showAllExercisesPage();
   });
 
-  $('.nav-exercise-page').click(function(){
-    showScreen('myExercises');
-    // showMyExercisesPage();
+  $('.navMyExercisePageBtn').click(function(){
+    // showScreen('myExercises');
+    return showMyExercisesPage();
   });
 
   $('.nav-login').click(function(){
@@ -252,6 +279,7 @@ $(function onPageReady(){
     // hideAddExerciseBtn();
     // showExerciseForm();
     // clearExerciseForm();
+    hideAddExerciseBtn();
     showScreen('exerciseForm');
   })
 
@@ -267,15 +295,14 @@ $(function onPageReady(){
   
   // Show Login Form
   $('.login-btn').click(function(){
-    // hideIntroPage();
     hideLogInBtn();
-    showLoginForm();
-    // showExerciseForm();
+    showLoginForm(); 
   });
 
   // Show Video Picker 
   $('.add-video-btn').click(function(e){
     e.preventDefault();
+    hideAddExerciseBtn();
     hideExerciseForm();
     showMoviePicker();
   });
@@ -299,7 +326,9 @@ $(function onPageReady(){
   })
 
   // Save Exercise Click
-  $('.exercise-form form').submit(function(){
+  $('.exercise-form form').submit(function(e){
+    console.log('Click Submit');
+    e.preventDefault();
     showFormMessages();
     submitExerciseForm();
   });
@@ -307,31 +336,22 @@ $(function onPageReady(){
   // Log In Click Event
   $('.logIn').click(function(){
     loggingIn();
-  })
-
-  // Delete Videos Click 
-  $('.added-videos').on('click','.deleteVideo', function(){
-    deleteVideoFromExercise(currentExercise);
   });
 
-  // Delete Exercise
-  // $('.delete-exercise-btn').click(deleteExercise);
-  
   $('.returnToProfileBtn').click(function(){
     addSelectedVideosToForm();
     hideMoviePicker();
     showExerciseForm();
   });
 
-  //Edit Exercise Form Page 
+  // Collects and displays the exercise data to the form 
   $('.user-exercise-page').on('click','.exercise-show', function(e){
-    // console.log('Click on exercise ',exercises);
-    hideFormMessage();
+
     showAddExerciseBtn();
     currentExerciseIndex = getExerciseIndexFromClick(e);
-    // console.log(currentExerciseIndex);
+
     const currentExercise = getCurrentExercise(currentExerciseIndex);
-    console.log(currentExercise);
+
     populateFormWExerciseData(currentExercise);
     renderVideosOnExercisesForm(currentExercise);
   });
@@ -339,20 +359,16 @@ $(function onPageReady(){
   // Delete Exercise Click
   $('.delete-exercise-btn').click(function(e){
     e.preventDefault();
-    let button = $(e.target);
-    let deleted = button.closest('.exercise');
-    // deleted.remove();
-    console.log(deleted);
-    console.log( $('.exercise-id').val() );
+    // console.log( $('.exercise-id').val() );
     deleteExercise( $('.exercise-id').val() );
   });
 
-   // Watch Videos On Exercise Form
-  $('.video-results').on('click','.watchvideo',function(e){
-    console.log('click');
-    previewVideosOnExercisePage();
+  // Delete Videos Click 
+  $('.added-videos').on('click','.deleteVideo', function(){
+    deleteVideoFromExercise(currentExercise);
   });
 
+  // Embedded Videos Previews
   previewVideos(); 
 
 

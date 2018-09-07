@@ -43,15 +43,25 @@ function submitSignupForm(){
     url: 'http://localhost:8080/api/users',
     data: data
   }).then(function(response) {
-    // console.log(data);
+    console.log(response);
     // Make sure that the formMessages div has the 'success' class.
     $(formMessages).removeClass('error');
     $(formMessages).addClass('success');
 
     // Set the message text.
-    $(formMessages).text(response);
+
+    let authToken = response.authToken;
+    
+    if(window.localStorage){
+      window.localStorage.setItem('authToken', authToken);
+      $(formMessages).text('Your Account was successfully created!');
+    } 
 
     showAddExerciseBtn();
+    // hideLoginItems();
+    hideNavItemsWhenLoggedIn();
+    showNavItemsAfterLogin();
+    // return showMyExercisesPage();
     // Clear the form.
     $('.first').val('');
     $('.last').val('');
@@ -134,13 +144,15 @@ function loggingIn(){
     $(formMessages).text('');
     $('.usersname').val('');
     $('.password').val('');
-    hideLoginItems();
+    hideNavItemsWhenLoggedIn();
+    showNavItemsAfterLogin();
     hideLoginForm();
     hideIntroPage();
     hideLogInBtn();
 
-    // return showMyExercisesPage();
-    showScreen('myExercises');
+    showAddExerciseBtn();
+    return showMyExercisesPage();
+    // showScreen('myExercises');
     
     
   }).fail(function(data) {

@@ -47,7 +47,7 @@ function searchYoutube() {
           key: 'AIzaSyA9YIeJMUAUAO5QaCo0wzfbdGlLIbjo1D4'
           , q: query
           , part: 'snippet'
-          , maxResults: 5
+          , maxResults: 6
           , pageToken: pageToken.current
           // , pageToken: 'CAYQAA'
       }
@@ -86,37 +86,44 @@ function previewVideos(){
   });
 }; 
 
-/**------------------------- */
-/*     Preview Videos
-/**------------------------- */
+/**-------------------------------------- */
+/*     Preview Videos on Exercise Form
+/**-------------------------------------- * /
 
-function previewVideosOnExercisePage(){
-  let target = $( e.target );
-  // let videoID = $(target).closest('.video-result').find('img').attr('videoID');   
-  let videoID = $(target).parent().parent().find('img').attr('videoID');
-  console.log(videoID);
-  $('.popup').show()
-  $('.overlayBg').show();
-  $(window).scrollTop(0)
-  // $('.popup iframe').attr('src', 'https://www.youtube.com/embed/' + $(this).attr('videoID'));
-  $('.popup iframe').attr('src', `https://www.youtube.com/embed/${videoID}`);
-  $('.overlayBg').click(function () {
-    $('.popup').hide()
-    $('.overlayBg').hide()
-  });
-}; 
+// function previewVideosOnExercisePage(){
+//   console.log('previewOnExercisePage Connected!');
+//   $('.video-controls').on('click','.watchVideo',function(e){
+//     let target = $( e.target );
+//     let videoID = $(target).parent().parent().find('img').attr('videoID');
+//     $('.popup').show()
+//     $('.overlayBg').show();
+//     $(window).scrollTop(0)
+//     $('.popup iframe').attr('src', `https://www.youtube.com/embed/${videoID}`);
+//   });
+//   $('.overlayBg').click(function () {
+//     $('.popup').hide()
+//     $('.overlayBg').hide()
+//   });
+// }; 
 
 /*--------------------------------*/
 /*     JSON for selected videos
 /*--------------------------------*/
 function jsonforVideo(videoElement){
   let target = $(videoElement);
-  return {
-    _id: target.find('.video-title').attr('objectID'),
+  const jsonVideo = {
+    // _id: target.find('.video-title').attr('objectID'),
     title: target.find('.video-title').text(),
     url: target.find('.thumbnail').attr('src'),
     videoID: target.find('.thumbnail').attr('videoID')
   };
+
+  if(target.find('.video-title').attr('objectID')){
+    jsonVideo._id = target.find('.video-title').attr('objectID');
+ }
+
+ return jsonVideo;
+
 }
 
 /**---------------------------- */
@@ -138,17 +145,16 @@ function selectVideoResult(e) {
   
   // old DOM-centric implementation
   videoResult.addClass('selected');
-
   // new APP state-centric implementation
   
-  //1. find actual video object based on videoResult element
-  let videoData = getVideoDataFromResultElement(videoResult);
+  // //1. find actual video object based on videoResult element
+  // let videoData = getVideoDataFromResultElement(videoResult);
   
-  //2. add videoData to our APP state
-  APP.screens.videoPicker.videos.selected.push(videoData);
+  // //2. add videoData to our APP state
+  // APP.screens.videoPicker.videos.selected.push(videoData);
 
-  //3. redraw our UI based on the changed APP state
-  redrawCurrentScreen();
+  // //3. redraw our UI based on the changed APP state
+  // redrawCurrentScreen();
   
 }
 
@@ -162,7 +168,7 @@ function addSelectedVideosToForm(){
   $('.video-result.selected').each(function(index, videoResult){
     let video = jsonforVideo($(videoResult));
     if( !isVideoAddedToForm(video.videoID) ){
-      $('.added-videos > .row').append(htmlForVideo(video));
+      $('.added-videos > .row').append(htmlForVideoOnExerciseForm(video));
     }
   });
 };

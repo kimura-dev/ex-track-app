@@ -132,12 +132,13 @@ router.put('/:id', jwtAuth, (req, res) => {
 
       ...req.body, videos: JSON.parse(req.body.videos)
   }, {
-    new: true
+    new: true 
   }).then((data) =>{
     console.log(data);
     res.status(200).json(data);
   }).catch((err) => {
     console.log(err);
+    res.status(err.status || 400).json({message: err.message || 'Failure to update exercise'});
   });
   // .then(exercise => {
   //   let allowComments;

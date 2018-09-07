@@ -29,11 +29,9 @@ function submitExerciseForm(){
   // } else {
   //   allowComments = false;
   // }
-   
-  let exerciseId = $('.exercise-id').val() || undefined;
 
   let data = {
-    _id: exerciseId,
+    // _id: exerciseId,
     title: $('.exercise-title').val(),
     description: CKEDITOR.instances['body'].getData(), 
     status: $('.status > option:selected').text(),
@@ -41,13 +39,20 @@ function submitExerciseForm(){
     videos: JSON.stringify(videos)
   };
 
+  let exerciseId = $('.exercise-id').val() || false;
+
+  if (exerciseId){
+    data._id = exerciseId;
+  }
+
   let formMessages = $('#form-messages');
   let authToken = '';
 
   if(window.localStorage){
     authToken = window.localStorage.getItem('authToken');
   }
-  console.log(authToken);
+ 
+  console.log('AJAX Submit');
 
   // AJAX To Exercises
   $.ajax({
@@ -58,16 +63,18 @@ function submitExerciseForm(){
       Authorization: `Bearer ${authToken}`
     }
   }).then(function(response) {
-    console.log('post exercises' + response);
+
+
     // Make sure that the formMessages div has the 'success' class.
     $(formMessages).removeClass('error');
     $(formMessages).addClass('success');
-    clearExerciseForm();
-    hideExerciseForm();
+    // clearExerciseForm();
+    // hideExerciseForm();
     addExerciseToLocalArrays(response, exerciseId);
-    return showMyExercisesPage();
+    // return showMyExercisesPage();
 
-  }).fail(function(data) {
+
+  }).fail(function(data) { 
     // Make sure that the formMessages div has the 'error' class.
     $(formMessages).removeClass('success');
     $(formMessages).addClass('error');
@@ -96,12 +103,12 @@ function addExerciseToLocalArrays(exercise, exerciseId){
 
     if (index >= 0){
       exercises[index] = exercise;
-      // console.log(response);
+
     }
 
     if (myIndex >= 0){
       myExercises[myIndex] = exercise;
-      // console.log(response);
+
     }
    
   } else {
@@ -116,12 +123,13 @@ function addExerciseToLocalArrays(exercise, exerciseId){
 /*    Show All and Show My Exercise Pages
 /**---------------------------------------------------- */
 function showAllExercisesPage(){
-  // console.log('ShowAllExercisesPage', exercises);
+
   showExercisesPage(exercises, '/exercises');
 };
 
 function showMyExercisesPage(){
-  // console.log('ShowMyExercisesPage', exercises);
+  // let formMessages = $('#form-messages');
+  // $('#form-messages').text(`${exercise.title} was added successfully!`);
   showExercisesPage(myExercises, '/exercises/my');
 };
 
@@ -129,7 +137,7 @@ function showExercisesPage(exercises, url){
   let timeSince = Date.now() - (exercises.lastModified || 0);
   lastExercisePage = url;
   let doUI = function(){
-    // console.log('showExercisesPage: ',exercises)
+
     $('.user-exercise-page').removeAttr('hidden');
     $('.user-exercise-page').show();
     renderAllExercisesPage(exercises, url);
@@ -146,8 +154,9 @@ function showExercisesPage(exercises, url){
 
 
 function renderAllExercisesPage(exercises, url){
+  // console.log(exercises);
   let htmlForPage = exercises.map(htmlForAllExercisesPage).join('');
-  // console.log(htmlForPage);
+
   $('.user-exercise-page > .row').html(htmlForPage); 
 };
 
@@ -185,14 +194,14 @@ function getExerciseIndexFromClick(e){
 
 function renderVideosOnExercisesForm(exercise){
   let htmlForVideo = exercise.videos.map(htmlForVideoOnExerciseForm).join('');
-  $('.added-videos').html(htmlForVideo); 
+  $('.added-videos > .row').html(htmlForVideo); 
 };
 
 function htmlForVideoOnExerciseForm(video){
-
+// console.log('This is video ', video);
   return `<div class="col-4">
            <div class="exerciseOnForm">
-              <h3 class="video-title" objectID="${video._id}">${video.title}</h3>
+              <h3 class="video-title" objectID="${video._id || ''}">${video.title}</h3>
               <img  class="thumbnail" src="${video.url}" videoID="${video.videoID}">
               <p class="url"><a href="https://www.youtube.com/watch?v=${video.videoID}" target="_blank"> ${video.videoID}</a></p>
               <div class="video-controls">
@@ -203,15 +212,18 @@ function htmlForVideoOnExerciseForm(video){
 };
 
 function populateFormWExerciseData(exercise) {
+  let formMessages = $('#form-messages');
 
   if(exercise){
     $('.exercise-id').val(exercise._id || '') ;
     $('.exercise-title').val(exercise.title || '') ;
     $('.exercise-description').val(exercise.description || '');
+    $(formMessages).text(`Your ${exercise.title} exericse!`);
     hideUserExercisePage();
-    // hideScreen('exerciseForm')
+
     showExerciseForm();
     showDeleteExerciseBtn();
+    // previewVideosOnExercisePage();
   }
 };
 
@@ -236,7 +248,7 @@ function getAllExercises(exercises, url){
         exercises.push(_exercise);
      });
      exercises.lastModified = Date.now();
-    //  console.log('getAllExercises',exercises);
+
      return exercises;
   });
 
@@ -247,7 +259,10 @@ function getAllExercises(exercises, url){
 /**--------------------------------------- */
 
 function deleteExercise(exercise_id){
-  console.log( $('.exercise-id').val() );
+  // console.log(exercises);
+  // console.log( $('.exercise-id').val() );
+  let formMessages = $('#form-messages');
+
   let authToken = '';
 
   if(window.localStorage){
@@ -261,19 +276,28 @@ function deleteExercise(exercise_id){
       Authorization: `Bearer ${authToken}`
     }
   }).then((response) => {
+    updateAllExercises(exercise_id);
     showScreen('allExercises');
-    console.log(response);
-    // $('.exercise').remove();
+    $(formMessages).text(`Your exercise was deleted successfully!`);
+    // json({ title: req.params.title })
   });
+  
+};
+
+function updateAllExercises(exercise_id){
+  // console.log(exercises);
+  // console.log( $('.exercise-id').val() );
+  exercises = exercises.filter(function (item) {
+    return !item._id.includes(exercise_id);
+  }); 
 };
 
 function clearExerciseForm(){
   $('.exercise-title').val('');
   $('.exercise-id').val('');
   $('.exercise-description').val('');
-  $('.added-videos').html('');
+  $('.added-videos > .row').html('');
   $('.allow-comments').val('');
-
-  // setData my be erasing and resetting the original value
+  // setData may be erasing and resetting the original value
   CKEDITOR.instances['body'].setData('');
 }

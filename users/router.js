@@ -5,6 +5,7 @@ const {User} = require('./models');
 const router = express.Router();
 const jsonParser = bodyParser.json();
 const bcrypt = require('bcryptjs');
+const {createAuthToken} = require('../auth/router');
 
 // Post to register a new user
 router.post('/', jsonParser, (req, res) => {
@@ -124,7 +125,12 @@ router.post('/', jsonParser, (req, res) => {
       });
     })
     .then(user => {
-      return res.status(201).json(user.serialize());
+      const authToken = createAuthToken(user.serialize());
+      let userOutput = user.serialize();
+      userOutput.authToken = authToken;
+      // return res.status(201).json(user.serialize());
+      
+      return res.status(201).json(userOutput);
     })
     .catch(err => {
       // Forward validation errors on to the client, otherwise give a 500

@@ -31,7 +31,7 @@ APP.screens.signup = {
   show: showSignupForm,
   hide: {
     hideSignupForm,
-    hideLoginItems
+    hideNavItemsWhenLoggedIn
   },
   nav: true
 }
@@ -52,7 +52,7 @@ APP.screens.login = {
   show: showLoginForm,
   hide: {
     hideLoginForm,
-    hideLoginItems
+    hideNavItemsWhenLoggedIn
   },
   // submit: loggingIn,
   // loggedIn: true,
