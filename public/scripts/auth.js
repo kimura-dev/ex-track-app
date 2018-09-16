@@ -40,7 +40,7 @@ function submitSignupForm(){
   // Submit the form using AJAX.
   $.ajax({
     type: 'POST',
-    url: 'http://localhost:8080/api/users',
+    url: `${API_URL}/users`,
     data: data
   }).then(function(response) {
     console.log(response);
@@ -79,7 +79,7 @@ function submitSignupForm(){
 
     // Set the message text.
     if (data.responseText !== '') {
-        $(formMessages).text('Successfully created account');
+        $(formMessages).text('Your account creation was unsuccessful. Please make sure the information you entered is correct.');
     } else {
         $(formMessages).text('Oops! An error occured and your message could not be sent.');
     }
@@ -130,29 +130,35 @@ function loggingIn(){
   let formMessages = $('#form-messages');
   $.ajax({
     type: 'POST',
-    url: 'http://localhost:8080/api/auth/login',
+    url: `${API_URL}/auth/login`,
     data: data
   }).then(function(response) {
     // let username =  $('.usersname').val();
     // console.log(response);
     let authToken = response.authToken;
+    let user = response.user.username;
+
     if(window.localStorage){
       window.localStorage.setItem('authToken', authToken);
+      window.localStorage.setItem('user', user);
+      console.log('Ran');
+      location.reload();
     }
+    
     $(formMessages).removeClass('error');
     $(formMessages).addClass('success');
     $(formMessages).text('');
-    $('.usersname').val('');
+    $('.username').val('');
     $('.password').val('');
-    hideNavItemsWhenLoggedIn();
-    showNavItemsAfterLogin();
-    hideLoginForm();
-    hideIntroPage();
-    hideLogInBtn();
 
-    showAddExerciseBtn();
-    return showMyExercisesPage();
-    // showScreen('myExercises');
+    // hideNavItemsWhenLoggedIn();
+    // showNavItemsAfterLogin();
+    hideLoginForm();
+    // hideIntroPage();
+    // hideLogInBtn();
+    // showAddExerciseBtn();
+    // return showMyExercisesPage();
+    return showScreen('myExercises');
     
     
   }).fail(function(data) {
@@ -165,6 +171,7 @@ function loggingIn(){
     }
   });
 };
+
 
 function logoutUser(){
   localStorage.removeItem('authToken');

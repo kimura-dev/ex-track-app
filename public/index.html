@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Exercise Tracker</title>
+  <title>Brazilian Jui-Jitsu Technique Creator</title>
  <!-- Load an icon library to show a hamburger menu (bars) on small screens -->
   <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css"> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
   <link rel="stylesheet" type="text/css" href="styles/float-grid.css">
   <link rel="stylesheet" type="text/css" href="styles/styles.css">
 </head>
@@ -17,11 +17,16 @@
   <header role="banner" aria-live="polite">
     <nav role="navigation">
       <div class="topnav" id="myTopnav">
-        <a href="#home" class="navShowAllBtn" hidden></ion-icon><ion-icon name="home"></ion-icon>All Exercises</a>
-        <a href="#" class="navShowMyBtn" hidden><ion-icon name="fitness" class="ion"></ion-icon>Your Exercises</a>
+        <a href="#home" class="navShowAllBtn" hidden></ion-icon><ion-icon name="home"></ion-icon>All Techniques</a>
+        <a href="#" class="navShowMyBtn" hidden><ion-icon name="fitness" class="ion"></ion-icon>Your Techniques</a>
         <a href="#" class="nav-login"><ion-icon name="person" class="ion"></ion-icon>Login</a>
         <a href="#" class="nav-signup"><ion-icon name="person-add" class="ion"></ion-icon>Register</a>
         <a href="#" class="nav-logout" hidden><ion-icon name="arrow-round-forward" class="ion"></ion-icon>Logout</a>
+        <div class="logo-container">
+          <a href="#" class="nav-logo"><img src="/styles/imgs/bjj-logo2.jpg" alt="bjj technique creator logo"></a>
+        </div>
+
+        <!-- <a href="#" class="nav-username"><ion-icon name="person" class="ion"></ion-icon></a> -->
         <a href="javascript:void(0);" class="icon" onclick="myFunction()">
           <i class="fa fa-bars"></i>
         </a>
@@ -35,14 +40,19 @@
   <section class="introduction-page" aria-live="polite">
     <div class="row" id="js-wp-1">
       <div class="intro-content">
-        <h1 class="intro-title">Exercise Tracker</h1>
-        <p class="intro-content">Search, add and track your favorite exercises, using our exercise tracker. Choose for your exercises to be viewed by the world or completley private as your own personal exercise for tracking.</p>
+        <h1 class="intro-title js--intro-title">Brazilian Jiu Jitsu Technique Creator</h1>
+        <p class="intro-content">Create, Comment and Contribute to our every growing library of essential BJJ Techniques. Choose for your techniques to be viewed by the world or completley private. </p>
+        <p class="loginOrRegisterPrompt"><a class="promptLogin">Login</a> or <a class="promptRegister">Register</a> to START CREATING!</p> 
         <!-- <button class="begin">Begin</button> -->
       </div>
     </div>
-      <div class="row">
+      <!-- <div class="row">
           <button class="login-btn">Login</button>
-        </div>
+        </div> -->
+
+      <div class="row">
+        <button class="enter">Enter</button>
+      </div>
   </section>
 
   <!-- <section class="search-exercise" hidden>
@@ -58,14 +68,16 @@
   </section> -->
 
   <div class="add-btn-box" aria-live="polite">
-      <button class="add-exercise-btn" hidden><ion-icon name="add-circle-outline"></ion-icon>Add New Exercise</button>
+      <button class="add-exercise-btn" hidden><ion-icon name="add-circle-outline"></ion-icon>Add New Technique</button>
   </div>
     <!-- <button class="view-user-exercise-btn" hidden>Your Exercise</button> -->
 
 
-  <div class="row" aria-live="polite">
+  <!-- <div class="row" aria-live="polite">
     <button type="previous" class="prev-btn" hidden>Previous Page</button>
-  </div>
+  </div> -->
+
+  <!--Form Message Div For Notifications-->
 
   <div id="form-messages" aria-live="polite"></div>
 
@@ -93,8 +105,8 @@
           <option value="brown" name="brown" class="brown">Brown</option>
           <option value="black" name="black" class="black">Black</option>
         </select>
-        </label> -->
-        <!-- <label for="affiliates">Affiliations
+        </label> 
+         <label for="affiliates">Affiliations
           <input type="text" name="affiliates" class="affiliates">
         </label> -->
         <label for="password">Password
@@ -127,11 +139,11 @@
     <div class="row">
       <div class="col-12">
           <form>
-            <fieldset>
-              <legend>Exercise</legend>
+            <fieldset class="exerciseFieldset">
+              <legend>BJJ</legend>
               <div class="row">
                 <div class="input-field">
-                  <label for="exercise-title" name="exercise-title">Name your Exercise:
+                  <label for="exercise-title" name="exercise-title">Technique Name:
                     <input type="text" name="title" class="exercise-title">
                   </label>
                 </div>
@@ -139,7 +151,7 @@
               </div>
             </div>
 
-              <input type="hidden" class="exercise-id">
+            <input type="hidden" class="exercise-id">
       
               <div class="row">
                 <div class="input-field">
@@ -150,7 +162,7 @@
       
               <div class="row">
                 <div class="col-4 status-col">
-                  <p>Make your exercise public to allow other users to see it</p>
+                  <p>Make your exercise public to allow other users to see it, or private. </p>
                   <select name="status" class="status">
                     <option value="public" name="public" class="public" checked>Public</option>
                     <option value="private" name="private" class="private">Private</option>
@@ -166,42 +178,58 @@
                   </label>
                 </p>
               </div> -->
-              <h3 class="vid-picker-on-form">Use the Video Picker to add videos to your exercise.</h3>
-              <h2><ion-icon name="arrow-down"></ion-icon>Click below<ion-icon name="arrow-down"></ion-icon>!!</h2>
+              <h3 class="pickerContentOnForm">Use the Video Picker to add videos that help demonstrate your technique.</h3>
+              <h2 class="clickBelow"><ion-icon name="arrow-down"></ion-icon>VIDEO PICKER!!</h2>
 
               <hr>
  
-              <button class="add-video-btn"><ion-icon name="add-circle-outline"></ion-icon>Video Picker</button> 
+              <button class="add-video-btn"><ion-icon name="add-circle-outline" value="select video picker"></ion-icon>Video Picker</button> 
 
-              <button type="submit" value="save" class="save-exercise-btn"><ion-icon name="save"></ion-icon>Save Exercise</button>
+              <div class="exerciseFormBtns">
+                <div class="row">
+                    <button type="submit" value="save exercise button" class="save-exercise-btn"><ion-icon name="save"></ion-icon>Save Technique</button>
 
-              <button type="submit" value="delete" class="delete-exercise-btn" hidden><ion-icon name="trash"></ion-icon>Delete Exercise</button>
+                    <button type="submit" value="delete button" class="delete-exercise-btn" hidden><ion-icon name="trash"></ion-icon>Delete Technique</button>
+                </div>
+                  
+              </div>
+              
 
 
               <section class="added-videos" aria-live="polite">
+                <input type="hidden" class="video-id">
                 <div class="row">
 
                 </div>
               </section>
 
               <hr>
-<!-- 
+
+              <!-- <input type="hidden" class="comment-id"> -->
+
               <section class="comment-section">
                 <div class="row">
-                    <p>Please <a href="#" class="a-login">log</a> in to leave a comment</p>
-                  <form method="POST" action="/exercises/comment/">
-                    <fieldset>
-                      <legend>
-                        <div class="input-field">
-                          <textarea name="body" class="comments" col="100" rows="10"></textarea>
-                          <label> Add Comment</label>
-                        </div>
-                        <button value="submit" name="submit">Submit</button>
-                      </legend>
-                    </fieldset>
-                  </form>
+                  <p>Please <a href="#" class="a-login">log</a> in to leave a comment</p>
+                  <!-- <div class="col-4">
+                    <form method="POST" action="/exercises/comment/">
+                      <div class="input-field">
+                        <label> Add Comment</label>
+                        <textarea name="body" class="commentBody" col="60" rows="5"></textarea>
+                      </div>
+                      <button value="save comment" name="save" class="commentSaveBtn">Submit</button>
+                    </form>
+                  </div> -->
                 </div>
-              </section> -->
+              </section>
+
+              <button class="addCommentBtn"> Add Comment </button>
+
+              <div class="continuedComments" hidden>
+                <div class="row">
+                  
+                 
+                </div>
+              </div>
                
           </fieldset>     
         </form>
@@ -214,14 +242,14 @@
           <legend>Video Picker</legend>
           <h2 class="vid-picker-title">Video Picker</h2>
           <div class="vid-picker-content">
-            <p> Use the video picker below to search for videos to add to your exercise.</p>
+            <p> Use the video picker below to search for videos to add to your techniques.</p>
             <p>Use the <strong>Preview</strong> &amp; <strong>Select</strong> buttons to check out the videos before you add them to your exercise.</p>
           </div>
           <label for="search">Search for videos:
             <input type="text" name="search" class="video-search-input" placeholder="e.g.,kettle bells...">
             <button type="search" class="video-search-btn"><ion-icon name="search"></ion-icon>Search</button>
-            <button type="return" class="returnToProfileBtn"><ion-icon name="add-circle"></ion-icon>Add Your Videos</button>
-            <button type="cancel" class="closePickerBtn"><ion-icon name="undo"></ion-icon>Back to Exercise</button>
+            <button type="return" class="addVideosToProfileBtn"><ion-icon name="add-circle"></ion-icon>Add Your Videos</button>
+            <button type="cancel" class="closePickerBtn"><ion-icon name="undo"></ion-icon>Back to Technique</button>
           </label>
         </fieldset>
       </form>
@@ -229,7 +257,6 @@
       <hr>
    
       <section class="video-results" aria-live="polite">
-        <!-- <div class="flexbox"> -->
         <div class="row clearfix">
 
         </div>
@@ -252,11 +279,13 @@
         </div>
     </section>
 
-     <section class="user-exercise-page" hidden aria-live="polite" hidden>
+     <section class="user-exercise-page" aria-live="polite" hidden>
+       <h2 class="allExercisePageHeader" hidden>Browse Techniques</h2>
+       <!-- <button class="goBackToAllExerciseBtn" hidden>Go Back</button> -->
+       <h2 class="usernameHeader" hidden>UserName</h2>
        <div class="row">
          <div class="col-12">
-           <h3>Welcome to Your Exercises Page</h3>
-           <p>Begin buy adding an exercise!</p>
+  
          </div>
        </div>
        <!-- <div class="row"> -->
@@ -292,11 +321,13 @@
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous"></script>
-  <script src="https://cdn.ckeditor.com/4.10.0/standard/ckeditor.js"></script>
+  <!-- <script src="vendors/jquery.waypoints.min.js"></script> -->
   <script src="scripts/client.js"></script>
   <script src="scripts/auth.js"></script>
   <script src="scripts/exercises.js"></script>
   <script src="scripts/videos.js"></script>
   <script src="scripts/screens.js"></script>
+  <script src="scripts/comments.js"></script>
+
 </body>
 </html>

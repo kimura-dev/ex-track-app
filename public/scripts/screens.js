@@ -20,7 +20,9 @@ APP.screens.myExercises = {
 APP.screens.intro = {
   title: "Home",
   show: showIntroPage,
-  hide: hideIntroPage,
+  hide: function hideIntroPage(){
+    $('.introduction-page').hide();
+  },
   // have to hide and show login btn 
   nav: true
 }
@@ -29,10 +31,10 @@ APP.screens.signup = {
   title: "Signup",
   // url: '/api/users',
   show: showSignupForm,
-  hide: {
-    hideSignupForm,
-    hideNavItemsWhenLoggedIn
-  },
+  hide: 
+    hideSignupForm
+    // hideNavItemsWhenLoggedIn
+  ,
   nav: true
 }
 
@@ -50,12 +52,7 @@ APP.screens.login = {
   title: "Login",
   url: '/api/auth/login',
   show: showLoginForm,
-  hide: {
-    hideLoginForm,
-    hideNavItemsWhenLoggedIn
-  },
-  // submit: loggingIn,
-  // loggedIn: true,
+    // hideNavItemsWhenLoggedIn
   nav: true
 }
 
@@ -63,11 +60,7 @@ APP.screens.exerciseForm = {
   title: "Exercise Form",
   url: '/exercises',
   show: showExerciseForm,
-  hide: {
-    hideIntroPage,
-    hideUserExercisePage,
-    hideAddExerciseBtn
-  },
+  hide: hideExerciseForm,
   submit: submitExerciseForm,
   nav: false
 }

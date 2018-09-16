@@ -29,7 +29,7 @@ const LogSchema = new Schema({
   futureNotes: {
     type: String
   },
-  user:{
+  username:{
     type: Schema.Types.ObjectId,
     ref:'User'
   },

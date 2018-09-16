@@ -87,24 +87,26 @@ function previewVideos(){
 }; 
 
 /**-------------------------------------- */
-/*     Preview Videos on Exercise Form
-/**-------------------------------------- * /
+/*     Preview Videos on Exercise Form*/
+/**-------------------------------------- */
 
-// function previewVideosOnExercisePage(){
-//   console.log('previewOnExercisePage Connected!');
-//   $('.video-controls').on('click','.watchVideo',function(e){
-//     let target = $( e.target );
-//     let videoID = $(target).parent().parent().find('img').attr('videoID');
-//     $('.popup').show()
-//     $('.overlayBg').show();
-//     $(window).scrollTop(0)
-//     $('.popup iframe').attr('src', `https://www.youtube.com/embed/${videoID}`);
-//   });
-//   $('.overlayBg').click(function () {
-//     $('.popup').hide()
-//     $('.overlayBg').hide()
-//   });
-// }; 
+function previewVideosOnExercisePage(){
+  $('.exercise-form').on('click','.watchVideo',function(e){
+    let target = $( e.target );
+    let videoID = $(target).parent().parent().find('img').attr('videoID');
+    // console.log(videoID);
+
+    $('.popup').show()
+    $('.overlayBg').show();
+    $(window).scrollTop(0)
+    $('.popup iframe').attr('src', `https://www.youtube.com/embed/${videoID}`);
+  });
+  $('.overlayBg').click(function () {
+    $('.popup').hide()
+    $('.overlayBg').hide()
+  });
+}; 
+
 
 /*--------------------------------*/
 /*     JSON for selected videos
@@ -125,6 +127,7 @@ function jsonforVideo(videoElement){
  return jsonVideo;
 
 }
+
 
 /**---------------------------- */
 /*     Add Videos to Profile
@@ -203,7 +206,7 @@ function isVideoInResults(videoID){
 function htmlForVideo(video){
   return `<div class="col-4">
               <h3 class="video-title">${video.title}</h3>
-              <img  class="thumbnail" src="${video.url}" videoID="${video.videoID}">
+              <img  class="thumbnail" src="${video.url}" videoID="${video.videoID}" alt="video result thumbnail">
               <p class="url"><a href="https://www.youtube.com/watch?v=${video.videoID}" target="_blank"> ${video.videoID}</a></p>
               <div class="video-controls">
             ${videoControls(true)}
@@ -219,31 +222,19 @@ function htmlForVideoResult(value){
   // let selectedAttribute = selectedMatch ? ' selected' : '';
   
   
-    return  `<div class="col-4 video-result${ /*selectedAttribute*/ '' }">
-            <h3 class="video-title">${value.snippet.title}</h3>
-            <img  class="thumbnail" src="${value.snippet.thumbnails.medium.url}" videoID="${value.id.videoId}">
-            <p class="url"><a href="https://www.youtube.com/watch?v=${value.id.videoId}" target="_blank"> ${value.id.videoId}</a></p>  
-            <div class="video-controls">
-            ${videoControls(false)}
-            </div>
-          </div>`
+    return  `<div class="video-result">
+              <div class="col-4${ /*selectedAttribute*/ '' }">
+                  <h3 class="video-title">${value.snippet.title}</h3>
+                  <img  class="thumbnail" src="${value.snippet.thumbnails.medium.url}" videoID="${value.id.videoId}">
+                  <p class="url"><a href="https://www.youtube.com/watch?v=${value.id.videoId}" target="_blank"> ${value.id.videoId}</a></p>  
+                  <div class="video-controls">
+                    ${videoControls(false)}
+                  </div>
+              </div>
+            </div>`;
   
 };
-
-    // return `<div class="col-4 video-result${ /*selectedAttribute*/ '' }">
-    //   <div class="video">
-    //     <img class="video-image" src="${value.snippet.thumbnails.medium.url}" videoID="${value.id.videoId}" />
-    //     <div class="video-content">
-    //       <h3 class="video-title">${value.snippet.title}</h3>
-    //       <p class="url"><a href="https://www.youtube.com/watch?v=${value.id.videoId}" target="_blank">${value.id.videoId}</a></p>
-    //     </div>
-    //     <div class="video-controls">
-    //       ${videoControls(false)}
-    //     </div>
-    //   </div>
-    // </div>`;
-
-
+  
 function videoControls(isAdded){
   if(isAdded){
     return  `
@@ -256,27 +247,37 @@ function videoControls(isAdded){
   
 };
 
-  function deleteVideoFromExercise(exercise){
-  let authToken = '';
-
-  if(window.localStorage){
-    authToken = window.localStorage.getItem('authToken');
-  }
-
-  $.ajax({
-    type: 'DELETE',
-    url: `http://localhost:8080/api/exercises/${exercise_id}/videos/${video_id}`,
-  }).then(() => {
-    console.log('Deleted Video from exercise')
-  });
-};
-
-
-
-/**------------------------------- */
+/**--------------------------------- */
 /*     Delete Video from Profile
-/**-------------------------------- */
-function deleteVideo(){
-  let target = $( e.target );
-  $(target).parent().remove();  
+/**--------------------------------- */
+
+  function deleteVideoFromExercise(video_id){
+    let formMessages = $('#form-messages');
+    // let video = $(e.target);
+    // let videoID = $(video).parent().parent().find('img').attr('videoID');
+    // console.log(videoID);
+    let authToken = isLoggedIn(); 
+    $.ajax({
+      type: 'DELETE',
+      url:  `${API_URL}/exercises/videos/${video_id}`,
+      headers: {
+        Authorization: `Bearer ${authToken}`
+      }
+    }).then(() => {
+      console.log('Deleted Video from exercise')
+      updateAllExercises(exercise_id);
+      // showScreen('allExercises');
+      $(formMessages).text(`Your video was deleted successfully!`);
+    }).fail(function(data) { 
+      // Make sure that the formMessages div has the 'error' class.
+      $(formMessages).removeClass('success');
+      $(formMessages).addClass('error');
+  
+      // Set the message text.
+      if (data.responseText !== '') {
+          $(formMessages).text(data.responseText);
+      } else {
+          $(formMessages).text('Oops! An error occured and your message could not be sent.');
+      }
+    });
 };

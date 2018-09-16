@@ -4,7 +4,7 @@ let video = [];
 let exerciseId = '';
 const REFRESH_PERIOD = 1000 * 60; // 60,000 milliseconds
 let lastExercisePage = '';
-let currentExerciseIndex = -1;
+let currentExerciseId = '';
 let pageToken = {};
 const API_URL = 'http://localhost:8080/api';
 
@@ -20,22 +20,11 @@ function submitExerciseForm(){
     videos.push(jsonforVideo(this));
   });
 
-  // let allowComments;
-
-  // if ( $( '.allowComments' ).prop( "checked" ) ) {
-  //   allowComments = true;
-  //   $('.comment-section').removeAttr('hidden');
-  //   $('.comment-section').show();
-  // } else {
-  //   allowComments = false;
-  // }
-
   let data = {
     // _id: exerciseId,
     title: $('.exercise-title').val(),
-    description: CKEDITOR.instances['body'].getData(), 
+    description: $('.exercise-description').val(), 
     status: $('.status > option:selected').text(),
-    // allowComments: allowComments,
     videos: JSON.stringify(videos)
   };
 
@@ -46,45 +35,37 @@ function submitExerciseForm(){
   }
 
   let formMessages = $('#form-messages');
-  let authToken = '';
-
-  if(window.localStorage){
-    authToken = window.localStorage.getItem('authToken');
-  }
+  let authToken = isLoggedIn();
  
   console.log('AJAX Submit');
 
   // AJAX To Exercises
   $.ajax({
     type: exerciseId ? 'PUT':'POST',
-    url: `http://localhost:8080/api/exercises/${ exerciseId ? exerciseId  : ''}`,
+    url: `${API_URL}/exercises/${ exerciseId ? exerciseId  : ''}`,
     data: data,
     headers: {
       Authorization: `Bearer ${authToken}`
     }
   }).then(function(response) {
+    console.log(response);
 
-
-    // Make sure that the formMessages div has the 'success' class.
-    $(formMessages).removeClass('error');
-    $(formMessages).addClass('success');
+    // $(formMessages).removeClass('error');
+    // $(formMessages).addClass('success');
     // clearExerciseForm();
-    // hideExerciseForm();
-    addExerciseToLocalArrays(response, exerciseId);
-    // return showMyExercisesPage();
+    // addExerciseToLocalArrays(response, exerciseId);
+    // showScreen('myExercises');
 
 
-  }).fail(function(data) { 
-    // Make sure that the formMessages div has the 'error' class.
-    $(formMessages).removeClass('success');
-    $(formMessages).addClass('error');
+  // }).fail(function(data) { 
+  //   $(formMessages).removeClass('success');
+  //   $(formMessages).addClass('error');
 
-    // Set the message text.
-    if (data.responseText !== '') {
-        $(formMessages).text(data.responseText);
-    } else {
-        $(formMessages).text('Oops! An error occured and your message could not be sent.');
-    }
+  //   if (data.responseText !== '') {
+  //       $(formMessages).text(data.responseText);
+  //   } else {
+  //       $(formMessages).text('Oops! An error occured and your message could not be sent.');
+  //   }
   });
 };
 
@@ -123,14 +104,24 @@ function addExerciseToLocalArrays(exercise, exerciseId){
 /*    Show All and Show My Exercise Pages
 /**---------------------------------------------------- */
 function showAllExercisesPage(){
-
-  showExercisesPage(exercises, '/exercises');
+  if(!isLoggedIn()){
+    showloginRegisterPrompt();
+    hideAddExerciseBtn();  
+  }
+  showAllExercisePageHeader();
+  hideUsernameHeader();
+  showAllExercisePageHeader();
+  return showExercisesPage(exercises, '/exercises');
 };
 
 function showMyExercisesPage(){
-  // let formMessages = $('#form-messages');
-  // $('#form-messages').text(`${exercise.title} was added successfully!`);
-  showExercisesPage(myExercises, '/exercises/my');
+  hideLoginRegisterPrompt();
+  showAddExerciseBtn();
+  showUsernameHeader();
+  hideAllExercisePageHeader();
+  $('.usernameHeader').html(getCurrentUser()+"'s "+' Techniques');
+
+  return showExercisesPage(myExercises, '/exercises/my');
 };
 
 function showExercisesPage(exercises, url){
@@ -141,7 +132,7 @@ function showExercisesPage(exercises, url){
     $('.user-exercise-page').removeAttr('hidden');
     $('.user-exercise-page').show();
     renderAllExercisesPage(exercises, url);
-    showAddExerciseBtn();
+    
   }
 
   if(timeSince >= REFRESH_PERIOD){
@@ -170,9 +161,9 @@ function htmlForAllExercisesPage(exercise){
   };
 
   return `<div class="col-4">
-                 <div class="exercise">
+                 <div class="exercise" data-id='${exercise.id}'>
                      <a class="exercise-show" href="#">View
-                     <img class="exercise-image" src="${videoSrc}" videoID="${videoID}" />
+                     <img class="exercise-image" src="${videoSrc}" videoID="${videoID}" alt="video result thumbnail"/>
                      </a>
                      <h3 class="user-exercise-title">${exercise.title}</h3>
                    <div class="exercise-content">
@@ -186,10 +177,10 @@ function htmlForAllExercisesPage(exercise){
 /*     Display Users Exercise Data to Form
 /**---------------------------------------------------- */
 
-function getExerciseIndexFromClick(e){
-  const target = $(e.currentTarget).closest('.exercise').closest('.col-4');
-  let index = target.index();
-  return index;
+function getCurrentExerciseIdFromClick(e){
+  exerciseId = $(e.currentTarget).closest('.exercise').attr('data-id');
+  console.log('ExerciseID ' + exerciseId);
+  return exerciseId;
 };
 
 function renderVideosOnExercisesForm(exercise){
@@ -198,7 +189,6 @@ function renderVideosOnExercisesForm(exercise){
 };
 
 function htmlForVideoOnExerciseForm(video){
-// console.log('This is video ', video);
   return `<div class="col-4">
            <div class="exerciseOnForm">
               <h3 class="video-title" objectID="${video._id || ''}">${video.title}</h3>
@@ -212,9 +202,11 @@ function htmlForVideoOnExerciseForm(video){
 };
 
 function populateFormWExerciseData(exercise) {
+
   let formMessages = $('#form-messages');
 
   if(exercise){
+
     $('.exercise-id').val(exercise._id || '') ;
     $('.exercise-title').val(exercise.title || '') ;
     $('.exercise-description').val(exercise.description || '');
@@ -223,16 +215,13 @@ function populateFormWExerciseData(exercise) {
 
     showExerciseForm();
     showDeleteExerciseBtn();
-    // previewVideosOnExercisePage();
+    
   }
+  
 };
 
 function getAllExercises(exercises, url){
-  let authToken = '';
-
-  if(window.localStorage){
-    authToken = window.localStorage.getItem('authToken');
-  }
+  let authToken = isLoggedIn() ;
   
   // AJAX To Exercises
   return $.ajax({
@@ -259,8 +248,7 @@ function getAllExercises(exercises, url){
 /**--------------------------------------- */
 
 function deleteExercise(exercise_id){
-  // console.log(exercises);
-  // console.log( $('.exercise-id').val() );
+
   let formMessages = $('#form-messages');
 
   let authToken = '';
@@ -271,7 +259,7 @@ function deleteExercise(exercise_id){
 
   $.ajax({
     type: 'DELETE',
-    url: `http://localhost:8080/api/exercises/${exercise_id}`,
+    url: `${API_URL}/exercises/${exercise_id}`,
     headers: {
       Authorization: `Bearer ${authToken}`
     }
@@ -279,14 +267,13 @@ function deleteExercise(exercise_id){
     updateAllExercises(exercise_id);
     showScreen('allExercises');
     $(formMessages).text(`Your exercise was deleted successfully!`);
-    // json({ title: req.params.title })
+
   });
   
 };
 
 function updateAllExercises(exercise_id){
-  // console.log(exercises);
-  // console.log( $('.exercise-id').val() );
+
   exercises = exercises.filter(function (item) {
     return !item._id.includes(exercise_id);
   }); 
@@ -298,6 +285,5 @@ function clearExerciseForm(){
   $('.exercise-description').val('');
   $('.added-videos > .row').html('');
   $('.allow-comments').val('');
-  // setData may be erasing and resetting the original value
-  CKEDITOR.instances['body'].setData('');
+
 }

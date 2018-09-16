@@ -11,7 +11,9 @@ body {
   color: rgb(255, 255, 255);
   font-family: 'Raleway', sans-serif;
   font-size: 18px;
-  background-image:  -webkit-linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),url(/styles/imgs/hero.jpg);
+  background-image:  -webkit-linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),url(/styles/imgs/hero1.jpg);
+  
+
   background-position: center;
 	/*100% of the viewport*/
 	height: 100vh;
@@ -20,6 +22,7 @@ body {
   background-attachment: fixed;
   margin: 0;
 }
+
 
 /*-------------------------------*/
 /*    Global Elements
@@ -64,7 +67,9 @@ legend {
 /* Add a black background color to the top navigation */
 .topnav {
   background-color: rgb(42, 59, 212);
+  border-bottom: 8px solid rgb(238, 122, 13);
   overflow: hidden;
+  position: relative;
 }
 
 /* Style the links inside the navigation bar */
@@ -81,11 +86,45 @@ legend {
   font-size: 17px;
 }
 
+/* .topnav .nav-username {
+  position: absolute;
+  right: 0;
+  padding-right: 0.5em; 
+} */
+
+.logo-container {
+  margin-left: auto;
+  margin-right: auto;
+  /* margin-bottom: 20px; */
+}
+.topnav .nav-logo {
+  position: absolute;
+  right: 0;
+  padding-right: 0.1em; 
+  padding-top: 0;
+}
+
+.nav-logo {
+  width: 100px;
+  height: 100px;
+}
+
+a.nav-username {
+  color: rgb(238, 122, 13);
+  text-shadow: 1px 1px #4e4b48;
+}
+
 /* Change the color of links on hover */
 .topnav a:hover,
 .topnav a:focus {
   background-color: rgb(238, 122, 13);   
   color: #E5E5E5;
+}
+
+a.nav-logo:hover,
+a.nav-logo:focus {
+  background-color: rgb(42, 59, 212);
+  cursor: default;
 }
 
 .hydrated {
@@ -112,17 +151,25 @@ legend {
   text-align: center;
 } */
 
-.success {
+#form-messages {
+  /* margin-top: 1.5em; */
+  margin: 0 auto;
+  font-size: 1.5em;
+  /* background-color: rgba(250, 109, 15, 0.678); */
+  color: #E5E5E5;
+  width: 40em;
   text-align: center;
+  padding: 0.12em;
 }
 
-.success,
-.error {
-  text-align: center;
+div.error {
+  margin-top: 1.5em;
+  margin-left: 1.5em;
   font-size: 1.5em;
-  width: 100%;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  background-color: rgba(238, 64, 64, 0.473);
+  color: #E5E5E5;
+  width: 40em;
+  text-align: center;
 }
 /*-------------------------------*/
 /*      Animations
@@ -140,7 +187,7 @@ legend {
 /*   Intro Content
 /*-------------------------------*/
 .intro-title {
-  margin-top: 125px;
+  margin-top: 2em;
   margin-bottom: 40px;
   letter-spacing: 0.4em;
   text-shadow:2px 2px rgb(71, 93, 218);
@@ -154,7 +201,7 @@ legend {
   line-height: 2.5em;
   word-spacing: 0.2em;
   letter-spacing: 0.1em;
-  font-size: 22px;
+  /* font-size: 22px; */
   font-weight: 500;
 }
 
@@ -162,7 +209,48 @@ legend {
   text-align: center;
 }
 
-.login-btn {
+.loginOrRegisterPrompt a {
+  color: rgb(243, 125, 16);
+}
+
+.loginOrRegisterPrompt a:hover,
+.loginOrRegisterPrompt a:focus {
+  color:  #E5E5E5;
+  cursor: pointer;
+}
+
+.enter {
+  background-color: rgb(17, 69, 243);
+  color: aliceblue;
+  margin: 20px;
+  padding: 20px;
+  font-size: 22px;
+  font-size: 18px;
+  width: 25%;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.enter:hover,
+.enter:focus {
+  background-color: rgb(238, 122, 13);  
+  border: 3px solid #E5E5E5;
+  cursor: pointer;
+}
+
+.browse-header {
+  letter-spacing: 0.4em;
+  text-shadow:2px 2px rgb(71, 93, 218);
+  color: rgb(238, 122, 13);  
+  font-weight: 700;
+  font-size: 200%;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+/* .login-btn {
   background-color: rgb(17, 69, 243);
   color: aliceblue;
   margin: 20px;
@@ -174,12 +262,12 @@ legend {
   letter-spacing: 0.25em;
   font-weight: 600;
   cursor: pointer;
-}
+} */
 
-.login-btn:hover,
+/* .login-btn:hover,
 .login-btn:focus {
   background-color: rgb(238, 122, 13);  
-}
+} */
 
 /*-------------------------------*/
 /*      Sign Up Form
@@ -216,7 +304,6 @@ legend {
   font-size: 18px;
   text-transform: uppercase;
   margin-top: 40px;
-  margin-bottom: 40px;
 }
 
 .add-btn-box {
@@ -230,8 +317,36 @@ legend {
 }
 
 /*-------------------------------*/
+/*      Go Back to Exercise Btn
+/*-------------------------------*/
+
+/* .goBackToAllExerciseBtn {
+  background-color: rgb(17, 69, 243);
+  color: #E5E5E5;
+  padding: 18px;
+  font-size: 18px;
+  text-transform: uppercase;
+  margin-top: 40px;
+  text-align: center;
+}
+
+.goBackToAllExerciseBtn:hover,
+.goBackToAllExerciseBtn:focus {
+  background-color: rgb(238, 122, 13); 
+  cursor: pointer;
+} */
+
+/*-------------------------------*/
 /*   Exercise Form
 /*-------------------------------*/
+.exerciseFieldset {
+  margin-top: 2em;
+}
+
+.exerciseFormBtns {
+  background-color: beige;
+  display: inline-block;
+}
 .add-video-btn,
 .save-exercise-btn,
 .delete-exercise-btn {
@@ -257,6 +372,31 @@ legend {
   cursor: pointer; 
 }
 
+.exercise-description {
+  width: 50em;
+  height: 12em;
+  font-size: 0.9em;
+}
+
+.commentBody {
+  width: 40em;
+  height: 4em;
+  font-size: 0.8em;
+}
+
+.commentSaveBtn {
+  color: #E5E5E5;
+  padding: 8px;
+  font-size: 85%;
+  background-color: rgb(6, 31, 252);
+}
+
+.commentSaveBtn:hover,
+.commentSaveBtn:focus {
+  background-color: rgb(238, 122, 13);  
+  cursor: pointer; 
+}
+
 .status {
   padding: 2px;
   font-size: 16px;
@@ -275,6 +415,17 @@ h5 {
   font-size: 20px;
 }
 
+.pickerContentOnForm {
+  margin-top: 2.5em;
+  margin-bottom: 2.5em;
+  margin-left: 2.0em;
+}
+
+.clickBelow {
+  margin-top: 2em;
+  margin-left: 2em;
+}
+
 input[type='checkbox'] {
   width: 18px;
   height: 18px;
@@ -286,7 +437,10 @@ input[type='checkbox']:focus {
 }
 
 .exerciseOnForm {
-  background-color: rgb(238, 134, 183);
+  background-color: rgb(238, 122, 13);
+  min-height: 20em;
+  max-height: 22em;
+  /* max-height:  */
 }
 
 .watchVideo,
@@ -305,6 +459,50 @@ deleteVideo:focus,
   background-color: rgb(238, 122, 13);  
 }
 
+.a-login {
+  color: rgb(238, 122, 13);
+}
+
+/*-------------------------------*/
+/*   COMMENTS SECTION
+/*-------------------------------*/
+.addCommentBtn {
+  color: #E5E5E5;
+  padding: 8px;
+  font-size: 85%;
+  background-color: rgb(6, 31, 252);
+  margin-left: 1.8em
+}
+
+.addCommentBtn:hover,
+.addCommentBtn:focus {
+  background-color: rgb(238, 122, 13);  
+  cursor: pointer;
+}
+/*-------------------------------*/
+/*   USER EXERCISE PAGE
+/*-------------------------------*/
+.usernameHeader {
+  text-align: center;
+  margin-bottom: 40px;
+  letter-spacing: 0.4em;
+  text-shadow:2px 2px rgb(71, 93, 218);
+  color: rgb(238, 122, 13);  
+  font-weight: 700;
+  font-size: 150%;
+  text-transform: uppercase;
+}
+
+.allExercisePageHeader{
+  text-align: center;
+  margin-bottom: 40px;
+  letter-spacing: 0.4em;
+  text-shadow:2px 2px rgb(71, 93, 218);
+  color: rgb(238, 122, 13);  
+  font-weight: 700;
+  font-size: 150%;
+  text-transform: uppercase;
+}
 /*-------------------------------*/
 /*   Login Buttons & Styles
 /*-------------------------------*/
@@ -318,7 +516,8 @@ deleteVideo:focus,
 
 .logIn:hover,
 .logIn:focus {
-  background-color: rgb(238, 122, 13);   
+  background-color: rgb(238, 122, 13); 
+  cursor: pointer;  
 }
 
 .login-fieldset {
@@ -377,7 +576,7 @@ input {
 }
 
 img {
-  margin:10px;
+  max-width: 100%;
 }
 
 p {
@@ -389,10 +588,6 @@ p {
   width: 1140px;
   height: 100%;
 }
-
-/* .button-options {
-  display: block;
-} */
 
 .tokenClass {
   padding: 10px;
@@ -410,15 +605,6 @@ p {
 /*------------------------------------------*/
 /*         VideoPicker Style
 /*------------------------------------------*/
-.videoPickerFieldSet{
-
-}
-
-.vid-picker-on-form {
-  margin-top: 2.5em;
-  margin-bottom: 2.5em;
-
-}
 
 .vid-picker-title {
   text-align: center;
@@ -443,11 +629,7 @@ p {
 
 
 .video-result {
-  margin: 2px;
   background-color: rgb(238, 122, 13);
-  display: inline-block;
-  width: 33%;
-  float: left;
 } 
 
 
@@ -456,33 +638,6 @@ p {
   clear: both;
   display: table;
 }
-
-
-/*------------------------------------------*/
-/* Flexbox display on Video Results */
-/*------------------------------------------*/
-
-/* .flexbox {
-  float: left;
-} */
-
-/* .flexbox {
-  background-color:  rgb(17, 69, 243);;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.video-results {
-  display: flex;
-}
-
-.video-result {
-  margin: 2px;
-  background-color: rgb(238, 122, 13);
-  flex: 1;
-  min-width: 200px;
-} */
 
 /*------------------------------------------*/
 /* Video Section */
@@ -536,12 +691,38 @@ p {
 .exercise {
   margin-bottom: 30px;
   background-color: rgb(238, 122, 13);
-  overflow: hidden;
+  overflow: scroll;
+
+  text-overflow: ellipsis;
+  max-height: 23em;
+  min-height: 23em;
 }
 
 .exercise-show {
   font-size: 20px;
-  color: rgb(238, 232, 224);
+  color: rgb(34, 66, 243);
+  text-transform: uppercase;
+  /* text-shadow: 2px 2px  rgb(47, 117, 209); */
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  margin-left: 0.6em;
+  /* text-decoration: none; */
+}
+
+.exercise-show:hover,
+.exercise-show:focus {
+  color: #E5E5E5;
+  cursor: pointer;
+}
+
+.user-exercise-title {
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 18px;
+  color: rgb(6, 31, 252);
+  text-shadow: 2px 2px  rgb(13, 174, 238);
+  font-weight: 700;
+  letter-spacing: 0.2em;
 }
 
 .video-result .select-video-btn {
@@ -570,7 +751,7 @@ p {
   color: #E5E5E5;
   text-transform: uppercase;
 }
-.returnToProfileBtn {
+.addVideosToProfileBtn {
   background-color: rgb(6, 31, 252);
   padding: 8px;
   font-size: 16px;
@@ -582,14 +763,14 @@ p {
 
 .video-search-btn:hover,
 .closePickerBtn:hover,
-.returnToProfileBtn:hover {
+.addVideosToProfileBtn:hover {
   cursor: pointer;
   border: 3px solid white;
 }
 
 .video-search-btn:focus,
 .closePickerBtn:focus,
-.returnToProfileBtn:focus {
+.addVideosToProfileBtn:focus {
   cursor: pointer;
   border: 3px solid white;
 }
@@ -629,20 +810,36 @@ footer {
 
 }
 /* When the screen is less than 600 pixels wide, hide all links, except for the first one ("Home"). Show the link that contains should open and close the topnav (.icon) */
-@media screen and (max-width: 600px) {
-  .topnav a:not(:first-child) {display: none;}
+@media screen and (max-width: 640px) {
+  .topnav a:not(:first-child),
+  .logo-container {display: none;}
+
+  /* .logo-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+  } */
+
   .topnav a.icon {
     float: right;
     display: block;
   }
+
+  .intro-title {
+    font-size: 1.6em;
+  }
+
+  .intro-content {
+    line-height: 2.0em;
+  }
 }
 
 /* The "responsive" class is added to the topnav with JavaScript when the user clicks on the icon. This class makes the topnav look good on small screens (display the links vertically instead of horizontally) */
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 640px) {
   .topnav.responsive {position: relative;}
   .topnav.responsive a.icon {
     position: absolute;
-    right: 0;
+    left: 0;
     top: 0;
   }
   .topnav.responsive a {

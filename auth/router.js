@@ -21,21 +21,24 @@ router.use(bodyParser.json());
 
 // Create a New User
 router.post('/users', localAuth, (req, res) => {
+  const user = req.user.serialize();
   const authToken = createAuthToken(req.user.serialize());
-  res.json({authToken});
+  res.json({authToken, user});
 });
 // The user provides a username and password to login
 router.post('/login', localAuth, (req, res) => {
-  const authToken = createAuthToken(req.user.serialize());
-  res.json({authToken});
+  const user = req.user.serialize();
+  const authToken = createAuthToken(user);
+  res.json({authToken, user});
 });
 
 const jwtAuth = passport.authenticate('jwt', {session: false});
 
 // The user exchanges a valid JWT for a new one with a later expiration
 router.post('/refresh', jwtAuth, (req, res) => {
-  const authToken = createAuthToken(req.user);
-  res.json({authToken});
+  const user = req.user.serialize();
+  const authToken = createAuthToken(user);
+  res.json({authToken, user});
 });
 
 module.exports = {router, createAuthToken};

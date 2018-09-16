@@ -8,7 +8,7 @@ const {Log} = require('./models');
 // Log Index
 router.get('/', (req, res) => {
   Log.find({status:'public'})
-    .populate('user')
+     .populate('user','username firstName lastName')
     .then(logs => {
       res.status(200).json(logs);
     }).catch(err => {
@@ -21,7 +21,7 @@ router.get('/:id', (req, res, next) => {
   Log.findOne({
     _id: req.params.id
   })
-  .populate('user')
+   .populate('user','username firstName lastName')
   .populate('comments.user')
   .then(log => {
     req.log = log;
@@ -35,7 +35,7 @@ router.get('/:id', (req, res, next) => {
 // Logged in users logs
 router.get('/', (req, res) => {
   Log.find({user: req.user.id})
-    .populate('user')
+    .populate('user','username firstName lastName')
     .then(logs => {
       res.status(200).json(logs);
     }).catch(err => {
