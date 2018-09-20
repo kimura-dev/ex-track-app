@@ -3,11 +3,11 @@ const Schema = mongoose.Schema;
 
 // Create Shema
 const LogSchema = new Schema({
-  exercise:{
-    type: Schema.Types.ObjectId,
-    ref:'Exercise',
-    required: true
-  },
+  // exercise:{
+  //   type: Schema.Types.ObjectId,
+  //   ref:'Exercise',
+  //   required: true
+  // },
   notes:{
     type: String,
     required: true
@@ -16,19 +16,10 @@ const LogSchema = new Schema({
     type: Date,
     default: new Date(0)
   },
-  status: {
-    type: String,
-    default:'public'
-  },
-  rating: [{
-    rating:{
-      type: Number,
-      default: 0
-    }
-  }],
-  futureNotes: {
-    type: String
-  },
+  // status: {
+  //   type: String,
+  //   default:'public'
+  // },
   username:{
     type: Schema.Types.ObjectId,
     ref:'User'

@@ -6,7 +6,6 @@
 /**------------------------------ */
 
 function showMoviePicker(){
-  // hideExerciseForm();
   $('.video-picker').show();
   searchVideoForExerciseTitle();
 };
@@ -26,14 +25,20 @@ function hideMoviePicker(){
 function youtubeOutput(data) {
   pageToken.nextPage = data.nextPageToken;
   pageToken.prevPage = data.prevPageToken;
-  // console.log(data);
-  // console.log(pageToken);
-
-  let html = "";
+   
+  let html = ` <div class="row clearfix">`;
   $.each(data['items'], function (index, value) {
+
+    
     html += htmlForVideoResult(value);     
+    if( (index + 1) % 3 === 0 ){
+      // console.log(index);
+      html += '</div> <div class="row clearfix">'
+    }
   });
-  $('.video-results > .row').html(html);
+  html += '</div>';
+
+  $('.video-results').html(html);
   // showPrevNextBtn();
 };
 
@@ -58,7 +63,12 @@ function searchYoutube() {
 function searchVideoForExerciseTitle(){
   let title = $('.exercise-title').val();
 
-  if(title && !$('.added-videos > .row').children().length) {
+  // if(title && !$('.added-videos > .row').children().length) {
+  //   $('.video-search-input').val(title);
+  //   $('.video-search-btn').focus().click();
+  // }
+
+  if(title) {
     $('.video-search-input').val(title);
     $('.video-search-btn').focus().click();
   }
@@ -93,7 +103,7 @@ function previewVideos(){
 function previewVideosOnExercisePage(){
   $('.exercise-form').on('click','.watchVideo',function(e){
     let target = $( e.target );
-    let videoID = $(target).parent().parent().find('img').attr('videoID');
+    let videoID = $(target).parent().parent().parent().find('img').attr('videoID');
     // console.log(videoID);
 
     $('.popup').show()
@@ -208,38 +218,51 @@ function htmlForVideo(video){
               <h3 class="video-title">${video.title}</h3>
               <img  class="thumbnail" src="${video.url}" videoID="${video.videoID}" alt="video result thumbnail">
               <p class="url"><a href="https://www.youtube.com/watch?v=${video.videoID}" target="_blank"> ${video.videoID}</a></p>
-              <div class="video-controls">
-            ${videoControls(true)}
+              <div class="video-controls" data-videoId="${video._id}">
+               ${videoControls(true)}
 
-              </div>
-            </div>`
+                </div>
+              </div>`
 }
 
 function htmlForVideoResult(value){
   const videos = APP.screens.videoPicker.videos.selected;
+  let title = value.snippet.title;
   // let selectedMatch = videos.find(video => video.videoID === value.id.videoId);
 
   // let selectedAttribute = selectedMatch ? ' selected' : '';
-  
-  
     return  `<div class="video-result">
-              <div class="col-4${ /*selectedAttribute*/ '' }">
-                  <h3 class="video-title">${value.snippet.title}</h3>
+              <div class="col-4${ /*selectedAttribute*/ '' } youtubeVideo">
+                  <h3 class="video-title">${truncateVideoElement(title)}</h3>
                   <img  class="thumbnail" src="${value.snippet.thumbnails.medium.url}" videoID="${value.id.videoId}">
                   <p class="url"><a href="https://www.youtube.com/watch?v=${value.id.videoId}" target="_blank"> ${value.id.videoId}</a></p>  
                   <div class="video-controls">
-                    ${videoControls(false)}
+                    ${videoControls(false)} 
                   </div>
               </div>
             </div>`;
   
 };
-  
+
+function truncateVideoElement(title){
+
+  let shortText = jQuery.trim(title).substring(0, 15)
+      .split(" ").slice(0, -1).join(" ") + "...";
+  return shortText;
+  // $('.video-title').html('before: ' + title + '<br>' + 'after: ' + shortText);
+
+}
+
+
 function videoControls(isAdded){
   if(isAdded){
     return  `
-    <button class="watchVideo">Watch Video</button>
-    <button class="deleteVideo">Delete Video</button>`
+    <div class="float-left">
+      <button class="watchVideo">Watch Video</button>
+    </div>
+    <div class="float-right">
+      <button class="deleteVideo">Delete Video</button>
+    </div>`
   } 
     return `<button class="preview-video"><ion-icon name="play-circle"></ion-icon>Preview</button>
             <button class="select-video-btn"><ion-icon name="add-circle"></ion-icon>Select</button>
@@ -252,6 +275,7 @@ function videoControls(isAdded){
 /**--------------------------------- */
 
   function deleteVideoFromExercise(video_id){
+    let exercise_id = '';
     let formMessages = $('#form-messages');
     // let video = $(e.target);
     // let videoID = $(video).parent().parent().find('img').attr('videoID');
@@ -259,6 +283,7 @@ function videoControls(isAdded){
     let authToken = isLoggedIn(); 
     $.ajax({
       type: 'DELETE',
+      // url:  `${API_URL}/exercises/videos/${video_id}`,
       url:  `${API_URL}/exercises/videos/${video_id}`,
       headers: {
         Authorization: `Bearer ${authToken}`

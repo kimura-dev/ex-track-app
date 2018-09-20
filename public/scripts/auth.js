@@ -7,6 +7,9 @@
 function showSignupForm(){
   $('#sign-up-form').show();
   hideLoginForm();
+  if(currentScreen() == 'exerciseForm'){
+    hideSignupForm();
+  }
 }
 
 function hideSignupForm(){
@@ -57,7 +60,7 @@ function submitSignupForm(){
       $(formMessages).text('Your Account was successfully created!');
     } 
 
-    showAddExerciseBtn();
+    // showAddExerciseBtn();
     // hideLoginItems();
     hideNavItemsWhenLoggedIn();
     showNavItemsAfterLogin();
@@ -104,6 +107,9 @@ function hideLogInBtn(){
 function showLoginForm(){
   $('#login-form').show();
   hideSignupForm();
+  if(currentScreen() == 'exerciseForm'){
+    hideLoginForm();
+  }
 };
 
 function hideLoginForm(){
@@ -136,7 +142,8 @@ function loggingIn(){
     // let username =  $('.usersname').val();
     // console.log(response);
     let authToken = response.authToken;
-    let user = response.user.username;
+   
+    let user = JSON.stringify(response.user);
 
     if(window.localStorage){
       window.localStorage.setItem('authToken', authToken);
@@ -171,7 +178,6 @@ function loggingIn(){
     }
   });
 };
-
 
 function logoutUser(){
   localStorage.removeItem('authToken');

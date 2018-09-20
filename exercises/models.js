@@ -44,10 +44,7 @@ const ExerciseSchema = new Schema({
       type: Date,
       default: Date.now
     },
-    user:{
-      type: Schema.Types.ObjectId,
-      ref:'User'
-    }
+    user: String
   }],
   username: {
     type: String,

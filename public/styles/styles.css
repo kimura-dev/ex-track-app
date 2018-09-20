@@ -7,6 +7,10 @@
 /* Orange rgb(238, 122, 13) */
 /* Blue rgb(42, 59, 212); */
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   color: rgb(255, 255, 255);
   font-family: 'Raleway', sans-serif;
@@ -39,15 +43,17 @@ fieldset {
 }
 
 fieldset legend {
+  background-color: bisque;
   border: 5px solid rgb(42, 59, 212);
   padding: 5px 10px;
   font-size: 26px;
-
+  color: rgb(238, 122, 13);
+  text-shadow: 2px 0 0 #fff, -2px 0 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
 }
 
-input {
+/* input {
   display: block;
-}
+} */
 
 strong {
   color: rgb(238, 122, 13);  
@@ -86,11 +92,11 @@ legend {
   font-size: 17px;
 }
 
-/* .topnav .nav-username {
+.topnav .nav-username {
   position: absolute;
   right: 0;
   padding-right: 0.5em; 
-} */
+}
 
 .logo-container {
   margin-left: auto;
@@ -151,15 +157,23 @@ a.nav-logo:focus {
   text-align: center;
 } */
 
+div #form-messages {
+  display: block;
+}
+
 #form-messages {
   /* margin-top: 1.5em; */
   margin: 0 auto;
   font-size: 1.5em;
+  font-weight: bold;
+
   /* background-color: rgba(250, 109, 15, 0.678); */
-  color: #E5E5E5;
+  color: rgb(238, 122, 13);
   width: 40em;
   text-align: center;
-  padding: 0.12em;
+  padding: 1em;
+  padding-bottom: 0;
+  text-shadow: 2px 0 0 #fff, -2px 0 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
 }
 
 div.error {
@@ -276,7 +290,12 @@ div.error {
   margin: auto;
   margin-top: 5em;
   width: 40%;
+  background-color: rgb(255, 228, 196)
   /* height: 500px; */
+}
+
+.sign-up-fieldset input {
+  display: block;
 }
 
 
@@ -339,14 +358,65 @@ div.error {
 /*-------------------------------*/
 /*   Exercise Form
 /*-------------------------------*/
+.hidden {
+  display: none;
+}
+
 .exerciseFieldset {
-  margin-top: 2em;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain, cover;
+  background-color: rgb(34, 157, 238);
+  /* background-color: bisque;
+  color: rgb(17, 69, 243);
+  text-shadow: 2px 0 0 rgb(238, 122, 13), -2px 0 0 rgb(238, 122, 13), 0 2px 0 rgb(238, 122, 13), 0 -2px 0 rgb(238, 122, 13), 1px 1px rgb(238, 122, 13), -1px -1px 0 rgb(238, 122, 13), 1px -1px 0 rgb(238, 122, 13), -1px 1px 0 rgb(238, 122, 13); */
 }
 
 .exerciseFormBtns {
   background-color: beige;
   display: inline-block;
 }
+
+.label-for-ex {
+  color: #fff;
+  letter-spacing: 0.1em;
+  text-shadow: 0 1px 0 rgb(255, 129, 12),
+  0 2px 0 #fa8e04,
+  0 3px 0 rgb(248, 132, 0),
+  0 4px 0 #dd8028,
+  0 5px 0 rgb(230, 130, 16),
+  0 6px 1px rgba(0,0,0,.1),
+  0 0 5px rgba(0,0,0,.1),
+  0 1px 3px rgba(0,0,0,.3),
+  0 3px 5px rgba(0,0,0,.2),
+  0 5px 10px rgba(0,0,0,.25),
+  0 10px 10px rgba(0,0,0,.2),
+  0 20px 20px rgba(0,0,0,.15);
+}
+
+.addExerciseTitleToVidSect {
+  text-align: center;
+  margin-bottom: 40px;
+  letter-spacing: 0.4em;
+  /* text-shadow:2px 2px rgb(71, 93, 218); */
+  color: rgb(238, 122, 13);  
+  font-weight: 700;
+  font-size: 150%;
+  text-transform: uppercase;
+  text-shadow: 0 1px 0 rgb(17, 69, 243),
+               0 2px 0 rgb(17, 69, 243),
+               0 3px 0 rgb(17, 69, 243),
+               0 4px 0 rgb(17, 69, 243),
+               0 5px 0 rgb(17, 69, 243),
+               0 6px 1px rgba(0,0,0,.1),
+               0 0 5px rgba(0,0,0,.1),
+               0 1px 3px rgba(0,0,0,.3),
+               0 3px 5px rgba(0,0,0,.2),
+               0 5px 8px rgba(0,0,0,.25),
+               0 8px 10px rgba(0,0,0,.2),
+               0 15px 15px rgba(0,0,0,.15);
+}
+
 .add-video-btn,
 .save-exercise-btn,
 .delete-exercise-btn {
@@ -356,6 +426,7 @@ div.error {
   font-size: 18px;
   text-transform: uppercase;
   margin-right: 40px;
+  margin-bottom: 20px;
 }
 
 .add-video-btn:hover,
@@ -373,22 +444,34 @@ div.error {
 }
 
 .exercise-description {
-  width: 50em;
-  height: 12em;
+  /* width: 49em; */
+  height: 9em;
   font-size: 0.9em;
 }
 
+.ex-desc-input-field {
+  text-align: center;
+}
+
+.ex-desc-input-field1 {
+  text-align: center;
+  background-color: rgb(238, 122, 13);
+  border: 4px solid #000;
+  margin-top: 25px;
+}
+
 .commentBody {
-  width: 40em;
-  height: 4em;
+  width: 59em;
+  height: 4.5em;
   font-size: 0.8em;
 }
 
 .commentSaveBtn {
   color: #E5E5E5;
-  padding: 8px;
+  padding: 12px;
   font-size: 85%;
   background-color: rgb(6, 31, 252);
+  border-radius: 50%;
 }
 
 .commentSaveBtn:hover,
@@ -411,14 +494,23 @@ div.error {
   margin: 15px 0px;
 }
 
+.status-content {
+  color: rgb(238, 122, 13);
+  text-shadow: 1px 0 0 #fff, -1px 0 0 #fff,0 1px 0 #fff,0 -1px 0 #fff, 1px 1px #fff;
+  letter-spacing: 0.1em;
+}
+
 h5 {
-  font-size: 20px;
+  font-size: 0.9em;
 }
 
 .pickerContentOnForm {
-  margin-top: 2.5em;
-  margin-bottom: 2.5em;
-  margin-left: 2.0em;
+  margin-left: 1.8em;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  color: rgb(238, 122, 13);
+  text-align: center;
+  text-shadow: 2px 0 0 #fff, -2px 0 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff; 
 }
 
 .clickBelow {
@@ -438,9 +530,17 @@ input[type='checkbox']:focus {
 
 .exerciseOnForm {
   background-color: rgb(238, 122, 13);
-  min-height: 20em;
-  max-height: 22em;
+  min-height: 18em;
+  max-height: 18em;
   /* max-height:  */
+}
+
+.float-left {
+  float: left;
+}
+
+.float-right {
+  float: right;
 }
 
 .watchVideo,
@@ -468,10 +568,11 @@ deleteVideo:focus,
 /*-------------------------------*/
 .addCommentBtn {
   color: #E5E5E5;
-  padding: 8px;
-  font-size: 85%;
-  background-color: rgb(6, 31, 252);
-  margin-left: 1.8em
+  background-color: rgb(17, 69, 243);
+  padding: 15px;
+  font-size: 18px;
+  text-transform: uppercase;
+  margin-right: 40px;
 }
 
 .addCommentBtn:hover,
@@ -523,6 +624,11 @@ deleteVideo:focus,
 .login-fieldset {
   width: 40%;
   margin: 25px auto;
+  background-color: bisque;
+}
+
+.login-fieldset input {
+  display: block;
 }
 
 /*-------------------------------*/
@@ -606,6 +712,27 @@ p {
 /*         VideoPicker Style
 /*------------------------------------------*/
 
+.vidPickerSearchSection {
+  display: inline-block;
+}
+
+.prevPage {
+  float: left;
+  margin-right: 45px;
+  margin-bottom: 20px;
+}
+
+.nextPage {
+  float: right;
+  margin-left: 45px;
+  margin-bottom: 20px;
+}
+
+.button.tokenClass.next{
+  margin-left: 45px;
+  margin-bottom: 20px;
+}
+
 .vid-picker-title {
   text-align: center;
   text-transform: uppercase;
@@ -614,9 +741,11 @@ p {
   text-shadow: 2px 2px  rgb(6, 31, 252);
   font-weight: 700;
   letter-spacing: 0.2em;
+  margin: 0;
 }
-
-.vid-picker-content {
+  
+  
+  .vid-picker-content {
   color: #E5E5E5;
   letter-spacing: 0.1em;
   line-height: 1.2em;
@@ -737,6 +866,10 @@ p {
 /*       BUTTONS -- Video Result
 /*------------------------------------------*/
 
+/* .videoPickerStyles .video-search-btn {
+  float: right;
+} */
+
 .video-search-btn {
   background-color: rgb(238, 122, 13);  
   padding:8px;
@@ -752,13 +885,19 @@ p {
   text-transform: uppercase;
 }
 .addVideosToProfileBtn {
-  background-color: rgb(6, 31, 252);
-  padding: 8px;
-  font-size: 16px;
-  margin-left: 30px;
-  margin-right: 30px;
-  color: #E5E5E5;
+  background-color: rgb(238, 122, 13);
+  color: aliceblue;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 11px;
+  font-size: 22px;
+  font-size: 18px;
+  width: 100%;
   text-transform: uppercase;
+  letter-spacing: 0.25em;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
 } 
 
 .video-search-btn:hover,
@@ -775,9 +914,20 @@ p {
   border: 3px solid white;
 }
 
-.video-result.selected {
-  background-color: rgb(71, 93, 218);
+button.unselect-video-btn {
+  color: #E5E5E5;
+  padding: 8px;
+  font-size: 85%;
+  background-color: rgb(238, 122, 13);
 }
+
+.youtubeVideo {
+  background-color: rgb(34, 157, 238);
+}
+
+/* .video-result.selected {
+  background-color: rgb(238, 122, 13);
+} */
 
 .video-result.selected .select-video-btn {
   display: none;
@@ -787,12 +937,52 @@ p {
   display: inline;
 }
 
-.video-results {
+/* .video-results {
   margin-top: 35px;
-}
+} */
 
 .vid-selected {
   opacity: 0.3;
+}
+
+.myButton {
+	-moz-box-shadow: 1px 4px 0px 2px #eb8c17;
+	-webkit-box-shadow: 1px 4px 0px 2px #eb8c17;
+	box-shadow: 1px 4px 0px 2px #eb8c17;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #3f5ed9), color-stop(1, #1c1ce6));
+	background:-moz-linear-gradient(top, #3f5ed9 5%, #1c1ce6 100%);
+	background:-webkit-linear-gradient(top, #3f5ed9 5%, #1c1ce6 100%);
+	background:-o-linear-gradient(top, #3f5ed9 5%, #1c1ce6 100%);
+	background:-ms-linear-gradient(top, #3f5ed9 5%, #1c1ce6 100%);
+	background:linear-gradient(to bottom, #3f5ed9 5%, #1c1ce6 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#3f5ed9', endColorstr='#1c1ce6',GradientType=0);
+	background-color:#3f5ed9;
+	-moz-border-radius:18px;
+	-webkit-border-radius:18px;
+	border-radius:18px;
+	border:1px solid #1b2acf;
+	/* display:inline-block; */
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:20px;
+	padding:12px 32px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #fca40d;
+}
+.myButton:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #1c1ce6), color-stop(1, #3f5ed9));
+	background:-moz-linear-gradient(top, #1c1ce6 5%, #3f5ed9 100%);
+	background:-webkit-linear-gradient(top, #1c1ce6 5%, #3f5ed9 100%);
+	background:-o-linear-gradient(top, #1c1ce6 5%, #3f5ed9 100%);
+	background:-ms-linear-gradient(top, #1c1ce6 5%, #3f5ed9 100%);
+	background:linear-gradient(to bottom, #1c1ce6 5%, #3f5ed9 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#1c1ce6', endColorstr='#3f5ed9',GradientType=0);
+	background-color:#1c1ce6;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
 }
 
 /*------------------------------------------*/
@@ -811,7 +1001,7 @@ footer {
 }
 /* When the screen is less than 600 pixels wide, hide all links, except for the first one ("Home"). Show the link that contains should open and close the topnav (.icon) */
 @media screen and (max-width: 640px) {
-  .topnav a:not(:first-child),
+  .topnav a:not(:first-child){display:none;}
   .logo-container {display: none;}
 
   /* .logo-container {
@@ -849,4 +1039,41 @@ footer {
   }
 }
 
+/*------------------------------------------*/
+/*     EXERCISE FORM RESPONSIVE STYLES
+/*------------------------------------------*/
+
+/*-------Exercise-Description TEXTAREA--------------*/
+@media screen and (max-width: 620px){
+  .exercise-description {
+    width: 25em;
+  }
+}
+
+@media screen and (max-width: 485px){
+  .exercise-description {
+    width: 20em;
+  }
+}
+
+@media screen and (max-width: 400px){
+  .exercise-description {
+    width: 15em;
+  }
+}
+
+/*-------ADDED VIDEOS AREA--------------*/
+@media screen and (max-width: 750px){
+   .thumbnail{
+     width: auto;
+   }
+}
+
+@media screen and (max-width: 719px){
+  .save-exercise-btn,
+  .delete-exercise-btn {
+    padding: 10px;
+    font-size: 15px;
+  }
+}
 

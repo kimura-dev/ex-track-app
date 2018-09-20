@@ -30,7 +30,7 @@ router.get('/my', jwtAuth, (req, res) => {
     .populate('user','username firstName lastName')
     .then(exercises => {
       res.status(200).json(exercises);
-      console.log(req.user.id);
+      console.log(req.user._id);
     }).catch(err => {
       console.error(err);
       res.status(500).json({message:'Internal server error'});
@@ -43,7 +43,7 @@ router.get('/:id', (req, res) => {
     _id: req.params.id
   })
   .populate('user','username firstName lastName')
-  // .populate('comments.user')
+  .populate('comments.user','username firstName lastName')
   .then(exercise => {
    res.status(200).json(exercise);
   }).catch(err => {
@@ -136,11 +136,13 @@ router.post('/:id/comment/', jwtAuth, (req, res) => {
 
     const newComment = {
       body: req.body.commentBody,
-      user: req.user.id
+      user: req.user.username
     }
 
+    console.log(req.user);
+
     // Add to comments array
-    exercise.comments.unshift(newComment);
+    exercise.comments.push(newComment);
 
     exercise.save()
       .then(exercise => {

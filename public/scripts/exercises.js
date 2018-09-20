@@ -36,8 +36,6 @@ function submitExerciseForm(){
 
   let formMessages = $('#form-messages');
   let authToken = isLoggedIn();
- 
-  console.log('AJAX Submit');
 
   // AJAX To Exercises
   $.ajax({
@@ -48,24 +46,22 @@ function submitExerciseForm(){
       Authorization: `Bearer ${authToken}`
     }
   }).then(function(response) {
-    console.log(response);
-
-    // $(formMessages).removeClass('error');
-    // $(formMessages).addClass('success');
-    // clearExerciseForm();
-    // addExerciseToLocalArrays(response, exerciseId);
-    // showScreen('myExercises');
+    $(formMessages).removeClass('error');
+    $(formMessages).addClass('success');
+    clearExerciseForm();
+    addExerciseToLocalArrays(response, exerciseId);
+    showScreen('myExercises');
 
 
-  // }).fail(function(data) { 
-  //   $(formMessages).removeClass('success');
-  //   $(formMessages).addClass('error');
+  }).fail(function(data) { 
+    $(formMessages).removeClass('success');
+    $(formMessages).addClass('error');
 
-  //   if (data.responseText !== '') {
-  //       $(formMessages).text(data.responseText);
-  //   } else {
-  //       $(formMessages).text('Oops! An error occured and your message could not be sent.');
-  //   }
+    if (data.responseText !== '') {
+        $(formMessages).text(data.responseText);
+    } else {
+        $(formMessages).text('Oops! An error occured and your message could not be sent.');
+    }
   });
 };
 
@@ -119,8 +115,8 @@ function showMyExercisesPage(){
   showAddExerciseBtn();
   showUsernameHeader();
   hideAllExercisePageHeader();
-  $('.usernameHeader').html(getCurrentUser()+"'s "+' Techniques');
-
+ 
+ $('.usernameHeader').html((getCurrentUser() ? getCurrentUser().username : '') + "'s " + ' Techniques');
   return showExercisesPage(myExercises, '/exercises/my');
 };
 
@@ -179,7 +175,7 @@ function htmlForAllExercisesPage(exercise){
 
 function getCurrentExerciseIdFromClick(e){
   exerciseId = $(e.currentTarget).closest('.exercise').attr('data-id');
-  console.log('ExerciseID ' + exerciseId);
+  // console.log('ExerciseID ' + exerciseId);
   return exerciseId;
 };
 
@@ -191,10 +187,10 @@ function renderVideosOnExercisesForm(exercise){
 function htmlForVideoOnExerciseForm(video){
   return `<div class="col-4">
            <div class="exerciseOnForm">
-              <h3 class="video-title" objectID="${video._id || ''}">${video.title}</h3>
+            <h3 class="video-title" objectID="${video._id || ''}">${truncateVideoElement(video.title)}</h3>
               <img  class="thumbnail" src="${video.url}" videoID="${video.videoID}">
               <p class="url"><a href="https://www.youtube.com/watch?v=${video.videoID}" target="_blank"> ${video.videoID}</a></p>
-              <div class="video-controls">
+              <div class="video-controls" data-videoId="${video._id}">
                 ${videoControls(true)}
               </div>
            </div>
@@ -210,6 +206,7 @@ function populateFormWExerciseData(exercise) {
     $('.exercise-id').val(exercise._id || '') ;
     $('.exercise-title').val(exercise.title || '') ;
     $('.exercise-description').val(exercise.description || '');
+    $('.addExerciseTitleToVidSect').text(`${exercise.title} Videos`)
     $(formMessages).text(`Your ${exercise.title} exericse!`);
     hideUserExercisePage();
 
@@ -248,14 +245,10 @@ function getAllExercises(exercises, url){
 /**--------------------------------------- */
 
 function deleteExercise(exercise_id){
-
+  console.log(exercise_id);
   let formMessages = $('#form-messages');
 
-  let authToken = '';
-
-  if(window.localStorage){
-    authToken = window.localStorage.getItem('authToken');
-  }
+  let authToken = isLoggedIn();
 
   $.ajax({
     type: 'DELETE',
@@ -264,8 +257,11 @@ function deleteExercise(exercise_id){
       Authorization: `Bearer ${authToken}`
     }
   }).then((response) => {
+    // location.reload(true);
+  // console.log('exercise_id after ajax for delete'+ exercise_id);
+
     updateAllExercises(exercise_id);
-    showScreen('allExercises');
+    showScreen('myExercises');
     $(formMessages).text(`Your exercise was deleted successfully!`);
 
   });
@@ -273,10 +269,11 @@ function deleteExercise(exercise_id){
 };
 
 function updateAllExercises(exercise_id){
-
+  console.log(exercise_id);
   exercises = exercises.filter(function (item) {
     return !item._id.includes(exercise_id);
   }); 
+  
 };
 
 function clearExerciseForm(){
@@ -284,6 +281,6 @@ function clearExerciseForm(){
   $('.exercise-id').val('');
   $('.exercise-description').val('');
   $('.added-videos > .row').html('');
+  $('.addExerciseTitleToVidSect').html('');
   $('.allow-comments').val('');
-
 }
