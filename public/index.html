@@ -17,18 +17,18 @@
   <header role="banner" aria-live="polite">
     <nav role="navigation" >
       <div class="topnav" id="myTopnav">
-        <a href="#home" class="navShowAllBtn" hidden></ion-icon><ion-icon name="home"></ion-icon>All Techniques</a>
-        <a href="#" class="navShowMyBtn" hidden><ion-icon name="fitness" class="ion"></ion-icon>Your Techniques</a>
+        <a href="#home" class="navShowAllBtn" hidden></ion-icon><ion-icon name="home"></ion-icon>All Categories</a>
+        <a href="#" class="navShowMyBtn" hidden><ion-icon name="fitness" class="ion"></ion-icon>Your Categories</a>
         <a href="#" class="nav-login"><ion-icon name="person" class="ion"></ion-icon>Login</a>
         <a href="#" class="nav-signup"><ion-icon name="person-add" class="ion"></ion-icon>Register</a>
         <a href="#" class="nav-logout" hidden><ion-icon name="arrow-round-forward" class="ion"></ion-icon>Logout</a>
-        <div class="logo-container">
+        <!-- <div class="logo-container">
           <a href="#" class="nav-logo"><img src="/styles/imgs/bjj-logo2.jpg" alt="bjj technique creator logo"></a>
-        </div>
+        </div> -->
           
 
         <!-- <a href="#" class="nav-username"><ion-icon name="person" class="ion"></ion-icon></a> -->
-        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+        <a href="javascript:void(0);" class="icon" onclick="responsiveNav()">
           <i class="fa fa-bars"></i>
         </a>
       </div>
@@ -41,8 +41,8 @@
   <section class="introduction-page" aria-live="polite">
     <div class="row" id="js-wp-1">
       <div class="intro-content">
-        <h1 class="intro-title js--intro-title">Brazilian Jiu Jitsu Technique Creator</h1>
-        <p class="intro-content">Create, Comment and Contribute to our every growing library of essential BJJ Techniques. Choose for your techniques to be viewed by the world or completley private. </p>
+        <h1 class="intro-title">Where's My Videos!</h1>
+        <p class="intro-content">Create your favorite categories, find the best videos and stash em here! Choose for your categories to be viewed by others or completley private. </p>
         <p class="loginOrRegisterPrompt"><a class="promptLogin">Login</a> or <a class="promptRegister">Register</a> to START CREATING!</p> 
       </div>
     </div>
@@ -52,12 +52,12 @@
       </div>
   </section>
 
-  <!-- <section class="search-exercise" hidden>
+  <!-- <section class="search-category" hidden>
       <form method="GET" action="/exercises">
         <fieldset>
-          <legend>Search A Technique:</legend>
-          <label for="exercise-search">
-             <input type="text" class="search-exercise">
+          <legend>Search A Category:</legend>
+          <label for="search-category">
+             <input type="text" class="search-category">
             </label>
             <button type="submit">Search</button>
         </fieldset>
@@ -65,7 +65,7 @@
   </section> -->
 
   <div class="add-btn-box" aria-live="polite">
-      <button class="add-exercise-btn myButton" hidden><ion-icon name="add-circle-outline"></ion-icon>Add New Technique</button>
+      <button class="add-category-btn myButton" hidden><ion-icon name="add-circle-outline"></ion-icon>Add New Category</button>
   </div>
 
   <!--Form Message Div For Notifications-->
@@ -73,7 +73,7 @@
   <div id="form-messages" aria-live="polite"></div>
 
   <section id="sign-up-form" hidden aria-live="polite">
-    <h2><strong>Sign Up</strong> now and begin creating techniques!</h2>
+    <h2><strong>Sign Up</strong> now and begin creating categories!</h2>
     <form method="POST" action="/auth/users">
       <fieldset class="sign-up-fieldset">
         <legend>Sign Up</legend>
@@ -127,34 +127,34 @@
     </form>
   </section>
 
-  <section role="main" class="exercise-form" hidden aria-live="polite">
+  <section role="main" class="category-form" hidden aria-live="polite">
     <div class="row">
       <div class="col-12">
           <form>
-            <fieldset class="exerciseFieldset">
+            <fieldset class="categoryFieldset">
               <legend>BJJ</legend>
               <div class="row">
                 <div class="input-field">
-                  <label for="exercise-title" name="exercise-title" class="label-for-ex">Technique Name:
-                    <input type="text" name="title" class="exercise-title">
+                  <label for="category-title" name="category-title" class="label-for-ex">Category Name:
+                    <input type="text" name="title" class="category-title">
                   </label>
                 </div>
                 </div>
               </div>
             </div>
 
-            <input type="hidden" class="exercise-id">
+            <input type="hidden" class="category-id">
       
               <div class="row" aria-live="polite">
                 <div class="input-field ex-desc-input-field1">
-                  <h5>Tell us about the exercise:</h5>
-                  <textarea name="body" rows="5" cols="60" class="exercise-description"></textarea>
+                  <h5>Tell us about the category:</h5>
+                  <textarea name="body" rows="5" cols="60" class="category-description"></textarea>
                 </div>
               </div>
       
               <div class="row" aria-live="polite">
                 <div class="col-4 status-col">
-                  <p class="status-content">Make your exercise public to allow other users to see it, or private. </p>
+                  <p class="status-content">Make your category public to allow other users to see it, or private. </p>
                   <select name="status" class="status">
                     <option value="public" name="public" class="public" checked>Public</option>
                     <option value="private" name="private" class="private">Private</option>
@@ -163,7 +163,7 @@
                 </div>
               </div>
       
-              <h3 class="pickerContentOnForm"><ion-icon name="arrow-down"></ion-icon>Use the Video Picker below to add videos that help demonstrate your technique.</h3>
+              <h3 class="pickerContentOnForm"><ion-icon name="arrow-down"></ion-icon>Use the Video Picker below to add videos to your category!!</h3>
               <!-- <h2 class="clickBelow"><ion-icon name="arrow-down"></ion-icon>VIDEO PICKER!!</h2> -->
 
               <hr>
@@ -175,7 +175,7 @@
               </div>
  
               <section class="added-videos" aria-live="polite">
-                <h2 class="addExerciseTitleToVidSect"></h2>
+                <h2 class="addCategoryTitleToVidSect"></h2>
                 <hr>
                 <input type="hidden" class="video-id">
                 <div class="row">
@@ -185,29 +185,30 @@
 
               <hr>
 
-                <div class="exerciseFormBtn" aria-live="polite">
+                <div class="categoryFormBtn" aria-live="polite">
                   <div class="row">
-                    <button type="submit" value="save exercise button" class="save-exercise-btn myButton"><ion-icon name="save"></ion-icon>Save Technique</button>
-                    <button type="submit" value="delete button" class="delete-exercise-btn myButton" hidden><ion-icon name="trash"></ion-icon>Delete Technique</button>
+                    <div class="float-left">
+                      <button type="submit" value="save category button" class="save-category-btn myButton"><ion-icon name="save"></ion-icon>Save Category</button>
+                    </div>
+                    <div class="float-right">
+                      <button type="submit" value="delete button" class="delete-category-btn myButton" hidden><ion-icon name="trash"></ion-icon>Delete Category</button>
+                    </div>
                   </div>
                 </div>
 
                 <hr>
-
+              
               <section class="comment-section" aria-live="polite">
-                <p>Please <a href="#" class="a-login">log</a> in to leave a comment</p>
                 <div class="row">                  
                   
                 </div>
-              </section>
+              </section> 
 
-              <!-- <button class="addCommentBtn"> Add Comment </button> -->
-
-              <div class="continuedComments" aria-live="polite">
+              <!-- <div class="continuedComments" aria-live="polite">
                 <div class="row">
                                  
                 </div>
-              </div>
+              </div> -->
                
           </fieldset>     
         </form>
@@ -221,7 +222,7 @@
           <h2 class="vid-picker-title">Video Picker</h2>
           <div class="vid-picker-content">
             <!-- <p> Use the video picker below to search for videos to add to your techniques.</p> -->
-            <p>Use the <strong>Preview</strong> &amp; <strong>Select</strong> buttons to check out the videos before you <strong>Add Videos</strong> to your technique.</p>
+            <p>Use the <strong>Preview</strong> &amp; <strong>Select</strong> buttons to check out the videos before you <strong>Add Videos</strong> to your category.</p>
           </div>
             <div class="vidPickerSearchSection" aria-live="polite">
               <label for="search">Search for videos:
@@ -230,7 +231,7 @@
             </div>
             
            
-            <button type="cancel" class="closePickerBtn"><ion-icon name="undo"></ion-icon>Back to Technique</button>
+            <button type="cancel" class="closePickerBtn"><ion-icon name="undo"></ion-icon>Back to Category</button>
 
           </label>
         </fieldset>
@@ -274,9 +275,8 @@
         </div>
     </section>
 
-     <section class="user-exercise-page" aria-live="polite" hidden>
-       <h2 class="allExercisePageHeader" hidden>Browse Techniques</h2>
-       <!-- <button class="goBackToAllExerciseBtn" hidden>Go Back</button> -->
+     <section class="user-category-page" aria-live="polite" hidden>
+       <h2 class="allCategoryPageHeader" hidden>Browse Categories</h2>
        <h2 class="usernameHeader" hidden></h2>
        <div class="row">
          <div class="col-12">
@@ -284,16 +284,6 @@
          </div>
        </div>
      </section>
-
-    <section class="exercise-logs" hidden>
-      <form method="POST" action="#">
-        <fieldset>
-          <legend>Logs Entry</legend>
-          
-        </fieldset>
-
-      </form>
-    </section>
 
     <!-- <footer role="contentinfo">
         <small>&copy; Copyright 2018 by Scott Reyell</small>

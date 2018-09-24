@@ -7,7 +7,7 @@
 function showSignupForm(){
   $('#sign-up-form').show();
   hideLoginForm();
-  if(currentScreen() == 'exerciseForm'){
+  if(currentScreen() == 'categoryForm'){
     hideSignupForm();
   }
 }
@@ -15,8 +15,6 @@ function showSignupForm(){
 function hideSignupForm(){
   $('#sign-up-form').hide();
 }
-
-
 
 /**----------------------------- */
 /*   AJAX Submit Signup Form
@@ -60,11 +58,11 @@ function submitSignupForm(){
       $(formMessages).text('Your Account was successfully created!');
     } 
 
-    // showAddExerciseBtn();
+    showAddCategoryBtn();
     // hideLoginItems();
     hideNavItemsWhenLoggedIn();
     showNavItemsAfterLogin();
-    // return showMyExercisesPage();
+    // return showMyCategoriesPage();
     // Clear the form.
     $('.first').val('');
     $('.last').val('');
@@ -89,6 +87,23 @@ function submitSignupForm(){
   });
 };
 
+function isLoggedIn(){
+  let authToken= '';
+  if(window.localStorage.getItem('authToken') !== null){
+    authToken = window.localStorage.getItem('authToken');
+  }
+  return authToken;
+}
+
+function getCurrentUser(){
+  let user = '';
+  if(window.localStorage){
+    user = window.localStorage.getItem('user');
+  }
+
+  return JSON.parse(user) || '';
+}
+
 /**-------------------------------- */
 /*  Hide & Show Log In Btn
 /**--------------------------------- */
@@ -107,7 +122,8 @@ function hideLogInBtn(){
 function showLoginForm(){
   $('#login-form').show();
   hideSignupForm();
-  if(currentScreen() == 'exerciseForm'){
+  enableFormInputs();
+  if(currentScreen() == 'categoryForm'){
     hideLoginForm();
   }
 };
@@ -144,7 +160,7 @@ function loggingIn(){
     let authToken = response.authToken;
    
     let user = JSON.stringify(response.user);
-
+    
     if(window.localStorage){
       window.localStorage.setItem('authToken', authToken);
       window.localStorage.setItem('user', user);
@@ -157,15 +173,10 @@ function loggingIn(){
     $(formMessages).text('');
     $('.username').val('');
     $('.password').val('');
-
-    // hideNavItemsWhenLoggedIn();
-    // showNavItemsAfterLogin();
+    
     hideLoginForm();
-    // hideIntroPage();
-    // hideLogInBtn();
-    // showAddExerciseBtn();
-    // return showMyExercisesPage();
-    return showScreen('myExercises');
+    
+    return showScreen('myCategories');
     
     
   }).fail(function(data) {

@@ -1,19 +1,76 @@
+// gets the current screen object from APP.screens
+
+function currentScreen(){
+  if( APP.currentScreenName 
+    && APP.screens 
+    && APP.currentScreenName in APP.screens
+  ){
+    return APP.screens[APP.currentScreenName];
+  }
+  return undefined;
+}
+
+function showScreen(screenName){
+  let output;
+
+  if( screenName && screenName in APP.screens ){
+    APP.lastScreen = currentScreen();
+
+    APP.currentScreenName = screenName;
+    Object.keys(APP.screens).forEach(screen => {
+      const thisScreen = APP.screens[screen];
+      if( thisScreen !== currentScreen() ){
+        if( typeof thisScreen.hide === 'function' ){
+            output = thisScreen.hide();
+        }
+      }
+
+      console.log(screenName);
+    });
+
+    const screen = APP.screens[screenName];
+
+    function showAndRender(screen){
+      (screen && typeof screen.show === 'function' ) && screen.show();
+      (screen && typeof screen.render === 'function' ) && screen.render();
+    }
+
+    if( output && output.then ){
+      return output.then( () =>  showAndRender(screen));
+    } 
+
+    return Promise.resolve().then( () => showAndRender(screen) );
+    
+  }  
+};
+
+function redrawCurrentScreen(){
+  const screen = currentScreen();
+  if( screen && typeof screen.render === 'function' ) screen.render();
+  else if( screen && typeof screen.show === 'function' ) screen.show();
+
+  console.log(screen);
+};
+
+
 // Make specific screens
-APP.screens.allExercises =  {
-  title: "All Exercises",
-  array: APP.exercises.all,
-  url: '/exercises',
-  show: showAllExercisesPage,
-  hide: hideUserExercisePage,
+APP.screens.allCategories =  {
+  title: "All Categories",
+  array: APP.categories.all,
+  url: '/categories',
+  show: showAllCategoriesPage,
+  hide: hideUserCategoryPage,
   nav: true
 };
 
-APP.screens.myExercises = {
-  title: "My Exercises",
-  array: APP.exercises.my,
-  url: '/exercises/my',
-  show: showMyExercisesPage,
-  hide: hideUserExercisePage,
+console.log(APP.categories.all);
+
+APP.screens.myCategories = {
+  title: "My Categories",
+  array: APP.categories.my,
+  url: '/categories/my',
+  show: showMyCategoriesPage,
+  hide: hideUserCategoryPage,
   nav: true
 };
 
@@ -29,20 +86,16 @@ APP.screens.intro = {
 
 APP.screens.signup = {
   title: "Signup",
-  // url: '/api/users',
   show: showSignupForm,
-  hide: 
-    hideSignupForm
-    // hideNavItemsWhenLoggedIn
-  ,
+  hide: hideSignupForm,
   nav: true
 }
 
 APP.screens.newUser = {
   title: "New User",
-  show: showAddExerciseBtn,
+  show: showAddCategoryBtn,
   hide: {
-    hideExerciseForm,
+    hideCategoryForm,
     hideSignupForm,
   },
   nav: true
@@ -56,19 +109,21 @@ APP.screens.login = {
   nav: true
 }
 
-APP.screens.exerciseForm = {
-  title: "Exercise Form",
-  url: '/exercises',
-  show: showExerciseForm,
-  hide: hideExerciseForm,
-  submit: submitExerciseForm,
-  nav: false
+APP.screens.categoryForm = {
+  title: "Category Form",
+  url: '/categories',
+  show: showCategoryForm,
+  hide: hideCategoryForm,
+  submit: submitCategoryForm,
+  nav: false,
+  currentCategoryId: false, 
+  render: renderCategoryForm
 }
 
 APP.screens.videoPicker = {
   title: "Video Picker",
   nav: false,
-  hide: hideExerciseForm,
+  hide: hideCategoryForm,
   prevPageToken: '',
   nextPageToken: '',
   searchTerm: '',

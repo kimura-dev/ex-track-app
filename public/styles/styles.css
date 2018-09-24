@@ -7,15 +7,15 @@
 /* Orange rgb(238, 122, 13) */
 /* Blue rgb(42, 59, 212); */
 
-html {
+/* html {
   scroll-behavior: smooth;
-}
+} */
 
 body {
   color: rgb(255, 255, 255);
   font-family: 'Raleway', sans-serif;
   font-size: 18px;
-  background-image:  -webkit-linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),url(/styles/imgs/hero1.jpg);
+  background-image:  -webkit-linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),url(/styles/imgs/video-hero3.jpg);
   
 
   background-position: center;
@@ -313,10 +313,10 @@ div.error {
   cursor: pointer;
 }
 /*-------------------------------*/
-/*      Add Exercise Btn
+/*      Add Category Btn
 /*-------------------------------*/
 
-.add-exercise-btn {
+.add-category-btn {
   background-color: rgb(17, 69, 243);
   color: #E5E5E5;
   padding: 18px;
@@ -329,40 +329,21 @@ div.error {
   text-align: center;
 }
 
-.add-exercise-btn:hover,
-.add-exercise-btn:focus {
+.add-category-btn:hover,
+.add-category-btn:focus {
   background-color: rgb(238, 122, 13); 
   cursor: pointer;
 }
 
 /*-------------------------------*/
-/*      Go Back to Exercise Btn
+/*   Category Form
 /*-------------------------------*/
 
-/* .goBackToAllExerciseBtn {
-  background-color: rgb(17, 69, 243);
-  color: #E5E5E5;
-  padding: 18px;
-  font-size: 18px;
-  text-transform: uppercase;
-  margin-top: 40px;
-  text-align: center;
-}
-
-.goBackToAllExerciseBtn:hover,
-.goBackToAllExerciseBtn:focus {
-  background-color: rgb(238, 122, 13); 
-  cursor: pointer;
-} */
-
-/*-------------------------------*/
-/*   Exercise Form
-/*-------------------------------*/
 .hidden {
   display: none;
 }
 
-.exerciseFieldset {
+.categoryFieldset {
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain, cover;
@@ -372,7 +353,7 @@ div.error {
   text-shadow: 2px 0 0 rgb(238, 122, 13), -2px 0 0 rgb(238, 122, 13), 0 2px 0 rgb(238, 122, 13), 0 -2px 0 rgb(238, 122, 13), 1px 1px rgb(238, 122, 13), -1px -1px 0 rgb(238, 122, 13), 1px -1px 0 rgb(238, 122, 13), -1px 1px 0 rgb(238, 122, 13); */
 }
 
-.exerciseFormBtns {
+.categoryFormBtns {
   background-color: beige;
   display: inline-block;
 }
@@ -394,7 +375,7 @@ div.error {
   0 20px 20px rgba(0,0,0,.15);
 }
 
-.addExerciseTitleToVidSect {
+.addCategoryTitleToVidSect {
   text-align: center;
   margin-bottom: 40px;
   letter-spacing: 0.4em;
@@ -418,32 +399,32 @@ div.error {
 }
 
 .add-video-btn,
-.save-exercise-btn,
-.delete-exercise-btn {
+.save-category-btn,
+.delete-category-btn {
   color: #E5E5E5;
   background-color: rgb(17, 69, 243);
   padding: 15px;
   font-size: 18px;
   text-transform: uppercase;
-  margin-right: 40px;
+  /* margin-right: 40px; */
   margin-bottom: 20px;
 }
 
 .add-video-btn:hover,
-.save-exercise-btn:hover,
-.delete-exercise-btn:hover {
+.save-category-btn:hover,
+.delete-category-btn:hover {
   background-color: rgb(238, 122, 13);  
   cursor: pointer; 
 }
 
 .add-video-btn:focus,
-.save-exercise-btn:focus,
-.delete-exercise-btn:focus {
+.save-category-btn:focus,
+.delete-category-btn:focus {
   background-color: rgb(238, 122, 13);  
   cursor: pointer; 
 }
 
-.exercise-description {
+.category-description {
   /* width: 49em; */
   height: 9em;
   font-size: 0.9em;
@@ -479,6 +460,69 @@ div.error {
   background-color: rgb(238, 122, 13);  
   cursor: pointer; 
 }
+/*----------------------------*/
+/*  1ST COMMENT SECTION
+/*----------------------------*/
+.a-login{
+  color: #fa8e04;
+}
+
+.a-login:hover,
+.a-login:focus {
+  color: rgb(6, 31, 252);
+  cursor: pointer;
+}
+
+#respond {
+  margin-top: 40px;
+}
+
+#respond input[type='text'],
+#respond input[type='email'], 
+#respond textarea,
+#respond p {
+  margin-bottom: 10px;
+  display: block;
+  width: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -o-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  border-radius: 5px;
+  line-height: 1.4em;
+}
+
+#comment-author,
+.comment-author {
+  color: rgb(238, 122, 13);
+  text-shadow: 1px 0 0 #fff, -1px 0 0 #fff, 0 1px 0 #fff, 0 -1px 0 #fff, 1px 1px #fff;
+  letter-spacing: 0.1em;
+}
+
+/*----------------------------*/
+/*  REST OF COMMENTS
+/*----------------------------*/
+
+.comment-container .comment {
+  background-color: #fff;
+  color: #000;
+  margin-bottom: 10px;
+  display: block;
+  width: 100%;
+
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -o-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  border-radius: 5px;
+
+  line-height: 1.4em;
+}
+
 
 .status {
   padding: 2px;
@@ -528,19 +572,27 @@ input[type='checkbox']:focus {
   cursor: pointer;
 }
 
-.exerciseOnForm {
+.categoryOnForm {
   background-color: rgb(238, 122, 13);
-  min-height: 18em;
-  max-height: 18em;
+  /* min-height: 18em;
+  max-height: 18em; */
+  margin-bottom: 25px;
+  overflow: auto;
   /* max-height:  */
 }
 
 .float-left {
   float: left;
+  margin: 10px;
 }
 
 .float-right {
   float: right;
+  margin: 10px;
+}
+
+.video-controls {
+  background-color: #E5E5E5;
 }
 
 .watchVideo,
@@ -559,29 +611,8 @@ deleteVideo:focus,
   background-color: rgb(238, 122, 13);  
 }
 
-.a-login {
-  color: rgb(238, 122, 13);
-}
-
 /*-------------------------------*/
-/*   COMMENTS SECTION
-/*-------------------------------*/
-.addCommentBtn {
-  color: #E5E5E5;
-  background-color: rgb(17, 69, 243);
-  padding: 15px;
-  font-size: 18px;
-  text-transform: uppercase;
-  margin-right: 40px;
-}
-
-.addCommentBtn:hover,
-.addCommentBtn:focus {
-  background-color: rgb(238, 122, 13);  
-  cursor: pointer;
-}
-/*-------------------------------*/
-/*   USER EXERCISE PAGE
+/*   USER CATEGORY PAGE
 /*-------------------------------*/
 .usernameHeader {
   text-align: center;
@@ -594,7 +625,7 @@ deleteVideo:focus,
   text-transform: uppercase;
 }
 
-.allExercisePageHeader{
+.allCategoryPageHeader{
   text-align: center;
   margin-bottom: 40px;
   letter-spacing: 0.4em;
@@ -682,7 +713,8 @@ input {
 }
 
 img {
-  max-width: 100%;
+  /* max-width: 100%; */
+  width: 100%;
 }
 
 p {
@@ -778,6 +810,7 @@ p {
 
 .thumbnail {
   width: 100%;
+  height: 177px;
 }
 
 .video-content {
@@ -817,17 +850,19 @@ p {
 /*         YouTube Results Page
 /*------------------------------------------*/
 
-.exercise {
+.category {
   margin-bottom: 30px;
   background-color: rgb(238, 122, 13);
-  overflow: scroll;
-
+  border: 5px solid #E5E5E5;
+  /* overflow: scroll; */
+  overflow: hidden;
   text-overflow: ellipsis;
-  max-height: 23em;
-  min-height: 23em;
+  /* max-height: 23em;
+  min-height: 23em; */
+  height: 20em;
 }
 
-.exercise-show {
+.category-show {
   font-size: 20px;
   color: rgb(34, 66, 243);
   text-transform: uppercase;
@@ -838,13 +873,13 @@ p {
   /* text-decoration: none; */
 }
 
-.exercise-show:hover,
-.exercise-show:focus {
+.category-show:hover,
+.category-show:focus {
   color: #E5E5E5;
   cursor: pointer;
 }
 
-.user-exercise-title {
+.user-category-title {
   text-align: center;
   text-transform: uppercase;
   font-size: 18px;
@@ -923,6 +958,7 @@ button.unselect-video-btn {
 
 .youtubeVideo {
   background-color: rgb(34, 157, 238);
+  margin-bottom: 20px;
 }
 
 /* .video-result.selected {
@@ -946,9 +982,9 @@ button.unselect-video-btn {
 }
 
 .myButton {
-	-moz-box-shadow: 1px 4px 0px 2px #eb8c17;
-	-webkit-box-shadow: 1px 4px 0px 2px #eb8c17;
-	box-shadow: 1px 4px 0px 2px #eb8c17;
+	-moz-box-shadow: 1px 4px 0px 2px rgb(238, 122, 13);
+	-webkit-box-shadow: 1px 4px 0px 2px rgb(238, 122, 13);
+	box-shadow: 1px 4px 0px 2px rgb(238, 122, 13);
 	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #3f5ed9), color-stop(1, #1c1ce6));
 	background:-moz-linear-gradient(top, #3f5ed9 5%, #1c1ce6 100%);
 	background:-webkit-linear-gradient(top, #3f5ed9 5%, #1c1ce6 100%);
@@ -996,19 +1032,14 @@ footer {
   /* margin-top: 100px; */
 }
 
-@media screen and (max-width: 600px){
+/*------------------------------------------*/
+/*      RESPONSIVE  TOPNAV
+/*------------------------------------------*/
 
-}
 /* When the screen is less than 600 pixels wide, hide all links, except for the first one ("Home"). Show the link that contains should open and close the topnav (.icon) */
 @media screen and (max-width: 640px) {
   .topnav a:not(:first-child){display:none;}
   .logo-container {display: none;}
-
-  /* .logo-container {
-    position: absolute;
-    left: 0;
-    top: 0;
-  } */
 
   .topnav a.icon {
     float: right;
@@ -1040,40 +1071,166 @@ footer {
 }
 
 /*------------------------------------------*/
-/*     EXERCISE FORM RESPONSIVE STYLES
+/*      RESPONSIVE IFRAME/POPUP
+/*------------------------------------------*/
+@media screen and (max-width: 600px){
+  .popup {
+    width: 450px;
+  }
+
+  iframe {
+    width: 450px;
+  }
+}
+
+@media screen and (max-width: 487px){
+  .popup {
+    width: 300px;
+  }
+
+  iframe {
+    width: 300px;
+  }
+}
+
+/*------------------------------------------*/
+/*      RESPONSIVE INTRO PAGE
 /*------------------------------------------*/
 
-/*-------Exercise-Description TEXTAREA--------------*/
 @media screen and (max-width: 620px){
-  .exercise-description {
+  .enter {width: 35%;}
+
+  .intro-title {margin-top: 25;}
+}
+@media screen and (max-width: 511px){
+  .intro-title {
+    margin-top: 20px;
+  }
+}
+@media screen and (max-width: 455px){
+  .enter {width: 45%;}
+}
+
+@media screen and (max-width: 361px){
+  .enter {width: 52%;}
+}
+
+
+/*------------------------------------------*/
+/*     RESPONSIVE USER/ALL CATEGORIES PAGE
+/*------------------------------------------*/
+
+@media screen and (max-width: 640px){
+  .category-show,
+  img {
+    display: block;
+    width: 100%;
+  }
+}
+ 
+
+/*------------------------------------------*/
+/*     RESPONSIVE STYLES CATEGORY FORM 
+/*------------------------------------------*/
+
+/*-------Category-Description TEXTAREA--------------*/
+@media screen and (max-width: 620px){
+  .category-description {
     width: 25em;
   }
 }
 
 @media screen and (max-width: 485px){
-  .exercise-description {
+  .category-description {
     width: 20em;
   }
 }
 
 @media screen and (max-width: 400px){
-  .exercise-description {
+  .category-description {
     width: 15em;
   }
 }
+/*----------------------------------------*/
 
-/*-------ADDED VIDEOS AREA--------------*/
+/*------------------------------------------*/
+/*------- VIDEOS ON CATEGORY FORM---------
+/*------------------------------------------*/
+
 @media screen and (max-width: 750px){
-   .thumbnail{
-     width: auto;
+   .watchVideo,
+   .deleteVideo {
+    font-size: 70%;
+    
    }
 }
 
-@media screen and (max-width: 719px){
-  .save-exercise-btn,
-  .delete-exercise-btn {
+@media screen and (max-width: 640px){
+  .watchVideo,
+  .deleteVideo {
+   text-transform: uppercase;
+   padding: 12px;
+   font-weight: 700;
+  }
+}
+
+/*--------------------------------------*/
+/*     SAVE AND DELETE TECH BTNS
+/*--------------------------------------*/
+
+@media screen and (max-width: 710px){
+  .save-category-btn,
+  .delete-category-btn {
+    padding: 12px;
+    font-size: 17px;
+  }
+}
+
+@media screen and (max-width: 564px){
+  .save-category-btn, .delete-category-btn {
     padding: 10px;
     font-size: 15px;
   }
 }
 
+@media screen and (max-width: 525px){
+  .save-category-btn, .delete-category-btn {
+    padding: 8px;
+    font-size: 14px;
+  }
+}
+
+
+
+
+/*-----------------------------------*/
+/*-------ADD CATEGORY BUTTON---------
+/*-----------------------------------*/
+
+
+@media screen and (max-width: 580px){
+  .mybutton{
+    font-size: 16px;
+  }
+
+  .add-category-btn {
+    margin-top: 25px;
+    margin-bottom: 25px;
+  }
+}
+
+@media screen and (max-width: 411px){
+  .add-category-btn {
+    margin-top: 18px;
+    margin-bottom: 25px;
+  }
+
+  .myButton {
+    font-size: 17px;
+  }
+
+  .usernameHeader {
+    margin: 0;
+    margin-bottom: 25px;
+  }
+}

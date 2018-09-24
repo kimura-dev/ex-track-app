@@ -7,7 +7,7 @@
 
 function showMoviePicker(){
   $('.video-picker').show();
-  searchVideoForExerciseTitle();
+  searchVideoForCategoryTitle();
 };
 
 function searchMoviePicker(){
@@ -60,8 +60,8 @@ function searchYoutube() {
   
 };
 
-function searchVideoForExerciseTitle(){
-  let title = $('.exercise-title').val();
+function searchVideoForCategoryTitle(){
+  let title = $('.category-title').val();
 
   // if(title && !$('.added-videos > .row').children().length) {
   //   $('.video-search-input').val(title);
@@ -82,7 +82,7 @@ function previewVideos(){
   $('.video-results').on('click', '.preview-video', function (e) {
     let target = $( e.target );
     // let videoID = $(target).closest('.video-result').find('img').attr('videoID');   
-    let videoID = $(target).parent().parent().find('img').attr('videoID');
+    let videoID = $(target).parent().parent().parent().find('img').attr('videoID');
     // console.log(videoID);
     $('.popup').show()
     $('.overlayBg').show();
@@ -97,19 +97,20 @@ function previewVideos(){
 }; 
 
 /**-------------------------------------- */
-/*     Preview Videos on Exercise Form*/
+/*     Preview Videos on Category Form*/
 /**-------------------------------------- */
 
-function previewVideosOnExercisePage(){
-  $('.exercise-form').on('click','.watchVideo',function(e){
+function previewVideosOnCategoryPage(){
+  $('.category-form').on('click','.watchVideo',function(e){
     let target = $( e.target );
     let videoID = $(target).parent().parent().parent().find('img').attr('videoID');
-    // console.log(videoID);
+    console.log(videoID);
 
     $('.popup').show()
     $('.overlayBg').show();
     $(window).scrollTop(0)
     $('.popup iframe').attr('src', `https://www.youtube.com/embed/${videoID}`);
+    $('.resp iframe').attr('src', `https://www.youtube.com/embed/${videoID}`);
   });
   $('.overlayBg').click(function () {
     $('.popup').hide()
@@ -117,6 +118,12 @@ function previewVideosOnExercisePage(){
   });
 }; 
 
+function handlePreviewVideos(){
+  previewVideos();
+  previewVideosOnCategoryPage(); 
+}
+
+$(handlePreviewVideos);
 
 /*--------------------------------*/
 /*     JSON for selected videos
@@ -181,7 +188,7 @@ function addSelectedVideosToForm(){
   $('.video-result.selected').each(function(index, videoResult){
     let video = jsonforVideo($(videoResult));
     if( !isVideoAddedToForm(video.videoID) ){
-      $('.added-videos > .row').append(htmlForVideoOnExerciseForm(video));
+      $('.added-videos > .row').append(htmlForVideoOnCategoryForm(video));
     }
   });
 };
@@ -233,7 +240,7 @@ function htmlForVideoResult(value){
   // let selectedAttribute = selectedMatch ? ' selected' : '';
     return  `<div class="video-result">
               <div class="col-4${ /*selectedAttribute*/ '' } youtubeVideo">
-                  <h3 class="video-title">${truncateVideoElement(title)}</h3>
+                  <h3 class="video-title">${truncateVideoTitle(title)}</h3>
                   <img  class="thumbnail" src="${value.snippet.thumbnails.medium.url}" videoID="${value.id.videoId}">
                   <p class="url"><a href="https://www.youtube.com/watch?v=${value.id.videoId}" target="_blank"> ${value.id.videoId}</a></p>  
                   <div class="video-controls">
@@ -244,15 +251,14 @@ function htmlForVideoResult(value){
   
 };
 
-function truncateVideoElement(title){
+function truncateVideoTitle(title){
 
-  let shortText = jQuery.trim(title).substring(0, 15)
+  let shortText = jQuery.trim(title).substring(0, 10)
       .split(" ").slice(0, -1).join(" ") + "...";
   return shortText;
   // $('.video-title').html('before: ' + title + '<br>' + 'after: ' + shortText);
 
 }
-
 
 function videoControls(isAdded){
   if(isAdded){
@@ -264,9 +270,15 @@ function videoControls(isAdded){
       <button class="deleteVideo">Delete Video</button>
     </div>`
   } 
-    return `<button class="preview-video"><ion-icon name="play-circle"></ion-icon>Preview</button>
-            <button class="select-video-btn"><ion-icon name="add-circle"></ion-icon>Select</button>
-            <button class="unselect-video-btn"><ion-icon name="undo"></ion-icon>Unselect</button>`
+    return `<div class="float-left">
+      <button class="preview-video"><ion-icon name="play-circle"></ion-icon>Preview</button>     
+    </div>
+    <div class="float-right">
+      <button class="select-video-btn"><ion-icon name="add-circle"></ion-icon>Select</button>
+    </div>
+    <div class="float-right">
+      <button class="unselect-video-btn"><ion-icon name="undo"></ion-icon>Unselect</button>
+    </div>`
   
 };
 
@@ -274,24 +286,22 @@ function videoControls(isAdded){
 /*     Delete Video from Profile
 /**--------------------------------- */
 
-  function deleteVideoFromExercise(video_id){
-    let exercise_id = '';
+  function deleteVideoFromCategory(video_id){
+    let category_id = APP.screens.categoryForm.currentCategoryId;
     let formMessages = $('#form-messages');
-    // let video = $(e.target);
-    // let videoID = $(video).parent().parent().find('img').attr('videoID');
-    // console.log(videoID);
     let authToken = isLoggedIn(); 
     $.ajax({
       type: 'DELETE',
-      // url:  `${API_URL}/exercises/videos/${video_id}`,
-      url:  `${API_URL}/exercises/videos/${video_id}`,
+      url:  `${API_URL}/categories/videos/${video_id}`,
       headers: {
         Authorization: `Bearer ${authToken}`
       }
-    }).then(() => {
-      console.log('Deleted Video from exercise')
-      updateAllExercises(exercise_id);
-      // showScreen('allExercises');
+    }).then((newCategory) => {
+      console.log(newCategory);
+
+      console.log('.then after ajax call category_id : '+ category_id);
+      replaceSavedCategory(categoryId, newCategory);  
+      redrawCurrentScreen();
       $(formMessages).text(`Your video was deleted successfully!`);
     }).fail(function(data) { 
       // Make sure that the formMessages div has the 'error' class.

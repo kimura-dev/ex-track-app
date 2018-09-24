@@ -1,18 +1,18 @@
 "use strict";
 
 let video = [];
-let exerciseId = '';
+let categoryId = '';
 const REFRESH_PERIOD = 1000 * 60; // 60,000 milliseconds
-let lastExercisePage = '';
-let currentExerciseId = '';
+let lastCategoryPage = '';
+let currentcategoryId = '';
 let pageToken = {};
 const API_URL = 'http://localhost:8080/api';
 
 
 /**-------------------------------- */
-/* Exercise Form Submit 
+/* Category Form Submit 
 /**--------------------------------- */
-function submitExerciseForm(){
+function submitCategoryForm(){
 
   let videos = [];
 
@@ -21,26 +21,25 @@ function submitExerciseForm(){
   });
 
   let data = {
-    // _id: exerciseId,
-    title: $('.exercise-title').val(),
-    description: $('.exercise-description').val(), 
+    title: $('.category-title').val(),
+    description: $('.category-description').val(), 
     status: $('.status > option:selected').text(),
     videos: JSON.stringify(videos)
   };
 
-  let exerciseId = $('.exercise-id').val() || false;
-
-  if (exerciseId){
-    data._id = exerciseId;
+  let categoryId = $('.category-id').val() || false;
+  console.log(categoryId);
+  if (categoryId){
+    data._id = categoryId;
   }
 
   let formMessages = $('#form-messages');
   let authToken = isLoggedIn();
 
-  // AJAX To Exercises
+  // AJAX To Categories
   $.ajax({
-    type: exerciseId ? 'PUT':'POST',
-    url: `${API_URL}/exercises/${ exerciseId ? exerciseId  : ''}`,
+    type: categoryId ? 'PUT':'POST',
+    url: `${API_URL}/categories/${ categoryId ? categoryId  : ''}`,
     data: data,
     headers: {
       Authorization: `Bearer ${authToken}`
@@ -48,17 +47,17 @@ function submitExerciseForm(){
   }).then(function(response) {
     $(formMessages).removeClass('error');
     $(formMessages).addClass('success');
-    clearExerciseForm();
-    addExerciseToLocalArrays(response, exerciseId);
-    showScreen('myExercises');
+    clearCategoryForm();
+    addCategoryToLocalArrays(response, categoryId);
+    showScreen('myCategories');
 
 
   }).fail(function(data) { 
     $(formMessages).removeClass('success');
     $(formMessages).addClass('error');
 
-    if (data.responseText !== '') {
-        $(formMessages).text(data.responseText);
+    if (data.responseJSON) {
+        $(formMessages).text(data.responseJSON.message);
     } else {
         $(formMessages).text('Oops! An error occured and your message could not be sent.');
     }
@@ -66,73 +65,75 @@ function submitExerciseForm(){
 };
 
 
-function addExerciseToLocalArrays(exercise, exerciseId){
-  // Create Exercise Array
-  if(exerciseId){
-    $('#form-messages').text(`${exercise.title} was edited successfully!`);
-    const index = exercises.findIndex((exercise) => {
-      return exercise._id === exerciseId;
+function addCategoryToLocalArrays(category, categoryId){
+  // Create Category Array
+  if(categoryId){
+    $('#form-messages').text(`${category.title} was edited successfully!`);
+    const index = categories.findIndex((category) => {
+      return category._id === categoryId;
     });
 
-    const myIndex = myExercises.findIndex((exercise) => {
-      return exercise._id === exerciseId;
+    const myIndex = myCategories.findIndex((category) => {
+      return category._id === categoryId;
     });
 
     if (index >= 0){
-      exercises[index] = exercise;
+      categories[index] = category;
 
     }
 
     if (myIndex >= 0){
-      myExercises[myIndex] = exercise;
+      myCategories[myIndex] = category;
 
     }
    
   } else {
-    $('#form-messages').text(`${exercise.title} was added successfully!`);
-    exercises.push(exercise);
-    myExercises.push(exercise);
+    $('#form-messages').text(`${category.title} was added successfully!`);
+    categories.push(category);
+    myCategories.push(category);
   }
+
+
 
 };
 
 /**--------------------------------------------------- */
-/*    Show All and Show My Exercise Pages
+/*    Show All and Show My Category Pages
 /**---------------------------------------------------- */
-function showAllExercisesPage(){
+function showAllCategoriesPage(){
   if(!isLoggedIn()){
     showloginRegisterPrompt();
-    hideAddExerciseBtn();  
+    hideAddCategoryBtn();  
   }
-  showAllExercisePageHeader();
+  // showAllCategoryPageHeader();
   hideUsernameHeader();
-  showAllExercisePageHeader();
-  return showExercisesPage(exercises, '/exercises');
+  showAllCategoryPageHeader();
+  return showCategoriesPage(categories, '/categories');
 };
 
-function showMyExercisesPage(){
+function showMyCategoriesPage(){
   hideLoginRegisterPrompt();
-  showAddExerciseBtn();
+  showAddCategoryBtn();
   showUsernameHeader();
-  hideAllExercisePageHeader();
+  hideAllCategoryPageHeader();
  
- $('.usernameHeader').html((getCurrentUser() ? getCurrentUser().username : '') + "'s " + ' Techniques');
-  return showExercisesPage(myExercises, '/exercises/my');
+ $('.usernameHeader').html((getCurrentUser() ? getCurrentUser().username : '') + "'s " + ' Categories');
+  return showCategoriesPage(myCategories, '/categories/my');
 };
 
-function showExercisesPage(exercises, url){
-  let timeSince = Date.now() - (exercises.lastModified || 0);
-  lastExercisePage = url;
+function showCategoriesPage(categories, url){
+  let timeSince = Date.now() - (categories.lastModified || 0);
+  lastCategoryPage = url;
   let doUI = function(){
 
-    $('.user-exercise-page').removeAttr('hidden');
-    $('.user-exercise-page').show();
-    renderAllExercisesPage(exercises, url);
+    $('.user-category-page').removeAttr('hidden');
+    $('.user-category-page').show();
+    renderAllCategoriesPage(categories, url);
     
   }
 
   if(timeSince >= REFRESH_PERIOD){
-    return getAllExercises(exercises, url).then(doUI);
+    return getAllCategories(categories, url).then(doUI);
   } else {
     doUI();
     return Promise.resolve();
@@ -140,54 +141,54 @@ function showExercisesPage(exercises, url){
 };
 
 
-function renderAllExercisesPage(exercises, url){
-  // console.log(exercises);
-  let htmlForPage = exercises.map(htmlForAllExercisesPage).join('');
+function renderAllCategoriesPage(categories, url){
+  
+  let htmlForPage = categories.map(htmlForAllCategoriesPage).join('');
 
-  $('.user-exercise-page > .row').html(htmlForPage); 
+  $('.user-category-page > .row').html(htmlForPage); 
 };
 
-function htmlForAllExercisesPage(exercise){
+function htmlForAllCategoriesPage(category){
   let videoSrc = '';
   let videoID = '';
 
-  if(exercise.videos && exercise.videos.length){
-    videoSrc = exercise.videos[0].url;
-    videoID = exercise.videos[0].videoID;
+  if(category.videos && category.videos.length){
+    videoSrc = category.videos[0].url;
+    videoID = category.videos[0].videoID;
   };
 
   return `<div class="col-4">
-                 <div class="exercise" data-id='${exercise.id}'>
-                     <a class="exercise-show" href="#">View
-                     <img class="exercise-image" src="${videoSrc}" videoID="${videoID}" alt="video result thumbnail"/>
-                     </a>
-                     <h3 class="user-exercise-title">${exercise.title}</h3>
-                   <div class="exercise-content">
-                     <p>${exercise.description}</p>
+                 <div class="category" data-id='${category.id}'>
+                     <a class="category-show" href="#">View</a>
+                     <img class="category-image" src="${videoSrc}" videoID="${videoID}" alt="video result thumbnail"/>
+                     <h3 class="user-category-title">${category.title}</h3>
+                   <div class="category-content">
+                     <p>${category.description}</p>
                    </div>
                  </div>
               </div>`;
 };
 
 /**--------------------------------------------------- */
-/*     Display Users Exercise Data to Form
+/*     Display Users Category Data to Form
 /**---------------------------------------------------- */
 
-function getCurrentExerciseIdFromClick(e){
-  exerciseId = $(e.currentTarget).closest('.exercise').attr('data-id');
-  // console.log('ExerciseID ' + exerciseId);
-  return exerciseId;
+function getCurrentCategoryIdFromClick(e){
+  categoryId = $(e.currentTarget).closest('.category').attr('data-id');
+  
+  return categoryId;
 };
 
-function renderVideosOnExercisesForm(exercise){
-  let htmlForVideo = exercise.videos.map(htmlForVideoOnExerciseForm).join('');
+function renderVideosOnCategoriesForm(category){
+
+  let htmlForVideo = category.videos.map(htmlForVideoOnCategoryForm).join('');
   $('.added-videos > .row').html(htmlForVideo); 
 };
-
-function htmlForVideoOnExerciseForm(video){
+ 
+function htmlForVideoOnCategoryForm(video){
   return `<div class="col-4">
-           <div class="exerciseOnForm">
-            <h3 class="video-title" objectID="${video._id || ''}">${truncateVideoElement(video.title)}</h3>
+           <div class="categoryOnForm">
+            <h3 class="video-title" objectID="${video._id || ''}">${truncateVideoTitle(video.title)}</h3>
               <img  class="thumbnail" src="${video.url}" videoID="${video.videoID}">
               <p class="url"><a href="https://www.youtube.com/watch?v=${video.videoID}" target="_blank"> ${video.videoID}</a></p>
               <div class="video-controls" data-videoId="${video._id}">
@@ -197,90 +198,188 @@ function htmlForVideoOnExerciseForm(video){
           </div>`;
 };
 
-function populateFormWExerciseData(exercise) {
+
+function populateFormWCategoryData(category) {
 
   let formMessages = $('#form-messages');
 
-  if(exercise){
+  if(category){
 
-    $('.exercise-id').val(exercise._id || '') ;
-    $('.exercise-title').val(exercise.title || '') ;
-    $('.exercise-description').val(exercise.description || '');
-    $('.addExerciseTitleToVidSect').text(`${exercise.title} Videos`)
-    $(formMessages).text(`Your ${exercise.title} exericse!`);
-    hideUserExercisePage();
+    $('.category-id').val(category._id || '') ;
+    $('.category-title').val(category.title || '') ;
+    $('.category-description').val(category.description || '');
+    $('.addCategoryTitleToVidSect').text(`${category.title} Videos`)
+    $(formMessages).text(`Your ${category.title} exericse!`);
+    hideUserCategoryPage();
 
-    showExerciseForm();
-    showDeleteExerciseBtn();
+    showCategoryForm();
+    showDeleteCategoryBtn();
     
   }
   
 };
 
-function getAllExercises(exercises, url){
+function getCurrentCategoriesArray(){
+  const screen = currentScreen();
+  if(screen){
+    return screen.array;
+  } 
+
+  console.log(array);
+
+};
+
+function getCurrentCategory(currentCategoryId){
+  const categories = getCurrentCategoriesArray();
+  if(categories){
+     return categories.find(category => {
+       return category._id === currentCategoryId;
+    });
+  }
+  // console.log(currentCategoryId);
+};
+
+function getCurrentCategoryComments(){
+  comments = APP.screens.categoryForm.currentCategory.comments;
+  console.log(comments);
+}
+
+function replaceSavedCategory(categoryId, newCategory){
+  const categories = getCurrentCategoriesArray();
+  if(categories){
+     let oldIndex =  categories.findIndex(category => {
+       return category._id === categoryId;
+    });
+
+    if(oldIndex >= 0){
+      categories[oldIndex] = newCategory;
+    }
+  }
+}
+
+function setCurrentCategory(categoryId){
+  APP.screens.categoryForm.currentCategoryId = categoryId;
+}
+
+function showCategoryForm(){
+  $('.category-form').removeAttr('hidden');
+  $('.category-form').show();
+
+  let categoryFormScreen = currentScreen();
+
+  if(APP.lastScreen){
+    categoryFormScreen.array = APP.lastScreen.array;
+  }
+
+  if(!isLoggedIn()){
+    disableFormInputs();
+    showAddCategoryBtn();
+    hideCategoryFormBtns();
+    hideVideoPickerBtn()
+  } else {
+    showCategoryFormBtns();
+    enableFormInputs();
+    showVideoPickerBtn();
+
+  }
+};
+
+function hideCategoryForm(){
+  $('.category-form').attr('hidden');
+  $('.category-form').hide();
+  hideFormMessage();
+};
+
+function renderCategoryForm(){
+  const currentCategory = getCurrentCategory(APP.screens.categoryForm.currentCategoryId);
+  if(currentCategory){
+    populateFormWCategoryData(currentCategory);
+    renderVideosOnCategoriesForm(currentCategory); 
+    renderCommentsOnCategoryForm(currentCategory);
+    if((getCurrentUser() ? getCurrentUser().username : '') === currentCategory.username){
+      enableFormInputs();
+    } else {
+      disableFormInputs();
+    }
+  } else {
+    clearCategoryForm();
+  }
+}
+
+function getAllCategories(categories, url){
   let authToken = isLoggedIn() ;
   
-  // AJAX To Exercises
+  // AJAX To Categories
   return $.ajax({
     type: 'GET',
     cache: false,
-    url: API_URL + ( url || '/exercises' ),
+    url: API_URL + ( url || '/categories' ),
     headers: {
       Authorization: `Bearer ${authToken}`
     }
-  }).then(function(_exercises){
-     exercises.length = 0;
-     _exercises.forEach((_exercise) => {
-        exercises.push(_exercise);
+  }).then(function(_categories){
+     categories.length = 0;
+     _categories.forEach((_category) => {
+        categories.push(_category);
      });
-     exercises.lastModified = Date.now();
+     categories.lastModified = Date.now();
 
-     return exercises;
+     return categories;
   });
 
 };
 
+
 /**--------------------------------------- */
-/*     Delete Exercises & Videos
+/*     Delete Categories & Videos
 /**--------------------------------------- */
 
-function deleteExercise(exercise_id){
-  console.log(exercise_id);
+function deleteCategory(category_id){
+  console.log(category_id);
   let formMessages = $('#form-messages');
 
   let authToken = isLoggedIn();
 
   $.ajax({
     type: 'DELETE',
-    url: `${API_URL}/exercises/${exercise_id}`,
+    url: `${API_URL}/categories/${category_id}`,
     headers: {
       Authorization: `Bearer ${authToken}`
     }
   }).then((response) => {
     // location.reload(true);
-  // console.log('exercise_id after ajax for delete'+ exercise_id);
-
-    updateAllExercises(exercise_id);
-    showScreen('myExercises');
-    $(formMessages).text(`Your exercise was deleted successfully!`);
+ 
+    deleteSavedCategory(category_id);
+    showScreen('myCategories');
+    $(formMessages).text(`Your category was deleted successfully!`);
 
   });
   
 };
 
-function updateAllExercises(exercise_id){
-  console.log(exercise_id);
-  exercises = exercises.filter(function (item) {
-    return !item._id.includes(exercise_id);
-  }); 
+
+function deleteSavedCategory(category_id){
+  // Find the cate array  
+  let currentCategoriesArray =  getCurrentCategoriesArray();
+  
+  // Find the index of cate Id in array.
+  function findSavedCategory(category) {
+    return category_id == category._id;
+  }
+
+  const categoryIndex = (currentCategoriesArray.findIndex(findSavedCategory)); 
+
+  // array .splice to remove that index from the array
+  currentCategoriesArray.splice(categoryIndex, 1);
+
   
 };
 
-function clearExerciseForm(){
-  $('.exercise-title').val('');
-  $('.exercise-id').val('');
-  $('.exercise-description').val('');
+function clearCategoryForm(){
+  $('.category-title').val('');
+  $('.category-id').val('');
+  $('.category-description').val('');
   $('.added-videos > .row').html('');
-  $('.addExerciseTitleToVidSect').html('');
-  $('.allow-comments').val('');
+  $('.addCategoryTitleToVidSect').html('');
+  // $('.comment-section > .row').html('');
 }

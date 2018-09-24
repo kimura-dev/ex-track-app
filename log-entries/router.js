@@ -72,7 +72,7 @@ router.put('/:id', (req, res) => {
 // Process Add Log
 router.post('/', (req, res) => {
   const newLog = {
-    exercise: req.body.title,
+    category: req.body.title,
     status: req.body.status,
     user: req.user.id
   }

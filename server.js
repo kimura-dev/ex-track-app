@@ -9,16 +9,16 @@ const morgan = require('morgan');
 const passport = require('passport');
 const {DATABASE_URL, PORT} = require('./config');
 const bcrypt = require('bcryptjs');
-// var jwtDecode = require('jwt-decode');
+
 
 // Load Models
-const {Exercise} = require('./exercises/models');
-const {Log} = require('./log-entries/models');
+const {Category} = require('./categories/models');
+// const {Log} = require('./log-entries/models');
 
 // Load Routers
 const { router: usersRouter } = require('./users');
-const exerciseRouter = require('./exercises/router');
-const logRouter = require('./log-entries/router');
+const categoryRouter = require('./categories/router');
+// const logRouter = require('./log-entries/router');
 const { router: authRouter, localStrategy, jwtStrategy } = require('./auth');
 
 mongoose.Promise = global.Promise;
@@ -68,8 +68,8 @@ app.use((req, res, next) => {
 // Use Routes
 app.use('/api/users/', usersRouter);
 app.use('/api/auth/', authRouter);
-app.use('/api/exercises/', exerciseRouter);
-app.use('/api/logs/', logRouter);
+app.use('/api/categories/', categoryRouter);
+// app.use('/api/logs/', logRouter);
 
 
 // Set static folder

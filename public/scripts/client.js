@@ -3,95 +3,34 @@
 /**-------------------------------- */
 /*     Global App State
 /**--------------------------------- */
-let exercises = [];  
-let myExercises = []; 
+let categories = [];  
+let myCategories = []; 
 
 // General APP structure for refactor
 const APP = {
-  exercises: {},            // exercises.my, exercises.all, etc...
-  currentScreen: 'intro',   // name of screen in APP.screens' keys
-  screens: {},              // screens are UI components and also track state
+  categories: {},            
+  currentScreen: 'intro',   
+  screens: {},              
   authToken: '',
   user: undefined
 }
 
-// Specific exercise arrays
-APP.exercises.all = exercises;
-APP.exercises.my = myExercises;
+// Specific categories arrays
+APP.categories.all = categories;
+APP.categories.my = myCategories;
 
-// Helper functions for data access into global app object
+/**-------------------------------- */
+/*     Hide & Show Functions
+/**--------------------------------- */
 
-// gets the current screen object from APP.screens
-function currentScreen(){
-  if( APP.currentScreen 
-    && APP.screens 
-    && APP.currentScreen in APP.screens
-  ){
-    return APP.screens[APP.currentScreen];
-  }
-  return undefined;
+function showCategoryFormBtns(){
+  $('.categoryFormBtn').removeClass('hidden');
+  $('.categoryFormBtn').show();
 }
 
-function showScreen(screenName){
-  let output;
-  if( screenName && screenName in APP.screens ){
-    APP.currentScreen = screenName;
-    // console.log('screenName ' + screenName);
-    Object.keys(APP.screens).forEach(screen => {
-      const thisScreen = APP.screens[screen];
-      if( thisScreen !== currentScreen() ){
-        if( typeof thisScreen.hide === 'function' ){
-            output = thisScreen.hide();
-        }
-      }
-    });
-
-    if( output && output.then ){
-      return output.then( () => redrawCurrentScreen() );
-    } 
-
-    return Promise.resolve().then( () =>  redrawCurrentScreen() );
-    // only calls .show() if the screen exists
-  
-  }  
-};
-
-function redrawCurrentScreen(){
-  const screen = currentScreen();
-  if( screen ) screen.show();
-  else {
-    if( APP.screens.intro ){
-      APP.screens.intro.show();
-    } else {
-      console.log("No intro page to show.")
-    }
-  }
-};
-
-function getCurrentExercisesArray(){
-  const screen = currentScreen();
-  if(screen){
-    return screen.array;
-  } 
-};
-
-function getCurrentExercise(currentExerciseId){
-  const exercises = getCurrentExercisesArray();
-  if(exercises){
-     return exercises.find(exercise => {
-       return exercise._id === currentExerciseId;
-    });
-  }
-};
-
-function showExerciseFormBtns(){
-  $('.exerciseFormBtn').removeClass('hidden');
-  $('.exerciseFormBtn').show();
-}
-
-function hideExerciseFormBtns(){
-  $('.exerciseFormBtn').addClass('hidden');
-  $('.exerciseFormBtn').hide();
+function hideCategoryFormBtns(){
+  $('.categoryFormBtn').addClass('hidden');
+  $('.categoryFormBtn').hide();
 }
 
 function showVideoPickerBtn(){
@@ -105,35 +44,9 @@ function hideVideoPickerBtn(){
   $('.videoPickerBtn').hide();
 }
 
-
-/**-------------------------------- */
-/*     Hide & Show Functions
-/**--------------------------------- */
-function showExerciseForm(){
-  $('.exercise-form').removeAttr('hidden');
-  $('.exercise-form').show();
-  if(!isLoggedIn()){
-    disableFormInputs();
-    
-    hideExerciseFormBtns();
-    hideVideoPickerBtn()
-  } else {
-    showExerciseFormBtns();
-    enableFormInputs();
-    showVideoPickerBtn();
-  }
-};
-
-function hideExerciseForm(){
-  // console.log( $('.exercise-form'));
-  $('.exercise-form').attr('hidden');
-  $('.exercise-form').hide();
-  hideFormMessage();
-};
-
-function hideUserExercisePage(){
-  $('.user-exercise-page').attr('hidden');
-  $('.user-exercise-page').hide();
+function hideUserCategoryPage(){
+  $('.user-category-page').attr('hidden');
+  $('.user-category-page').hide();
 };
 
 function showIntroPage(){
@@ -141,14 +54,14 @@ function showIntroPage(){
 }
 
 
-function showDeleteExerciseBtn(){
-  $('.delete-exercise-btn').removeAttr('hidden');
-  $('.delete-exercise-btn').show();
+function showDeleteCategoryBtn(){
+  $('.delete-category-btn').removeAttr('hidden');
+  $('.delete-category-btn').show();
 }
 
-function hideDeleteExerciseBtn(){
-  $('.delete-exercise-btn').attr('hidden');
-  $('.delete-exercise-btn').hide();
+function hideDeleteCategoryBtn(){
+  $('.delete-category-btn').attr('hidden');
+  $('.delete-category-btn').hide();
 }
 
 function showPrevNextBtn(){
@@ -161,12 +74,12 @@ function hidePrevNextBtn(){
   $('.button-options').hide();
 }
 
-function showAddExerciseBtn(){
-  $('.add-exercise-btn').show();
+function showAddCategoryBtn(){
+  $('.add-category-btn').show();
 }
 
-function hideAddExerciseBtn(){
-  $('.add-exercise-btn').hide();
+function hideAddCategoryBtn(){
+  $('.add-category-btn').hide();
 }
 
 /**-------------------------------- */
@@ -188,14 +101,14 @@ function hideNavItemsBeforeLogin(){
   $('.nav-logout').hide();
 }
 
-function showAllExercisePageHeader(){
-  $('.allExercisePageHeader').removeAttr('hidden');
-  $('.allExercisePageHeader').show();
+function showAllCategoryPageHeader(){
+  $('.allCategoryPageHeader').removeAttr('hidden');
+  $('.allCategoryPageHeader').show();
 }
 
-function hideAllExercisePageHeader(){
-  $('.allExercisePageHeader').attr('hidden');
-  $('.allExercisePageHeader').hide();
+function hideAllCategoryPageHeader(){
+  $('.allCategoryPageHeader').attr('hidden');
+  $('.allCategoryPageHeader').hide();
 }
 
 function hideUsernameHeader(){
@@ -245,34 +158,6 @@ function showFormMessages(){
   $('#form-messages').show();
 }
 
-/**-------------------------------- */
-/*  Hide & Show Add Comment Btn
-/**--------------------------------- */
-
-function showAddCommentBtn(){
-  $('.addCommentBtn').removeAttr('hidden');
-  $('.addCommentBtn').show();
-}
-
-function hideAddCommentBtn(){
-  $('.addCommentBtn').attr('hidden');
-  $('.addCommentBtn').hide();
-}
-
-/**-------------------------------- */
-/*  Hide & Show Add Comment Btn
-/**--------------------------------- */
-
-function showContinuedComments(){
-  $('.continuedComments').removeAttr('hidden');
-  $('.continuedComments').show();
-}
-
-function hideContinuedComments(){
-  $('.continuedComments').attr('hidden');
-  $('.continuedComments').hide();
-}
-
 function showloginRegisterPrompt(){
   $('.loginOrRegisterPrompt').removeAttr('hidden');
   $('.loginOrRegisterPrompt').show();
@@ -283,11 +168,19 @@ function hideLoginRegisterPrompt(){
   $('.loginOrRegisterPrompt').hide();
 }
 
+function hideSubmitCommentBtn(){
+  $('.commentSaveBtn').attr('hidden');
+  $('.commentSaveBtn').hide();
+}
+/**-------------------------------- */
+/*  Hide & Show FORM INPUTS
+/**--------------------------------- */
+
 function enableFormInputs(){
   $('form input').prop('disabled', false);
   $('.status').prop('disabled', false);
   $('textarea').prop('readonly', false);
-  showExerciseFormBtns(); 
+  showCategoryFormBtns(); 
   showVideoPickerBtn();   
 }
 
@@ -295,61 +188,31 @@ function disableFormInputs(){
   $('form input').prop('disabled', true);
   $('.status').prop('disabled', 'disabled'); 
   $('textarea').prop('readonly', true); 
-  hideExerciseFormBtns();
+  hideCategoryFormBtns();
   hideVideoPickerBtn();
 }
 
-
-
 /* Toggle between adding and removing the "responsive" class to topnav when the user clicks on the icon */
-function myFunction() {
-  var x = document.getElementById("myTopnav");
-  if (x.className === "topnav") {
-      x.className += " responsive";
+function responsiveNav() {
+  var nav = document.getElementById("myTopnav");
+  if (nav.className === "topnav") {
+      nav.className += " responsive";
   } else {
-      x.className = "topnav";
+      nav.className = "topnav";
   }
 }
-
-function isLoggedIn(){
-  let authToken= '';
-  if(window.localStorage.getItem('authToken') !== null){
-    authToken = window.localStorage.getItem('authToken');
-  }
-  return authToken;
-}
-
-function getCurrentUser(){
-  let user = '';
-  if(window.localStorage){
-    user = window.localStorage.getItem('user');
-  }
-
-  return JSON.parse(user) || '';
-}
-
-
-// const user = getCurrentUser();
-// if( user && user.username === exercise.user.username ){
-//   $('.nav-username').text((getCurrentUser() ? getCurrentUser().username : ''));
-// }
 
 /**--------------------- */
 /*    On Page Ready/
        Click Events
 /**--------------------- */
-$(function onPageReady() {
+$(function onAppStart() {
 
     if(isLoggedIn()){
       showNavItemsAfterLogin();
       hideNavItemsWhenLoggedIn();
-      showScreen('myExercises');
+      showScreen('myCategories');
       hideLoginForm();
-
-      console.log(getCurrentUser());
-      // hideIntroPage();
-      // hideLogInBtn
-      // showMyExercisesPage();
       };
 
   // Popup Iframe and OverlayBg
@@ -358,30 +221,27 @@ $(function onPageReady() {
 
   // Youtube Toggle Search Pages
   $('.tokenClass').click(function () {
-    // console.log($(this).val());
+
     pageToken.current = $(this).val() == 'Next' ? pageToken.nextPage : pageToken.prevPage;
     searchYoutube();
   });
 
   // Nav Bar Icon Click Events
   $('.nav-signup').click(function(){
-    // console.log('working');
     showScreen('signup');
     enableFormInputs();
     
   });
 
   $('.topnav').on('click','.navShowAllBtn',function(){
-    // console.log(currentScreen());
-    if(currentScreen() == 'allExercises'){
+    if(currentScreen() == 'allCategories'){
       console.log('Already here!');
     }
-    showScreen('allExercises');
+    showScreen('allCategories');
   });
 
   $('.topnav').on('click','.navShowMyBtn',function(){
-    showScreen('myExercises');
-    // return showMyExercisesPage();
+    showScreen('myCategories');
   });
 
   $('.nav-login').click(function(){
@@ -395,7 +255,16 @@ $(function onPageReady() {
   });
 
   $('.nav-username').click(function(){
-      showScreen('myExercises');
+      showScreen('myCategories');
+  });
+
+  $('.comment-section').on('click','.a-login',function(e){
+    e.preventDefault();
+    if(!isLoggedIn()){
+      showScreen('login');
+    }
+
+    // console.log('a-login');
   });
   
   // Prevent Form Event Default
@@ -403,22 +272,27 @@ $(function onPageReady() {
     e.preventDefault();
   });
 
-  $('.add-exercise-btn').click(function(){
-    let formMessages = $('#form-messages');
-  
+  $('.add-category-btn').click(function(){
+    // console.log($('.category-title').val());
+    let formMessages = $('#form-messages'); 
+
+    // if($('.category-title').val()){
+    //   clearCategoryForm();
+    // }
+    // const currentCategoryId = getCurrentCategoryIdFromClick(e);
+    
+
     if(isLoggedIn()){
       showFormMessages();
       $('#form-messages').text('Add a new technique!');
-      clearExerciseForm();
-      hideAddExerciseBtn();
-      showScreen('exerciseForm');
+      hideAddCategoryBtn();
+      setCurrentCategory(false);  
+      showScreen('categoryForm');
       enableFormInputs();
     } else {
       showFormMessages();
       $('#form-messages').text(`Please login or register to add a technique!`);
-    }
-   
-   
+    }  
   })
 
   // Sign Up Form Click Event
@@ -436,18 +310,17 @@ $(function onPageReady() {
   })
 
   $('.enter').click(function(){
-    showScreen('allExercises');
-    hideAddExerciseBtn();
-    // showGoBackBtn();
+    showScreen('allCategories');
+    hideAddCategoryBtn();
   });
 
 
   // Show Video Picker 
   $('.add-video-btn').click(function(e){
     e.preventDefault();
-    searchVideoForExerciseTitle();
-    hideAddExerciseBtn();
-    hideExerciseForm();
+    searchVideoForCategoryTitle();
+    hideAddCategoryBtn();
+    hideCategoryForm();
     showMoviePicker();
   });
 
@@ -458,7 +331,6 @@ $(function onPageReady() {
  
   // Add Video to Profile
   $('.video-results').on('click','.select-video-btn',  selectVideoResult);
-
   $('.video-results').on('click','.unselect-video-btn', unselectVideoResult);
 
 
@@ -466,14 +338,14 @@ $(function onPageReady() {
   $('.closePickerBtn').click(function(e){
     e.preventDefault();
     hideMoviePicker();
-    showExerciseForm();
+    showCategoryForm();
   })
 
-  // Save Exercise Click
-  $('.exercise-form form').submit(function(e){
+  // Save Category Click
+  $('.category-form form').submit(function(e){
     e.preventDefault();
     showFormMessages();
-    submitExerciseForm();
+    submitCategoryForm();
   });
 
   // Log In Click Event
@@ -481,102 +353,48 @@ $(function onPageReady() {
     loggingIn();
   });
 
-  $('.a-login').click(function(){
-    if(!isLoggedIn()){
-      showScreen('login');
-      enableFormInputs();
-      hideExerciseForm();
-    }
-  });
-
   $('.addVideosToProfileBtn').click(function(){
     addSelectedVideosToForm();
     hideMoviePicker();
-    showExerciseForm();
+    showCategoryForm();
   });
 
-
-
 /**------------------------------------------------------- */
-/*   Collects and displays the exercise data to the form 
+/*   Collects and displays the category data to the form 
 /**------------------------------------------------------- */
 
-  $('.user-exercise-page').on('click','.exercise-show', function(e){
-      generateCommentElement();
-      // generateCommentData();
-      showAddExerciseBtn();
-      const currentExerciseId = getCurrentExerciseIdFromClick(e);
-      const currentExercise = getCurrentExercise(currentExerciseId);
-      // console.log(currentExercise.user.username);
-      // console.log(currentExercise.username);
+  $('.user-category-page').on('click','.category-show', function(e){
+    const currentCategoryId = getCurrentCategoryIdFromClick(e);
+    setCurrentCategory(currentCategoryId);  
 
-      // console.log(currentExercise);
-
-      // console.log(currentExercise.comments);
-
-      populateFormWExerciseData(currentExercise);
-      renderVideosOnExercisesForm(currentExercise); 
-
-      // console.log(getCurrentUser().username);
-
-      if((getCurrentUser() ? getCurrentUser().username : '') === currentExercise.username){
-        enableFormInputs();
-      } else {
-        disableFormInputs();
-      }
-    
+    showScreen('categoryForm');
   });
 
 /**------------------------------------------------------- */
 /*  
 /**------------------------------------------------------- */
 
-  // Delete Exercise Click
-  $('.delete-exercise-btn').click(function(e){
+  // Delete Category Click
+  $('.delete-category-btn').click(function(e){
     e.preventDefault();
-    // console.log( $('.exercise-id').val() );
-    // console.log('delete technique working');
-    // console.log($('.exercise-id').val());
-
-    deleteExercise( $('.exercise-id').val() );
-  });
-
-  // Delete Videos on exercise  
-  $('.added-videos').on('click','.deleteVideo', function(e){
-    let videoId = $(this).parent().parent().attr('data-videoId');
-    // console.log(videoId);
-
-    deleteVideoFromExercise(videoId);
-
-  });
-
-
-  // Add Comment Btn
-  // $('.addCommentBtn').click(function(e){
-  //   e.preventDefault();
-
-    // if(!isLoggedIn()){
-    //   console.log(currentScreen());
-    //   showScreen('login');
-    //   enableFormInputs();
-    // } else {
-    //   hideAddCommentBtn();
-    //   generateCommentElement();
-    //   generateCommentData();
-    // }
     
-  // });
- 
-  // Comment Submit Btn
-  $('.exercise-form').on('click', '.commentSaveBtn',function(e){
-    e.preventDefault();
-    addComment();
-  })
+    deleteCategory( $('.category-id').val() );
+  });
 
-  // Embedded Videos Previews
-  previewVideos();
-  previewVideosOnExercisePage(); 
-  // renderComments();
+  // Delete Videos on category  
+  $('.added-videos').on('click','.deleteVideo', function(e){
+   
+    // let videoId = $(this).parent().parent().parent().attr('data-videoId');
+    let videoId = $(this).closest('.video-controls').attr('data-videoId');
+
+    if(videoId){
+      deleteVideoFromCategory(videoId);   
+   } else {
+     $(this).closest('.categoryOnForm').closest('.col-4').remove();
+   }
+
+    // console.log('Click Event = the videoId of the video to delete : ' + videoId);
+  });
 
 
 });
