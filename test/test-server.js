@@ -8,15 +8,16 @@ const expect = chai.expect;
 
 chai.use(chaiHttp);
 
-before(function () {
-  return runServer(DATABASE_URL);
-});
-
-after(function () {
-  return closeServer();
-});
 
 describe("index page", function() {
+  before(function () {
+    return runServer(DATABASE_URL);
+  });
+  
+  after(function () {
+    return closeServer();
+  });
+  
   it("should exist", function() {
     return chai
       .request(app)
