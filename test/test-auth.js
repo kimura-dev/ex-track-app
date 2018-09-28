@@ -1,12 +1,11 @@
 'use strict';
-const DATABASE_URL = 'mongodb://localhost:27017/jwt-auth-demo-test';
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const jwt = require('jsonwebtoken');
-
 const { app, runServer, closeServer } = require('../server');
+const {TEST_DATABASE_URL, JWT_SECRET} = require('../config');
 const { User } = require('../users');
-const { JWT_SECRET } = require('../config');
+// const { JWT_SECRET } = require('../config');
 
 const expect = chai.expect;
 
@@ -22,7 +21,7 @@ describe('Auth endpoints', function () {
   const lastName = 'User';
 
   before(function () {
-    return runServer(DATABASE_URL);
+    return runServer(TEST_DATABASE_URL);
   });
 
   after(function () {

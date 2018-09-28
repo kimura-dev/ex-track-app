@@ -1,9 +1,9 @@
 "use strict";
-const DATABASE_URL = 'mongodb://localhost:27017/jwt-auth-demo-test';
+
 const chai = require("chai");
 const chaiHttp = require("chai-http");
 const {app, runServer, closeServer} = require("../server.js");
-
+const {TEST_DATABASE_URL} = require('../config');
 const expect = chai.expect;
 
 chai.use(chaiHttp);
@@ -11,7 +11,7 @@ chai.use(chaiHttp);
 
 describe("index page", function() {
   before(function () {
-    return runServer(DATABASE_URL);
+    return runServer(TEST_DATABASE_URL);
   });
   
   after(function () {
