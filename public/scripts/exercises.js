@@ -109,7 +109,7 @@ function addCategoryToLocalArrays(category, categoryId){
 /**---------------------------------------------------- */
 function showAllCategoriesPage(){
   let formMessages = $('#form-messages'); 
-  $(formMessages).text('Check out our different categories!');
+  $(formMessages).text('');
   if(!isLoggedIn()){
     showloginRegisterPrompt();
     hideAddCategoryBtn();  
@@ -122,7 +122,7 @@ function showAllCategoriesPage(){
 
 function showMyCategoriesPage(){
   let formMessages = $('#form-messages'); 
-  $(formMessages).text('DASHBOARD');
+  $(formMessages).text('');
   hideLoginRegisterPrompt();
   showAddCategoryBtn();
   showUsernameHeader();
@@ -163,7 +163,7 @@ function renderAllCategoriesPage(categories, url){
 function isOwnerOfCategory(category){
   let user = getCurrentUser();
   let isOwner = user.username === category.username;
-  return isOwner;
+  return isOwner && isLoggedIn();
 }
 
 function htmlForCategory(category){

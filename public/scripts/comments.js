@@ -3,21 +3,32 @@
 let comments = [];
 
 
+function friendlyDate(date){
+  let commentDate = Date.now();
+
+  if(typeof date === 'string'){
+    commentDate = new Date(Date.parse(date));
+  } else if (typeof date !== 'undefined'){
+    commentDate = date;
+  }
+
+  let options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
+  options.timeZoneName = 'short';
+
+  commentDate = commentDate.toLocaleDateString('en-US', options);
+
+  return commentDate;
+}
 
 function addComment(){
   let commentMessages = $('#comment-messages');
   let categoryID = $('.category-id').val();
 
-  let date = new Date(Date.UTC(2012, 11, 20, 3, 0, 0));
-
-  let options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
-  options.timeZoneName = 'short';
-
-  let commentDate = date.toLocaleDateString('en-US', options);
+  let date =  Date.now();
 
   let data = {
     body: $('#comment').val(),
-    date: commentDate
+    date
   }
 
   let authToken = isLoggedIn();
@@ -70,13 +81,12 @@ function renderCommentsOnCategoryForm(category){
 }
 
 
-function generateCommentElement(comment, commentDate) {
+function generateCommentElement(comment) {
   if(comment){
     let commentBody = comment.body || '';
     let user = comment.user || '';
     let commentId =  comment._id || '';
-    commentDate =  comment.date || '';
-
+    let commentDate = friendlyDate(comment.date);
 
     return `<div class="comment-container">
             <input name="comment id" type"id" value="${commentId}"hidden>             

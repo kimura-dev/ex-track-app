@@ -75,16 +75,19 @@ function submitSignupForm(){
    
   }).fail(function(data) {
     console.log(data);
+    redrawCurrentScreen();
     // Make sure that the formMessages div has the 'error' class.
     $(formMessages).removeClass('success');
     $(formMessages).addClass('error');
 
+
     // Set the message text.
-    if (data.responseText !== '') {
-        $(formMessages).text(data.message);
+    if (data.responseJSON) {
+        $(formMessages).text(`Your ${data.responseJSON.location} ${data.responseJSON.message}`);
     } else {
         $(formMessages).text('Oops! An error occured and your message could not be sent.');
     }
+    
   });
 };
 
