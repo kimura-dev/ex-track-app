@@ -121,9 +121,7 @@ function showUsernameHeader(){
   $('.usernameHeader').show();
 }
 
-function showNavItemsAfterLogin(){
-  // $('.navShowAllBtn').removeAttr('hidden');
-  // $('.navShowAllBtn').show();
+function showNavItemsAfterLogin(){ 
   $('.navShowMyBtn').removeAttr('hidden');
   $('.navShowMyBtn').show();
   $('.nav-logout').removeAttr('hidden');
@@ -158,6 +156,9 @@ function showFormMessages(){
   $('#form-messages').show();
 }
 
+function clearFormMeassage(){
+  $('#form-messages').html('');
+}
 function showloginRegisterPrompt(){
   $('.loginOrRegisterPrompt').removeAttr('hidden');
   $('.loginOrRegisterPrompt').show();
@@ -177,17 +178,27 @@ function hideSubmitCommentBtn(){
 /**--------------------------------- */
 
 function enableFormInputs(){
-  $('form input').prop('disabled', false);
+  $('form.category-form input').prop('disabled', false);
   $('.status').prop('disabled', false);
-  $('textarea').prop('readonly', false);
+  $('form.category-form textarea').prop('readonly', false);
+  // $('.status-content').removeAttr('hidden'); 
+  $('.status-content').show(); 
+  $('.pickerContentOnForm').show(); 
+
+
+
   showCategoryFormBtns(); 
   showVideoPickerBtn();   
 }
 
 function disableFormInputs(){
-  $('form input').prop('disabled', true);
+  $('form.category-form input').prop('disabled', true);
   $('.status').prop('disabled', 'disabled'); 
-  $('textarea').prop('readonly', true); 
+  $('form.category-form textarea').prop('readonly', true); 
+  // $('.status-content').attr('hidden'); 
+  // $('.status-content').attr('hidden', 'hidden'); 
+  $('.status-content').hide(); 
+  $('.pickerContentOnForm').hide(); 
   hideCategoryFormBtns();
   hideVideoPickerBtn();
 }
@@ -238,18 +249,22 @@ $(function onAppStart() {
       console.log('Already here!');
     }
     showScreen('allCategories');
+    hideMoviePicker();
   });
 
   $('.topnav').on('click','.navShowMyBtn',function(){
     showScreen('myCategories');
+    hideMoviePicker();
   });
 
-  $('.nav-login').click(function(){
+  $('.nav-login').click(function(){  
     showScreen('login')
     enableFormInputs();
   });
 
   $('.nav-logout').click(function(){
+    // let formMessages = $('#form-messages'); 
+    // $(formMessages).text('You are now Logged!')
     console.log('Logout Click')
     logoutUser();
   });
@@ -276,15 +291,9 @@ $(function onAppStart() {
     // console.log($('.category-title').val());
     let formMessages = $('#form-messages'); 
 
-    // if($('.category-title').val()){
-    //   clearCategoryForm();
-    // }
-    // const currentCategoryId = getCurrentCategoryIdFromClick(e);
-    
-
     if(isLoggedIn()){
       showFormMessages();
-      $('#form-messages').text('Add a new technique!');
+      $('#form-messages').text('Create your Category here! !');
       hideAddCategoryBtn();
       setCurrentCategory(false);  
       showScreen('categoryForm');
@@ -310,6 +319,15 @@ $(function onAppStart() {
   })
 
   $('.enter').click(function(){
+    // $('body').css({
+    //   'background-image': "url("+'/styles/imgs/video-hero.jpg'+")",
+    //   'background-position': 'center',
+    //   'height': '100vh',
+    //   'background-repeat': 'no-repeat',
+    //   'background-size': 'contain, cover',
+    //   'background-attachment': 'fixed',
+    //   'margin': '0'
+    // });
     showScreen('allCategories');
     hideAddCategoryBtn();
   });
@@ -366,7 +384,6 @@ $(function onAppStart() {
   $('.user-category-page').on('click','.category-show', function(e){
     const currentCategoryId = getCurrentCategoryIdFromClick(e);
     setCurrentCategory(currentCategoryId);  
-
     showScreen('categoryForm');
   });
 
@@ -383,17 +400,14 @@ $(function onAppStart() {
 
   // Delete Videos on category  
   $('.added-videos').on('click','.deleteVideo', function(e){
-   
-    // let videoId = $(this).parent().parent().parent().attr('data-videoId');
     let videoId = $(this).closest('.video-controls').attr('data-videoId');
 
     if(videoId){
       deleteVideoFromCategory(videoId);   
-   } else {
-     $(this).closest('.categoryOnForm').closest('.col-4').remove();
-   }
+    } else {
+      $(this).closest('.categoryOnForm').closest('.col-4').remove();
+    }
 
-    // console.log('Click Event = the videoId of the video to delete : ' + videoId);
   });
 
 

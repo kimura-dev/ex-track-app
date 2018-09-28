@@ -6,6 +6,8 @@
 /**------------------------------ */
 
 function showMoviePicker(){
+  let formMessages = $('#form-messages');
+  $(formMessages).text('Let\'s find some videos!');
   $('.video-picker').show();
   searchVideoForCategoryTitle();
 };
@@ -188,7 +190,9 @@ function addSelectedVideosToForm(){
   $('.video-result.selected').each(function(index, videoResult){
     let video = jsonforVideo($(videoResult));
     if( !isVideoAddedToForm(video.videoID) ){
-      $('.added-videos > .row').append(htmlForVideoOnCategoryForm(video));
+      let formMessages = $('#form-messages'); 
+      $(formMessages).text('Video add was succesful!')
+      $('.added-videos > .row').append(htmlForVideoOnCategoryForm(video, true));
     }
   });
 };
@@ -212,27 +216,23 @@ function isVideoInResults(videoID){
   return videoResult.length ? videoResult : false;
 }
 
-// function (e){
-//   let button = $(this);
-// }
-
 /**---------------------------- */
 /*    HTML For Videos 
 /**---------------------------- */
 
-function htmlForVideo(video){
+function htmlForVideo(video, isOwner){
   return `<div class="col-4">
               <h3 class="video-title">${video.title}</h3>
               <img  class="thumbnail" src="${video.url}" videoID="${video.videoID}" alt="video result thumbnail">
               <p class="url"><a href="https://www.youtube.com/watch?v=${video.videoID}" target="_blank"> ${video.videoID}</a></p>
               <div class="video-controls" data-videoId="${video._id}">
-               ${videoControls(true)}
+               ${videoControls(true, isOwner)}
 
                 </div>
               </div>`
 }
 
-function htmlForVideoResult(value){
+function htmlForVideoResult(value, isOwner){
   const videos = APP.screens.videoPicker.videos.selected;
   let title = value.snippet.title;
   // let selectedMatch = videos.find(video => video.videoID === value.id.videoId);
@@ -244,7 +244,7 @@ function htmlForVideoResult(value){
                   <img  class="thumbnail" src="${value.snippet.thumbnails.medium.url}" videoID="${value.id.videoId}">
                   <p class="url"><a href="https://www.youtube.com/watch?v=${value.id.videoId}" target="_blank"> ${value.id.videoId}</a></p>  
                   <div class="video-controls">
-                    ${videoControls(false)} 
+                    ${videoControls(false, isOwner)} 
                   </div>
               </div>
             </div>`;
@@ -252,23 +252,27 @@ function htmlForVideoResult(value){
 };
 
 function truncateVideoTitle(title){
-
-  let shortText = jQuery.trim(title).substring(0, 10)
-      .split(" ").slice(0, -1).join(" ") + "...";
+  let length = 25;
+  let shortText = title.substring(0,length) + "...";
+  // let shortText = jQuery.trim(title).substring(0, 10)
+  //     .split(" ").slice(0, -1).join(" ") + "...";
   return shortText;
-  // $('.video-title').html('before: ' + title + '<br>' + 'after: ' + shortText);
-
 }
 
-function videoControls(isAdded){
+function videoControls(isAdded, isOwner){
+  
   if(isAdded){
-    return  `
+    let html=  `
     <div class="float-left">
       <button class="watchVideo">Watch Video</button>
-    </div>
-    <div class="float-right">
-      <button class="deleteVideo">Delete Video</button>
-    </div>`
+    </div>`;
+    if(isOwner){
+      html += `
+      <div class="float-right">
+        <button class="deleteVideo">Delete Video</button>
+      </div>`
+    }
+    return html;
   } 
     return `<div class="float-left">
       <button class="preview-video"><ion-icon name="play-circle"></ion-icon>Preview</button>     

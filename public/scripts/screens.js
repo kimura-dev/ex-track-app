@@ -25,7 +25,7 @@ function showScreen(screenName){
         }
       }
 
-      console.log(screenName);
+      // console.log(screenName);
     });
 
     const screen = APP.screens[screenName];
@@ -49,7 +49,7 @@ function redrawCurrentScreen(){
   if( screen && typeof screen.render === 'function' ) screen.render();
   else if( screen && typeof screen.show === 'function' ) screen.show();
 
-  console.log(screen);
+  console.log('RedrawCurrentScreen: '+screen);
 };
 
 
@@ -63,7 +63,7 @@ APP.screens.allCategories =  {
   nav: true
 };
 
-console.log(APP.categories.all);
+// console.log(APP.categories.all);
 
 APP.screens.myCategories = {
   title: "My Categories",

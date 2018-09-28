@@ -2,17 +2,25 @@
 
 let comments = [];
 
+
+
 function addComment(){
+  let commentMessages = $('#comment-messages');
   let categoryID = $('.category-id').val();
-  
-  let date = Date.now();
+
+  let date = new Date(Date.UTC(2012, 11, 20, 3, 0, 0));
+
+  let options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
+  options.timeZoneName = 'short';
+
+  let commentDate = date.toLocaleDateString('en-US', options);
+
   let data = {
-    body: $('#comment').val()
+    body: $('#comment').val(),
+    date: commentDate
   }
-  
-  let formMessages = $('#form-messages');
+
   let authToken = isLoggedIn();
-  console.log(data);
 
   // AJAX To Categories
   return $.ajax({
@@ -23,11 +31,14 @@ function addComment(){
       Authorization: `Bearer ${authToken}`
     }
   }).then(function(newCategory){
+    // let newComment = newCategory.comments[newCategory.comments.length-1].body;
+    let commentUser = newCategory.comments[newCategory.comments.length-1].user;
 
-    // Add comment to an category and display updated category with the comment appended 
-    
-    $(formMessages).removeClass('error');
-    $(formMessages).addClass('success');
+    // Add comment to an category and display updated category with the comment appended     
+    $(commentMessages).removeClass('error');
+    $(commentMessages).addClass('success');
+    $(commentMessages).text(`${commentUser}, your comment has been added!`);
+
     $('#comment').val('');
     
     // update the category
@@ -35,13 +46,13 @@ function addComment(){
     redrawCurrentScreen();
     
   }).fail(function(data) { 
-    $(formMessages).removeClass('success');
-    $(formMessages).addClass('error');
+    $(commentMessages).removeClass('success');
+    $(commentMessages).addClass('error');
 
     if (data.responseText !== '') {
-        $(formMessages).text(data.responseText);
+        $(commentMessages).text(data.responseText);
     } else {
-        $(formMessages).text('Oops! An error occured and your message could not be sent.');
+        $(commentMessages).text('Oops! An error occured and your message could not be sent.');
     }
   });
 
@@ -59,27 +70,31 @@ function renderCommentsOnCategoryForm(category){
 }
 
 
-function generateCommentElement(comment) {
+function generateCommentElement(comment, commentDate) {
   if(comment){
     let commentBody = comment.body || '';
     let user = comment.user || '';
     let commentId =  comment._id || '';
+    commentDate =  comment.date || '';
+
 
     return `<div class="comment-container">
-            <p class="comment">${commentBody}</p>
+            <input name="comment id" type"id" value="${commentId}"hidden>             
             <p class="comment-author">${user}</p>
+            <p class="comment-date">${commentDate}</p>
+            <p class="comment">${commentBody}</p>
           </div>`
   }
-
+  
   let currentUserName  =  (getCurrentUser() && getCurrentUser().username) || '';
   
   return  `<div id="respond">
       <h3>Please <a href="#" class="a-login">login</a> to leave a comment</h3>
       <form id="commentform">
         <label for="comment-author" class="required">Your name</label>
-        <p id="comment-author" value="" tabindex="1" required="required">${currentUserName}</p>
+        <p class="comment-author"  required="required">${currentUserName}</p>
         <label for="comment" class="required">Your message</label>
-        <textarea name="comment" id="comment" rows="10" tabindex="4"  required="required"></textarea>
+        <textarea name="comment" id="comment" rows="10" tabindex="4"  required></textarea>
         <input name="submit" type="submit" value="Submit comment" class="commentSaveBtn"/> 
       </form>
       </div>`;
@@ -87,20 +102,17 @@ function generateCommentElement(comment) {
 
 
 function handleCommentSubmit(){
-  $('.category-form').on('click', '.commentSaveBtn',function(e) {
-    
+  $('.category-form').on('click', '.commentSaveBtn',function(e) { 
+    let commentMessages = $('#comment-messages');
     e.preventDefault();
-    addComment();
-    // const newComment = $('#comment').val();
-    // console.log(newComment);
-    // console.log()
-    // addComment();
-
-    // console.log('handleCommentSubmit')
+    if(!$('#comment').val()){
+      $(commentMessages).text(`Please put in your comment!`); 
+    } 
     
+    addComment(); 
+
   });
 }
-
 
 function getNewComment(){
   const newComment = $('#comment').val();

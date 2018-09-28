@@ -45,7 +45,7 @@ router.get('/:id', (req, res) => {
   })
   .populate('user','username firstName lastName')
   .populate('comments.user','username firstName lastName')
-  .then(category => {
+  .then(category => { 
    res.status(200).json(category);
   }).catch(err => {
     console.error(err);
@@ -117,7 +117,11 @@ router.put('/:id', jwtAuth, (req, res) => {
     res.status(200).json(data);
   }).catch((err) => {
     console.log(err);
-    res.status(err.status || 400).json({message: err.message || 'Failure to update category'});
+    if(err.name === 'ValidationError'){
+      return res.status(422).json({message:err.message, kind:err.kind, path: err.path, value: err.value});
+    }
+    res.status(400).json({message:'Failed to update category'});
+    // res.status(err.status || 400).json({message: err.message || 'Failure to update category'});
   });
   //   // Add to comments array
   //   // category.videos.push(videos);
@@ -153,7 +157,10 @@ router.post('/:id/comment/', jwtAuth, (req, res) => {
       });
   }).catch(err => {
     console.log('My error message  ' + err);
-    res.status(404).json({message:'Not found'});
+    if(err.name === 'ValidationError'){
+      return res.status(422).json({message:err.message, kind:err.kind, path: err.path, value: err.value});
+    }
+    res.status(400).json({message:'Invalid Request'});
   });
 });
 
@@ -176,10 +183,15 @@ router.delete('/videos/:video_id', jwtAuth,  (req, res) => {
     {new: true}
   )
   .then((category) => {
-    res.status(200).json({message:'Succussfully deleted video!'});
+    // res.status(200).json({message:'Succussfully deleted video!'});
+    res.status(200).json(category);
   }).catch(err => {
     console.log(err);
-    res.status(400).json({message:'Invalid request'});
+    if(err.name === 'ValidationError'){
+      return res.status(422).json({message:err.message, kind:err.kind, path: err.path, value: err.value});
+    }
+    res.status(404).json({message:' Video ID Not found'});
+    
   });
 });
 
@@ -191,6 +203,9 @@ router.delete('/:id', jwtAuth,  (req, res) => {
       res.status(200).json({message:'Succussfully deleted'});
     }).catch(err => {
       console.log(err);
+      if(err.name === 'ValidationError'){
+        return res.status(422).json({message:err.message, kind:err.kind, path: err.path, value: err.value});
+      }
       res.status(400).json({message:'Invalid request'});
     });
 });

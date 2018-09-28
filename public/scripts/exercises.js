@@ -28,12 +28,13 @@ function submitCategoryForm(){
   };
 
   let categoryId = $('.category-id').val() || false;
-  console.log(categoryId);
+  // console.log(categoryId);
   if (categoryId){
     data._id = categoryId;
   }
 
   let formMessages = $('#form-messages');
+  
   let authToken = isLoggedIn();
 
   // AJAX To Categories
@@ -66,9 +67,13 @@ function submitCategoryForm(){
 
 
 function addCategoryToLocalArrays(category, categoryId){
+  let formMessages = $('#form-messages');
+  console.log(category);
   // Create Category Array
+
   if(categoryId){
-    $('#form-messages').text(`${category.title} was edited successfully!`);
+  // For Edits on Category
+    $(formMessages).text(`${category.title} was edited successfully!`);
     const index = categories.findIndex((category) => {
       return category._id === categoryId;
     });
@@ -86,13 +91,15 @@ function addCategoryToLocalArrays(category, categoryId){
       myCategories[myIndex] = category;
 
     }
-   
   } else {
-    $('#form-messages').text(`${category.title} was added successfully!`);
-    categories.push(category);
+    // For New Categories
+    $(formMessages).text(`${category.title} was added successfully!`);
+    if(category.status === 'Public'){
+      categories.push(category);
+    }
+
     myCategories.push(category);
   }
-
 
 
 };
@@ -101,6 +108,8 @@ function addCategoryToLocalArrays(category, categoryId){
 /*    Show All and Show My Category Pages
 /**---------------------------------------------------- */
 function showAllCategoriesPage(){
+  let formMessages = $('#form-messages'); 
+  $(formMessages).text('Check out our different categories!');
   if(!isLoggedIn()){
     showloginRegisterPrompt();
     hideAddCategoryBtn();  
@@ -112,6 +121,8 @@ function showAllCategoriesPage(){
 };
 
 function showMyCategoriesPage(){
+  let formMessages = $('#form-messages'); 
+  $(formMessages).text('DASHBOARD');
   hideLoginRegisterPrompt();
   showAddCategoryBtn();
   showUsernameHeader();
@@ -142,20 +153,31 @@ function showCategoriesPage(categories, url){
 
 
 function renderAllCategoriesPage(categories, url){
+  console.log()
   
-  let htmlForPage = categories.map(htmlForAllCategoriesPage).join('');
+  let htmlForPage = categories.map(htmlForCategory).join('');
 
   $('.user-category-page > .row').html(htmlForPage); 
 };
 
-function htmlForAllCategoriesPage(category){
+function isOwnerOfCategory(category){
+  let user = getCurrentUser();
+  let isOwner = user.username === category.username;
+  return isOwner;
+}
+
+function htmlForCategory(category){
+  let isOwner = isOwnerOfCategory(category);
   let videoSrc = '';
   let videoID = '';
+  // let status = '';
 
   if(category.videos && category.videos.length){
     videoSrc = category.videos[0].url;
     videoID = category.videos[0].videoID;
-  };
+  } else {
+    videoSrc = '/styles/imgs/vhs-hero.jpg' ;
+  }
 
   return `<div class="col-4">
                  <div class="category" data-id='${category.id}'>
@@ -181,18 +203,23 @@ function getCurrentCategoryIdFromClick(e){
 
 function renderVideosOnCategoriesForm(category){
 
-  let htmlForVideo = category.videos.map(htmlForVideoOnCategoryForm).join('');
+  const user = getCurrentUser();
+  const isOwner = user.username === category.username;
+  // const isOwner = (user && user.username === category.user)
+
+  let htmlForVideo = category.videos.map((video) => htmlForVideoOnCategoryForm(video, isOwner));
+
   $('.added-videos > .row').html(htmlForVideo); 
 };
  
-function htmlForVideoOnCategoryForm(video){
+function htmlForVideoOnCategoryForm(video, isOwner){
   return `<div class="col-4">
            <div class="categoryOnForm">
             <h3 class="video-title" objectID="${video._id || ''}">${truncateVideoTitle(video.title)}</h3>
               <img  class="thumbnail" src="${video.url}" videoID="${video.videoID}">
               <p class="url"><a href="https://www.youtube.com/watch?v=${video.videoID}" target="_blank"> ${video.videoID}</a></p>
-              <div class="video-controls" data-videoId="${video._id}">
-                ${videoControls(true)}
+              <div class="video-controls" data-videoId="${video._id || ''}">
+                ${videoControls(true, isOwner)}
               </div>
            </div>
           </div>`;
@@ -200,6 +227,7 @@ function htmlForVideoOnCategoryForm(video){
 
 
 function populateFormWCategoryData(category) {
+  // console.log(category.username);
 
   let formMessages = $('#form-messages');
 
@@ -208,12 +236,13 @@ function populateFormWCategoryData(category) {
     $('.category-id').val(category._id || '') ;
     $('.category-title').val(category.title || '') ;
     $('.category-description').val(category.description || '');
+    $('.category-username').text(`Owner: ${category.username}'s` || '') ;
     $('.addCategoryTitleToVidSect').text(`${category.title} Videos`)
-    $(formMessages).text(`Your ${category.title} exericse!`);
-    hideUserCategoryPage();
+    $(formMessages).text(`${category.title} category!`);
+    // hideUserCategoryPage();
 
-    showCategoryForm();
-    showDeleteCategoryBtn();
+    // showCategoryForm();
+   
     
   }
   
@@ -267,7 +296,7 @@ function showCategoryForm(){
 
   let categoryFormScreen = currentScreen();
 
-  if(APP.lastScreen){
+  if(APP.lastScreen && APP.lastScreen.array){
     categoryFormScreen.array = APP.lastScreen.array;
   }
 
@@ -287,7 +316,7 @@ function showCategoryForm(){
 function hideCategoryForm(){
   $('.category-form').attr('hidden');
   $('.category-form').hide();
-  hideFormMessage();
+  // hideFormMessage();
 };
 
 function renderCategoryForm(){
@@ -296,10 +325,13 @@ function renderCategoryForm(){
     populateFormWCategoryData(currentCategory);
     renderVideosOnCategoriesForm(currentCategory); 
     renderCommentsOnCategoryForm(currentCategory);
-    if((getCurrentUser() ? getCurrentUser().username : '') === currentCategory.username){
+    const isOwner = isOwnerOfCategory(currentCategory);
+    if(isOwner){
       enableFormInputs();
+      showDeleteCategoryBtn();
     } else {
       disableFormInputs();
+      hideDeleteCategoryBtn();
     }
   } else {
     clearCategoryForm();

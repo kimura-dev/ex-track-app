@@ -5,6 +5,8 @@
 /**----------------------------- */  
 
 function showSignupForm(){
+  let formMessages = $('#form-messages'); 
+  $(formMessages).text('Sign Up here to begin creating categories!')
   $('#sign-up-form').show();
   hideLoginForm();
   if(currentScreen() == 'categoryForm'){
@@ -22,19 +24,16 @@ function hideSignupForm(){
 function submitSignupForm(){
   let password = '';
   let formMessages = $('#form-messages');
-  if($('.password').val() === $('.password2').val()){
-    password = $('.password').val();
-  } else {
-    showScreen('signup');
-    $(formMessages).text('Please make sure passwords match'); 
-  }
+  // if($('.password').val() === $('.password2').val()){
+  //   password = $('.password').val();
+  // } else {
+  //   $(formMessages).text('Please make sure both passwords match!'); 
+  // }
   let data = {
     firstName:$('.first').val(),
     lastName: $('.last').val(),
     username: $('.username').val(),
     email: $('.email').val(),
-    // rank: $('.rank > option:selected').val(),
-    // affiliates: $('.affiliates').val(),
     password: password
   };
 
@@ -58,6 +57,7 @@ function submitSignupForm(){
       $(formMessages).text('Your Account was successfully created!');
     } 
 
+    $(formMessages).text('Awesome, your accounts created!! Add a category and begin finding videos!');
     showAddCategoryBtn();
     // hideLoginItems();
     hideNavItemsWhenLoggedIn();
@@ -74,13 +74,14 @@ function submitSignupForm(){
     $('.password2').val('');
    
   }).fail(function(data) {
+    console.log(data);
     // Make sure that the formMessages div has the 'error' class.
     $(formMessages).removeClass('success');
     $(formMessages).addClass('error');
 
     // Set the message text.
     if (data.responseText !== '') {
-        $(formMessages).text('Your account creation was unsuccessful. Please make sure the information you entered is correct.');
+        $(formMessages).text(data.message);
     } else {
         $(formMessages).text('Oops! An error occured and your message could not be sent.');
     }
@@ -121,6 +122,8 @@ function hideLogInBtn(){
 /**----------------------------- */  
 function showLoginForm(){
   $('#login-form').show();
+  let formMessages = $('#form-messages'); 
+  $(formMessages).text('Login below!')
   hideSignupForm();
   enableFormInputs();
   if(currentScreen() == 'categoryForm'){
@@ -131,14 +134,6 @@ function showLoginForm(){
 function hideLoginForm(){
   $('#login-form').hide();
 };
-
-// function getAuthToken(){
-//   let authToken = '';
-
-//   if(window.localStorage){
-//     authToken = window.localStorage.getItem('authToken');
-//   }
-// };
 
 /**------------------------------- */
 /*    Logging In Users
@@ -155,8 +150,6 @@ function loggingIn(){
     url: `${API_URL}/auth/login`,
     data: data
   }).then(function(response) {
-    // let username =  $('.usersname').val();
-    // console.log(response);
     let authToken = response.authToken;
    
     let user = JSON.stringify(response.user);

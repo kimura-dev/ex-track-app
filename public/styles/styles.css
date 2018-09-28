@@ -15,9 +15,7 @@ body {
   color: rgb(255, 255, 255);
   font-family: 'Raleway', sans-serif;
   font-size: 18px;
-  background-image:  -webkit-linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),url(/styles/imgs/video-hero3.jpg);
-  
-
+  background-image:  -webkit-linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)),url(/styles/imgs/inside-therater.jpg);
   background-position: center;
 	/*100% of the viewport*/
 	height: 100vh;
@@ -38,13 +36,13 @@ body {
 fieldset {
   /* margin-top: 15px; */
   padding: 15px;
-  border: 5px solid rgb(42, 59, 212);
+  border: 5px solid rgb(97, 23, 23);
   color: rgb(238, 122, 13);  
 }
 
 fieldset legend {
   background-color: bisque;
-  border: 5px solid rgb(42, 59, 212);
+  border: 5px solid rgb(138, 15, 15);
   padding: 5px 10px;
   font-size: 26px;
   color: rgb(238, 122, 13);
@@ -72,7 +70,8 @@ legend {
 
 /* Add a black background color to the top navigation */
 .topnav {
-  background-color: rgb(42, 59, 212);
+  /* background-color: rgb(42, 59, 212); */
+  background-color: rgb(90, 18, 22);
   border-bottom: 8px solid rgb(238, 122, 13);
   overflow: hidden;
   position: relative;
@@ -161,15 +160,14 @@ div #form-messages {
   display: block;
 }
 
-#form-messages {
-  /* margin-top: 1.5em; */
+#form-messages,
+#comment-messages {
   margin: 0 auto;
-  font-size: 1.5em;
+  font-size: 150%;
   font-weight: bold;
-
-  /* background-color: rgba(250, 109, 15, 0.678); */
+  margin-bottom: 30px;
+  /* background-color:S rgba(250, 109, 15, 0.678); */
   color: rgb(238, 122, 13);
-  width: 40em;
   text-align: center;
   padding: 1em;
   padding-bottom: 0;
@@ -288,7 +286,6 @@ div.error {
 /*-------------------------------*/
 .sign-up-fieldset {
   margin: auto;
-  margin-top: 5em;
   width: 40%;
   background-color: rgb(255, 228, 196)
   /* height: 500px; */
@@ -300,11 +297,10 @@ div.error {
 
 
 .signup-btn {
-  background-color: rgb(17, 69, 243);
   color: #E5E5E5;
-  padding: 10px;
-  font-size: 16px;
-  margin: 3em 0;
+  padding: 8px;
+  font-size: 85%;
+  background-color: rgb(150, 48, 48);
 }
 
 .signup-btn:hover,
@@ -317,10 +313,6 @@ div.error {
 /*-------------------------------*/
 
 .add-category-btn {
-  background-color: rgb(17, 69, 243);
-  color: #E5E5E5;
-  padding: 18px;
-  font-size: 18px;
   text-transform: uppercase;
   margin-top: 40px;
 }
@@ -347,7 +339,7 @@ div.error {
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain, cover;
-  background-color: rgb(34, 157, 238);
+  background-color: rgb(146, 56, 56);
   /* background-color: bisque;
   color: rgb(17, 69, 243);
   text-shadow: 2px 0 0 rgb(238, 122, 13), -2px 0 0 rgb(238, 122, 13), 0 2px 0 rgb(238, 122, 13), 0 -2px 0 rgb(238, 122, 13), 1px 1px rgb(238, 122, 13), -1px -1px 0 rgb(238, 122, 13), 1px -1px 0 rgb(238, 122, 13), -1px 1px 0 rgb(238, 122, 13); */
@@ -384,11 +376,11 @@ div.error {
   font-weight: 700;
   font-size: 150%;
   text-transform: uppercase;
-  text-shadow: 0 1px 0 rgb(17, 69, 243),
-               0 2px 0 rgb(17, 69, 243),
-               0 3px 0 rgb(17, 69, 243),
-               0 4px 0 rgb(17, 69, 243),
-               0 5px 0 rgb(17, 69, 243),
+  text-shadow: 0 1px 0 #000,
+               0 2px 0 #000,
+               0 3px 0 #000,
+               0 4px 0 #000,
+               0 5px 0 #000,
                0 6px 1px rgba(0,0,0,.1),
                0 0 5px rgba(0,0,0,.1),
                0 1px 3px rgba(0,0,0,.3),
@@ -451,13 +443,13 @@ div.error {
   color: #E5E5E5;
   padding: 12px;
   font-size: 85%;
-  background-color: rgb(6, 31, 252);
+  background-color: rgb(238, 122, 13);  
   border-radius: 50%;
 }
 
 .commentSaveBtn:hover,
 .commentSaveBtn:focus {
-  background-color: rgb(238, 122, 13);  
+  background-color: rgb(150, 48, 48);;  
   cursor: pointer; 
 }
 /*----------------------------*/
@@ -494,8 +486,8 @@ div.error {
   line-height: 1.4em;
 }
 
-#comment-author,
-.comment-author {
+.comment-author,
+.comment-date {
   color: rgb(238, 122, 13);
   text-shadow: 1px 0 0 #fff, -1px 0 0 #fff, 0 1px 0 #fff, 0 -1px 0 #fff, 1px 1px #fff;
   letter-spacing: 0.1em;
@@ -583,12 +575,14 @@ input[type='checkbox']:focus {
 
 .float-left {
   float: left;
-  margin: 10px;
+  margin: 10px 0 10px 10px;
+  box-sizing: content-box;
 }
 
 .float-right {
   float: right;
-  margin: 10px;
+  margin: 10px 10px 10px 0;
+  box-sizing: content-box;
 }
 
 .video-controls {
@@ -600,7 +594,7 @@ input[type='checkbox']:focus {
   color: #E5E5E5;
   padding: 8px;
   font-size: 85%;
-  background-color: rgb(6, 31, 252);
+  background-color: rgb(150, 48, 48);
 }
 
 watchVideo:hover,
@@ -617,9 +611,10 @@ deleteVideo:focus,
 .usernameHeader {
   text-align: center;
   margin-bottom: 40px;
+  margin-top: 0;
   letter-spacing: 0.4em;
-  text-shadow:2px 2px rgb(71, 93, 218);
-  color: rgb(238, 122, 13);  
+  text-shadow:2px 2px rgb(238, 122, 13);
+  color:rgb(150, 48, 48) ;  
   font-weight: 700;
   font-size: 150%;
   text-transform: uppercase;
@@ -629,8 +624,8 @@ deleteVideo:focus,
   text-align: center;
   margin-bottom: 40px;
   letter-spacing: 0.4em;
-  text-shadow:2px 2px rgb(71, 93, 218);
-  color: rgb(238, 122, 13);  
+  text-shadow: 2px 2px rgb(238, 122, 13);
+  color: rgb(150, 48, 48);
   font-weight: 700;
   font-size: 150%;
   text-transform: uppercase;
@@ -640,10 +635,9 @@ deleteVideo:focus,
 /*-------------------------------*/
 .logIn {
   color: #E5E5E5;
-  text-transform: uppercase;
-  font-size: 14px;
   padding: 8px;
-  background-color: rgb(17, 69, 243);
+  font-size: 85%;
+  background-color: rgb(150, 48, 48);
 }
 
 .logIn:hover,
@@ -730,7 +724,7 @@ p {
 .tokenClass {
   padding: 10px;
   font-size: 18px;
-  background-color: rgb(17, 69, 243);
+  background-color: rgb(105, 5, 5);
   color: #E5E5E5;
 }
 
@@ -835,7 +829,7 @@ p {
   color: #E5E5E5;
   padding: 8px;
   font-size: 85%;
-  background-color: rgb(6, 31, 252);
+  background-color: rgb(150, 48, 48);
 }
 
 .preview-video:hover,
@@ -864,7 +858,7 @@ p {
 
 .category-show {
   font-size: 20px;
-  color: rgb(34, 66, 243);
+  color: rgb(154, 31, 31);
   text-transform: uppercase;
   /* text-shadow: 2px 2px  rgb(47, 117, 209); */
   font-weight: 700;
@@ -883,8 +877,8 @@ p {
   text-align: center;
   text-transform: uppercase;
   font-size: 18px;
-  color: rgb(6, 31, 252);
-  text-shadow: 2px 2px  rgb(13, 174, 238);
+  color: rgb(151, 57, 57);
+  text-shadow: 2px 2px  rgb(243, 1, 1);
   font-weight: 700;
   letter-spacing: 0.2em;
 }
@@ -957,7 +951,7 @@ button.unselect-video-btn {
 }
 
 .youtubeVideo {
-  background-color: rgb(34, 157, 238);
+  background-color: rgb(128, 80, 80);
   margin-bottom: 20px;
 }
 
@@ -980,23 +974,25 @@ button.unselect-video-btn {
 .vid-selected {
   opacity: 0.3;
 }
+/* rgb(90, 18, 22);
+rgb(238, 122, 13); */
 
 .myButton {
 	-moz-box-shadow: 1px 4px 0px 2px rgb(238, 122, 13);
 	-webkit-box-shadow: 1px 4px 0px 2px rgb(238, 122, 13);
 	box-shadow: 1px 4px 0px 2px rgb(238, 122, 13);
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #3f5ed9), color-stop(1, #1c1ce6));
-	background:-moz-linear-gradient(top, #3f5ed9 5%, #1c1ce6 100%);
-	background:-webkit-linear-gradient(top, #3f5ed9 5%, #1c1ce6 100%);
-	background:-o-linear-gradient(top, #3f5ed9 5%, #1c1ce6 100%);
-	background:-ms-linear-gradient(top, #3f5ed9 5%, #1c1ce6 100%);
-	background:linear-gradient(to bottom, #3f5ed9 5%, #1c1ce6 100%);
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, rgb(117, 37, 41)), color-stop(1, rgb(90, 18, 22)));
+	background:-moz-linear-gradient(top, rgb(104, 18, 22) 5%, rgb(128, 44, 49) 100%);
+	background:-webkit-linear-gradient(top, rgb(104, 18, 22) 5%, rgb(128, 44, 49) 100%);
+	background:-o-linear-gradient(top, rgb(104, 18, 22) 5%, rgb(128, 44, 49) 100%);
+	background:-ms-linear-gradient(top, rgb(104, 18, 22) 5%, rgb(128, 44, 49) 100%);
+	background:linear-gradient(to bottom, rgb(104, 18, 22)5%, rgb(128, 44, 49) 100%);
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#3f5ed9', endColorstr='#1c1ce6',GradientType=0);
-	background-color:#3f5ed9;
+	background-color:#d93f3f;
 	-moz-border-radius:18px;
 	-webkit-border-radius:18px;
 	border-radius:18px;
-	border:1px solid #1b2acf;
+	border:1px solid #cf1b1b;
 	/* display:inline-block; */
 	cursor:pointer;
 	color:#ffffff;
@@ -1008,12 +1004,12 @@ button.unselect-video-btn {
 }
 .myButton:hover {
 	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #1c1ce6), color-stop(1, #3f5ed9));
-	background:-moz-linear-gradient(top, #1c1ce6 5%, #3f5ed9 100%);
-	background:-webkit-linear-gradient(top, #1c1ce6 5%, #3f5ed9 100%);
-	background:-o-linear-gradient(top, #1c1ce6 5%, #3f5ed9 100%);
-	background:-ms-linear-gradient(top, #1c1ce6 5%, #3f5ed9 100%);
-	background:linear-gradient(to bottom, #1c1ce6 5%, #3f5ed9 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#1c1ce6', endColorstr='#3f5ed9',GradientType=0);
+	background:-moz-linear-gradient(top, rgb(141, 61, 66) 5%, rgb(184, 97, 101) 100%);
+	background:-webkit-linear-gradient(top, rgb(141, 61, 66) 5%, rgb(158, 88, 91) 100%);
+	background:-o-linear-gradient(top, rgb(141, 61, 66) 5%, rgb(172, 81, 85)100%);
+	background:-ms-linear-gradient(top, rgb(141, 61, 66) 5%, rgb(179, 83, 88) 100%);
+	background:linear-gradient(to bottom, rgb(141, 61, 66) 5%, rgb(150, 66, 70) 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#1c1ce6', endColorstr='rgb(90, 18, 22)',GradientType=0);
 	background-color:#1c1ce6;
 }
 .myButton:active {
@@ -1121,6 +1117,10 @@ footer {
 /*------------------------------------------*/
 
 @media screen and (max-width: 640px){
+  .category {
+    height: auto;
+  }
+
   .category-show,
   img {
     display: block;
