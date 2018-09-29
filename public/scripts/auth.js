@@ -22,19 +22,15 @@ function hideSignupForm(){
 /*   AJAX Submit Signup Form
 /**----------------------------- */  
 function submitSignupForm(){
-  let password = '';
+  console.log($('.password').val());
   let formMessages = $('#form-messages');
-  // if($('.password').val() === $('.password2').val()){
-  //   password = $('.password').val();
-  // } else {
-  //   $(formMessages).text('Please make sure both passwords match!'); 
-  // }
+  
   let data = {
     firstName:$('.first').val(),
     lastName: $('.last').val(),
     username: $('.username').val(),
     email: $('.email').val(),
-    password: password
+    password: $('.password').val()
   };
 
   // Submit the form using AJAX.
@@ -74,7 +70,7 @@ function submitSignupForm(){
     $('.password2').val('');
    
   }).fail(function(data) {
-    console.log(data);
+    // console.log(data);
     redrawCurrentScreen();
     // Make sure that the formMessages div has the 'error' class.
     $(formMessages).removeClass('success');
