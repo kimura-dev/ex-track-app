@@ -332,7 +332,8 @@ div.error {
 /*-------------------------------*/
 
 .hidden {
-  display: none;
+  visibility: hidden;
+  position: absolute;
 }
 
 .categoryFieldset {
@@ -1016,6 +1017,8 @@ rgb(238, 122, 13); */
 	position:relative;
 	top:1px;
 }
+
+
 
 /*------------------------------------------*/
 /*       Footer

@@ -85,47 +85,35 @@ function hideAddCategoryBtn(){
 /**-------------------------------- */
 /*  Hide & Show Nav Items
 /**--------------------------------- */
-function hideNavItemsWhenLoggedIn(){
-  $('.nav-login').attr('hidden');
-  $('.nav-login').hide();
-  $('.nav-signup').attr('hidden');
-  $('.nav-signup').hide();
+function hideNavItemsWhenLoggedIn(){ 
+  $('.nav-login').addClass('hidden'); 
+  $('.nav-signup').addClass('hidden');
+}
+
+function showNavItemsAfterLogin(){ 
+  $('.navShowMyBtn').removeClass('hidden');
+  $('.nav-logout').removeClass('hidden');
 }
 
 function hideNavItemsBeforeLogin(){
-  // $('.navShowAllBtn').attr('hidden');
-  // $('.navShowAllBtn').hide();
-  $('.navShowMyBtn').attr('hidden');
-  $('.navShowMyBtn').hide();
-  $('.nav-logout').attr('hidden');
-  $('.nav-logout').hide();
+  $('.navShowMyBtn').addClass('hidden');  
+  $('.nav-logout').addClass('hidden');
 }
 
 function showAllCategoryPageHeader(){
-  $('.allCategoryPageHeader').removeAttr('hidden');
   $('.allCategoryPageHeader').show();
 }
 
 function hideAllCategoryPageHeader(){
-  $('.allCategoryPageHeader').attr('hidden');
   $('.allCategoryPageHeader').hide();
 }
 
 function hideUsernameHeader(){
-  $('.usernameHeader').attr('hidden');
   $('.usernameHeader').hide();
 }
 
 function showUsernameHeader(){
-  $('.usernameHeader').removeAttr('hidden');
   $('.usernameHeader').show();
-}
-
-function showNavItemsAfterLogin(){ 
-  $('.navShowMyBtn').removeAttr('hidden');
-  $('.navShowMyBtn').show();
-  $('.nav-logout').removeAttr('hidden');
-  $('.nav-logout').show();
 }
 
 /**-------------------------------- */
@@ -144,33 +132,23 @@ function hideLogInBtn(){
 /**-------------------------------- */
 /*  Hide & Show Form Message
 /**--------------------------------- */
-hideNavItemsBeforeLogin();
-
 function hideFormMessage(){
-  $('#form-messages').attr('hidden');
   $('#form-messages').hide();
 }
 
 function showFormMessages(){
-  $('#form-messages').removeAttr('hidden');
   $('#form-messages').show();
 }
 
-function clearFormMeassage(){
-  $('#form-messages').html('');
-}
 function showloginRegisterPrompt(){
-  $('.loginOrRegisterPrompt').removeAttr('hidden');
   $('.loginOrRegisterPrompt').show();
 }
 
 function hideLoginRegisterPrompt(){
-  $('.loginOrRegisterPrompt').attr('hidden');
   $('.loginOrRegisterPrompt').hide();
 }
 
 function hideSubmitCommentBtn(){
-  $('.commentSaveBtn').attr('hidden');
   $('.commentSaveBtn').hide();
 }
 /**-------------------------------- */
@@ -205,12 +183,14 @@ function disableFormInputs(){
 
 /* Toggle between adding and removing the "responsive" class to topnav when the user clicks on the icon */
 function responsiveNav() {
-  var nav = document.getElementById("myTopnav");
-  if (nav.className === "topnav") {
-      nav.className += " responsive";
-  } else {
-      nav.className = "topnav";
-  }
+  // var nav = document.getElementById("myTopnav");
+  // if (nav.className === "topnav") {
+  //     nav.className += " responsive";
+  // } else {
+  //     nav.className = "topnav";
+  // }
+  $('#myTopnav').toggleClass('responsive');
+
 }
 
 /**--------------------- */
@@ -219,11 +199,13 @@ function responsiveNav() {
 /**--------------------- */
 $(function onAppStart() {
 
+  hideNavItemsBeforeLogin();
+
     if(isLoggedIn()){
       showNavItemsAfterLogin();
       hideNavItemsWhenLoggedIn();
       showScreen('myCategories');
-      hideLoginForm();
+      // hideLoginForm();
       };
 
   // Popup Iframe and OverlayBg

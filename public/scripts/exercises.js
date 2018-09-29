@@ -202,10 +202,7 @@ function getCurrentCategoryIdFromClick(e){
 };
 
 function renderVideosOnCategoriesForm(category){
-
-  const user = getCurrentUser();
-  const isOwner = user.username === category.username;
-  // const isOwner = (user && user.username === category.user)
+  const isOwner = isOwnerOfCategory(category);
 
   let htmlForVideo = category.videos.map((video) => htmlForVideoOnCategoryForm(video, isOwner));
 

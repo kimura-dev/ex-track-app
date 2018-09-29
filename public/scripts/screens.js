@@ -17,6 +17,7 @@ function showScreen(screenName){
     APP.lastScreen = currentScreen();
 
     APP.currentScreenName = screenName;
+    // Hiding the screens that aren't the one that was selected
     Object.keys(APP.screens).forEach(screen => {
       const thisScreen = APP.screens[screen];
       if( thisScreen !== currentScreen() ){
@@ -31,8 +32,11 @@ function showScreen(screenName){
     const screen = APP.screens[screenName];
 
     function showAndRender(screen){
+
       (screen && typeof screen.show === 'function' ) && screen.show();
       (screen && typeof screen.render === 'function' ) && screen.render();
+
+      $('#myTopnav').removeClass('responsive');
     }
 
     if( output && output.then ){

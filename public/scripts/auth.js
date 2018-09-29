@@ -101,6 +101,8 @@ function getCurrentUser(){
     user = window.localStorage.getItem('user');
   }
 
+  console.log('"User" inside getCurrentUser :'+user)
+
   return JSON.parse(user) || '';
 }
 
@@ -150,8 +152,10 @@ function loggingIn(){
     data: data
   }).then(function(response) {
     let authToken = response.authToken;
-   
+   console.log(response.user);
     let user = JSON.stringify(response.user);
+   console.log(user);
+
     
     if(window.localStorage){
       window.localStorage.setItem('authToken', authToken);

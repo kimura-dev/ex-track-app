@@ -30,34 +30,40 @@ describe("Category", function() {
           expect(item).to.have.all.keys(
             "id",
             "title",
-            "content",
-            "author",
-            "publishDate"
+            "description",
+            "status",
+            "username"
           );
         });
       });
   });
 
-  it("should add a blog post on POST", function() {
-    const newPost = {
+  it("should add a category on POST", function() {
+    const newCategory = {
       title: "Lorem ip some",
       content: "foo foo foo foo",
-      author: "Emma Goldman"
+      status: "Public",
+      videos: [{title:"Video Title", url:"http://example@example.com", videoID:'3452qtyz'}],
+      username: "Andrew Dice Clay"
     };
-    const expectedKeys = ["id", "publishDate"].concat(Object.keys(newPost));
+    const expectedKeys = ["id"].concat(Object.keys(newCategory));
+    const expectedVideoKeys = ["_id"].concat(Object.keys(newCategory.videos[0]));
 
     return chai
       .request(app)
-      .post("/blog-posts")
-      .send(newPost)
+      .post("/categories")
+      .send(newCategory)
       .then(function(res) {
         expect(res).to.have.status(201);
         expect(res).to.be.json;
         expect(res.body).to.be.a("object");
         expect(res.body).to.have.all.keys(expectedKeys);
-        expect(res.body.title).to.equal(newPost.title);
-        expect(res.body.content).to.equal(newPost.content);
-        expect(res.body.author).to.equal(newPost.author);
+        expect(res.body.videos).to.be.a('array');
+        expect(res.body.videos).to.have.lengthOf(1);
+        expect(res.body.videos[0]).to.have.all.keys(expectedVideoKeys);
+        expect(res.body.title).to.equal(newCategory.title);
+        expect(res.body.content).to.equal(newCategory.description);
+        expect(res.body.author).to.equal(newCategory.status);
       });
   });
 
@@ -65,27 +71,27 @@ describe("Category", function() {
     const badRequestData = {};
     return chai
       .request(app)
-      .post("/blog-posts")
+      .post("/categories")
       .send(badRequestData)
       .then(function(res) {
         expect(res).to.have.status(400);
       });
   });
 
-  it("should update blog posts on PUT", function() {
+  it("should update category on PUT", function() {
     return (
       chai
         .request(app)
         // first have to get
-        .get("/blog-posts")
+        .get("/categories")
         .then(function(res) {
           const updatedPost = Object.assign(res.body[0], {
             title: "connect the dots",
-            content: "la la la la la"
+            description: "la la la la la"
           });
           return chai
             .request(app)
-            .put(`/blog-posts/${res.body[0].id}`)
+            .put(`/categories/${res.body[0].id}`)
             .send(updatedPost)
             .then(function(res) {
               expect(res).to.have.status(204);
@@ -94,16 +100,16 @@ describe("Category", function() {
     );
   });
 
-  it("should delete posts on DELETE", function() {
+  it("should delete category on DELETE", function() {
     return (
       chai
         .request(app)
         // first have to get
-        .get("/blog-posts")
+        .get("/categories")
         .then(function(res) {
           return chai
             .request(app)
-            .delete(`/blog-posts/${res.body[0].id}`)
+            .delete(`/categories/${res.body[0].id}`)
             .then(function(res) {
               expect(res).to.have.status(204);
             });
