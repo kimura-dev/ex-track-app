@@ -39,7 +39,6 @@ function showVideoPickerBtn(){
 }
 
 function hideVideoPickerBtn(){
-  // console.log('hide working');
   $('.videoPickerBtn').addClass('hidden');
   $('.videoPickerBtn').hide();
 }
@@ -82,9 +81,6 @@ function hideAddCategoryBtn(){
   $('.add-category-btn').hide();
 }
 
-/**-------------------------------- */
-/*  Hide & Show Nav Items
-/**--------------------------------- */
 function hideNavItemsWhenLoggedIn(){ 
   $('.nav-login').addClass('hidden'); 
   $('.nav-signup').addClass('hidden');
@@ -128,7 +124,6 @@ function hideLogInBtn(){
   $('.login-btn').hide();
 }
 
-
 /**-------------------------------- */
 /*  Hide & Show Form Message
 /**--------------------------------- */
@@ -152,7 +147,7 @@ function hideSubmitCommentBtn(){
   $('.commentSaveBtn').hide();
 }
 /**-------------------------------- */
-/*  Hide & Show FORM INPUTS
+/*  ENABLE/DISABLE FORM INPUTS
 /**--------------------------------- */
 
 function enableFormInputs(){
@@ -162,8 +157,6 @@ function enableFormInputs(){
   // $('.status-content').removeAttr('hidden'); 
   $('.status-content').show(); 
   $('.pickerContentOnForm').show(); 
-
-
 
   showCategoryFormBtns(); 
   showVideoPickerBtn();   
@@ -180,6 +173,10 @@ function disableFormInputs(){
   hideCategoryFormBtns();
   hideVideoPickerBtn();
 }
+
+/**-------------------------------- */
+/*    RESPONSIVE NAVIGATION
+/**--------------------------------- */
 
 /* Toggle between adding and removing the "responsive" class to topnav when the user clicks on the icon */
 function responsiveNav() {
@@ -202,11 +199,8 @@ $(function onAppStart() {
   hideNavItemsBeforeLogin();
 
     if(isLoggedIn()){
-      showNavItemsAfterLogin();
-      hideNavItemsWhenLoggedIn();
       showScreen('myCategories');
-      // hideLoginForm();
-      };
+    };
 
   // Popup Iframe and OverlayBg
   $('.popup').hide();
@@ -214,7 +208,6 @@ $(function onAppStart() {
 
   // Youtube Toggle Search Pages
   $('.tokenClass').click(function () {
-
     pageToken.current = $(this).val() == 'Next' ? pageToken.nextPage : pageToken.prevPage;
     searchYoutube();
   });
@@ -222,8 +215,7 @@ $(function onAppStart() {
   // Nav Bar Icon Click Events
   $('.nav-signup').click(function(){
     showScreen('signup');
-    enableFormInputs();
-    
+    enableFormInputs(); 
   });
 
   $('.topnav').on('click','.navShowAllBtn',function(){
@@ -245,9 +237,6 @@ $(function onAppStart() {
   });
 
   $('.nav-logout').click(function(){
-    // let formMessages = $('#form-messages'); 
-    // $(formMessages).text('You are now Logged!')
-    console.log('Logout Click')
     logoutUser();
   });
 
@@ -260,8 +249,6 @@ $(function onAppStart() {
     if(!isLoggedIn()){
       showScreen('login');
     }
-
-    // console.log('a-login');
   });
   
   // Prevent Form Event Default
@@ -270,7 +257,6 @@ $(function onAppStart() {
   });
 
   $('.add-category-btn').click(function(){
-    // console.log($('.category-title').val());
     let formMessages = $('#form-messages'); 
 
     if(isLoggedIn()){
@@ -301,19 +287,9 @@ $(function onAppStart() {
   })
 
   $('.enter').click(function(){
-    // $('body').css({
-    //   'background-image': "url("+'/styles/imgs/video-hero.jpg'+")",
-    //   'background-position': 'center',
-    //   'height': '100vh',
-    //   'background-repeat': 'no-repeat',
-    //   'background-size': 'contain, cover',
-    //   'background-attachment': 'fixed',
-    //   'margin': '0'
-    // });
     showScreen('allCategories');
     hideAddCategoryBtn();
   });
-
 
   // Show Video Picker 
   $('.add-video-btn').click(function(e){
@@ -370,7 +346,7 @@ $(function onAppStart() {
   });
 
 /**------------------------------------------------------- */
-/*  
+/*       DELETE CATEGORY & DELETE CATEGORY VIDEOS
 /**------------------------------------------------------- */
 
   // Delete Category Click

@@ -127,6 +127,8 @@ function showMyCategoriesPage(){
   showAddCategoryBtn();
   showUsernameHeader();
   hideAllCategoryPageHeader();
+  showNavItemsAfterLogin();
+  hideNavItemsWhenLoggedIn();
  
  $('.usernameHeader').html((getCurrentUser() ? getCurrentUser().username : '') + "'s " + ' Categories');
   return showCategoriesPage(myCategories, '/categories/my');

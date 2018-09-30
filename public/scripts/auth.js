@@ -22,9 +22,8 @@ function hideSignupForm(){
 /*   AJAX Submit Signup Form
 /**----------------------------- */  
 function submitSignupForm(){
-  console.log($('.password').val());
   let formMessages = $('#form-messages');
-  
+
   let data = {
     firstName:$('.first').val(),
     lastName: $('.last').val(),
@@ -39,26 +38,26 @@ function submitSignupForm(){
     url: `${API_URL}/users`,
     data: data
   }).then(function(response) {
-    console.log(response);
     // Make sure that the formMessages div has the 'success' class.
     $(formMessages).removeClass('error');
     $(formMessages).addClass('success');
 
-    // Set the message text.
-
+    // Set the message text
     let authToken = response.authToken;
+    let user = JSON.stringify(response);
     
     if(window.localStorage){
       window.localStorage.setItem('authToken', authToken);
+      window.localStorage.setItem('user', user);
       $(formMessages).text('Your Account was successfully created!');
     } 
 
     $(formMessages).text('Awesome, your accounts created!! Add a category and begin finding videos!');
-    showAddCategoryBtn();
-    // hideLoginItems();
-    hideNavItemsWhenLoggedIn();
-    showNavItemsAfterLogin();
-    // return showMyCategoriesPage();
+    // showAddCategoryBtn();
+    // hideNavItemsWhenLoggedIn();
+    // showNavItemsAfterLogin();
+    showScreen('myCategories');
+  
     // Clear the form.
     $('.first').val('');
     $('.last').val('');
@@ -70,12 +69,10 @@ function submitSignupForm(){
     $('.password2').val('');
    
   }).fail(function(data) {
-    // console.log(data);
     redrawCurrentScreen();
     // Make sure that the formMessages div has the 'error' class.
     $(formMessages).removeClass('success');
     $(formMessages).addClass('error');
-
 
     // Set the message text.
     if (data.responseJSON) {
@@ -101,8 +98,6 @@ function getCurrentUser(){
     user = window.localStorage.getItem('user');
   }
 
-  console.log('"User" inside getCurrentUser :'+user)
-
   return JSON.parse(user) || '';
 }
 
@@ -119,7 +114,7 @@ function hideLogInBtn(){
 }
 
 /**----------------------------- */
-/* Login section
+/*     SHOW LOGIN FORM
 /**----------------------------- */  
 function showLoginForm(){
   $('#login-form').show();
@@ -137,7 +132,7 @@ function hideLoginForm(){
 };
 
 /**------------------------------- */
-/*    Logging In Users
+/*    Login AJAX
 /**-------------------------------- */
 
 function loggingIn(){
@@ -152,16 +147,12 @@ function loggingIn(){
     data: data
   }).then(function(response) {
     let authToken = response.authToken;
-   console.log(response.user);
     let user = JSON.stringify(response.user);
-   console.log(user);
 
-    
     if(window.localStorage){
       window.localStorage.setItem('authToken', authToken);
       window.localStorage.setItem('user', user);
-      console.log('Ran');
-      location.reload();
+      // location.reload();
     }
     
     $(formMessages).removeClass('error');
@@ -170,7 +161,7 @@ function loggingIn(){
     $('.username').val('');
     $('.password').val('');
     
-    hideLoginForm();
+    // hideLoginForm();
     
     return showScreen('myCategories');
     

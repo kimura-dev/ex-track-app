@@ -65,11 +65,6 @@ function searchYoutube() {
 function searchVideoForCategoryTitle(){
   let title = $('.category-title').val();
 
-  // if(title && !$('.added-videos > .row').children().length) {
-  //   $('.video-search-input').val(title);
-  //   $('.video-search-btn').focus().click();
-  // }
-
   if(title) {
     $('.video-search-input').val(title);
     $('.video-search-btn').focus().click();
@@ -83,13 +78,10 @@ function searchVideoForCategoryTitle(){
 function previewVideos(){
   $('.video-results').on('click', '.preview-video', function (e) {
     let target = $( e.target );
-    // let videoID = $(target).closest('.video-result').find('img').attr('videoID');   
     let videoID = $(target).parent().parent().parent().find('img').attr('videoID');
-    // console.log(videoID);
     $('.popup').show()
     $('.overlayBg').show();
     $(window).scrollTop(0)
-    // $('.popup iframe').attr('src', 'https://www.youtube.com/embed/' + $(this).attr('videoID'));
     $('.popup iframe').attr('src', `https://www.youtube.com/embed/${videoID}`);
   });
   $('.overlayBg').click(function () {
@@ -106,7 +98,6 @@ function previewVideosOnCategoryPage(){
   $('.category-form').on('click','.watchVideo',function(e){
     let target = $( e.target );
     let videoID = $(target).parent().parent().parent().find('img').attr('videoID');
-    console.log(videoID);
 
     $('.popup').show()
     $('.overlayBg').show();
@@ -133,7 +124,6 @@ $(handlePreviewVideos);
 function jsonforVideo(videoElement){
   let target = $(videoElement);
   const jsonVideo = {
-    // _id: target.find('.video-title').attr('objectID'),
     title: target.find('.video-title').text(),
     url: target.find('.thumbnail').attr('src'),
     videoID: target.find('.thumbnail').attr('videoID')
@@ -165,19 +155,7 @@ function selectVideoResult(e) {
   let button = $( this );
   let videoResult = button.closest('.video-result');
   
-  // old DOM-centric implementation
   videoResult.addClass('selected');
-  // new APP state-centric implementation
-  
-  // //1. find actual video object based on videoResult element
-  // let videoData = getVideoDataFromResultElement(videoResult);
-  
-  // //2. add videoData to our APP state
-  // APP.screens.videoPicker.videos.selected.push(videoData);
-
-  // //3. redraw our UI based on the changed APP state
-  // redrawCurrentScreen();
-  
 }
 
 function unselectVideoResult(e) {
@@ -235,9 +213,7 @@ function htmlForVideo(video, isOwner){
 function htmlForVideoResult(value, isOwner){
   const videos = APP.screens.videoPicker.videos.selected;
   let title = value.snippet.title;
-  // let selectedMatch = videos.find(video => video.videoID === value.id.videoId);
-
-  // let selectedAttribute = selectedMatch ? ' selected' : '';
+ 
     return  `<div class="video-result">
               <div class="col-4${ /*selectedAttribute*/ '' } youtubeVideo">
                   <h3 class="video-title">${truncateVideoTitle(title)}</h3>
@@ -252,10 +228,9 @@ function htmlForVideoResult(value, isOwner){
 };
 
 function truncateVideoTitle(title){
-  let length = 25;
-  let shortText = title.substring(0,length) + "...";
-  // let shortText = jQuery.trim(title).substring(0, 10)
-  //     .split(" ").slice(0, -1).join(" ") + "...";
+  let length = 40;
+  let shortText = title.substring(0, length) + "...";
+
   return shortText;
 }
 

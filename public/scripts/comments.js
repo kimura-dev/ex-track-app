@@ -2,7 +2,6 @@
 
 let comments = [];
 
-
 function friendlyDate(date){
   let commentDate = Date.now();
 
@@ -126,7 +125,6 @@ function handleCommentSubmit(){
 
 function getNewComment(){
   const newComment = $('#comment').val();
-    console.log(newComment);
     return newComment;
 }
 

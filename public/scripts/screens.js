@@ -109,6 +109,7 @@ APP.screens.login = {
   title: "Login",
   url: '/api/auth/login',
   show: showLoginForm,
+  hide: hideLoginForm,
     // hideNavItemsWhenLoggedIn
   nav: true
 }
