@@ -46,6 +46,7 @@ function submitCategoryForm(){
       Authorization: `Bearer ${authToken}`
     }
   }).then(function(response) {
+    console.log(response);
     $(formMessages).removeClass('error');
     $(formMessages).addClass('success');
     clearCategoryForm();

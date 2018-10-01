@@ -48,7 +48,7 @@ function showScreen(screenName){
   }  
 };
 
-function redrawCurrentScreen(){
+function  redrawCurrentScreen(){
   const screen = currentScreen();
   if( screen && typeof screen.render === 'function' ) screen.render();
   else if( screen && typeof screen.show === 'function' ) screen.show();

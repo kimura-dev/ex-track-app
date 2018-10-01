@@ -154,7 +154,6 @@ function enableFormInputs(){
   $('form.category-form input').prop('disabled', false);
   $('.status').prop('disabled', false);
   $('form.category-form textarea').prop('readonly', false);
-  // $('.status-content').removeAttr('hidden'); 
   $('.status-content').show(); 
   $('.pickerContentOnForm').show(); 
 
@@ -165,9 +164,7 @@ function enableFormInputs(){
 function disableFormInputs(){
   $('form.category-form input').prop('disabled', true);
   $('.status').prop('disabled', 'disabled'); 
-  $('form.category-form textarea').prop('readonly', true); 
-  // $('.status-content').attr('hidden'); 
-  // $('.status-content').attr('hidden', 'hidden'); 
+  $('form.category-form textarea').prop('readonly', true);  
   $('.status-content').hide(); 
   $('.pickerContentOnForm').hide(); 
   hideCategoryFormBtns();
@@ -198,9 +195,9 @@ $(function onAppStart() {
 
   hideNavItemsBeforeLogin();
 
-    if(isLoggedIn()){
-      showScreen('myCategories');
-    };
+  if(isLoggedIn()){
+    showScreen('myCategories');
+  };
 
   // Popup Iframe and OverlayBg
   $('.popup').hide();
@@ -358,8 +355,10 @@ $(function onAppStart() {
 
   // Delete Videos on category  
   $('.added-videos').on('click','.deleteVideo', function(e){
-    let videoId = $(this).closest('.video-controls').attr('data-videoId');
-
+    let videoId = $(this).closest('.video-controls').attr('data-videoid');
+    console.log(this);
+    
+    console.log('videoId on button click: ' + videoId);
     if(videoId){
       deleteVideoFromCategory(videoId);   
     } else {

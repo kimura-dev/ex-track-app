@@ -210,15 +210,15 @@ function htmlForVideo(video, isOwner){
               </div>`
 }
 
-function htmlForVideoResult(value, isOwner){
+function htmlForVideoResult(video, isOwner){
   const videos = APP.screens.videoPicker.videos.selected;
-  let title = value.snippet.title;
+  let title = video.snippet.title;
  
     return  `<div class="video-result">
               <div class="col-4${ /*selectedAttribute*/ '' } youtubeVideo">
                   <h3 class="video-title">${truncateVideoTitle(title)}</h3>
-                  <img  class="thumbnail" src="${value.snippet.thumbnails.medium.url}" videoID="${value.id.videoId}">
-                  <p class="url"><a href="https://www.youtube.com/watch?v=${value.id.videoId}" target="_blank"> ${value.id.videoId}</a></p>  
+                  <img  class="thumbnail" src="${video.snippet.thumbnails.medium.url}" videoID="${video.id.videoId}">
+                  <p class="url"><a href="https://www.youtube.com/watch?v=${video.id.videoId}" target="_blank"> ${video.id.videoId}</a></p>  
                   <div class="video-controls">
                     ${videoControls(false, isOwner)} 
                   </div>
