@@ -53,20 +53,6 @@ router.get('/:id', (req, res) => {
   });
 });
 
-// List categories from a user
-// router.get('/user/:userId', localAuth,  (req, res) => {
-//   Category.find({user: req.params.userId, status: 'Public'})
-//     .populate('user')
-//     .then(categories => {
-//       res.status(200).json(categories, {
-//         categories:categories
-//       }).catch(err => {
-//         console.error(err);
-//         res.status(500).json({message:'Internal server error'});
-//       })
-//     });
-// });
-
 // Process Add Categories
 router.post('/', jwtAuth, (req, res) => {
   if(req.body.videos.length > 0){
@@ -121,17 +107,8 @@ router.put('/:id', jwtAuth, (req, res) => {
       return res.status(422).json({message:err.message, kind:err.kind, path: err.path, value: err.value});
     }
     res.status(400).json({message:'Failed to update category'});
-    // res.status(err.status || 400).json({message: err.message || 'Failure to update category'});
-  });
-  //   // Add to comments array
-  //   // category.videos.push(videos);
-
-  //   // New values
-  //   category.title = req.body.title;
-  //   category.description = req.body.description; 
-  //   category.status = req.body.status;
-  //   category.allowComments = allowComments;
-  //   category.videos = req.body.videos;
+    });
+ 
   });
 
 // Add Comment
@@ -164,26 +141,16 @@ router.post('/:id/comment/', jwtAuth, (req, res) => {
   });
 });
 
-//The ID is undefined in the console log on line 16
-
 // Delete Video from Technique
 router.delete('/videos/:video_id', jwtAuth,  (req, res) => {
   console.log('This is req.params.id :  '+ req.params.video_id);
 
-  // Category.findOne({'videos._id': req.params.video_id})
-  //   .then((category) => {
-  //    const categoryIndex =  category.videos.findIndex(video => video._id === req.params.video_id);
-  //     category.videos.splice(categoryIndex, 1);
-  //     return category.save();
-
-  //   })
   Category.findOneAndUpdate(
     {'videos._id': req.params.video_id},
     {$pull: {videos: {_id: req.params.video_id}}},
     {new: true}
   )
   .then((category) => {
-    // res.status(200).json({message:'Succussfully deleted video!'});
     res.status(200).json(category);
   }).catch(err => {
     console.log(err);
