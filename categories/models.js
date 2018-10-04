@@ -18,7 +18,7 @@ const CategorySchema = new Schema({
   videos: [{
     title: String,
     videoID: String,
-    url: String
+    url: String,
   }],
   // ratings: [{
   //   date:{

@@ -1,11 +1,28 @@
 const chai = require("chai");
 const chaiHttp = require("chai-http");
+const {User} = require('../users');
+const jwt = require('jsonwebtoken');
+const {JWT_SECRET} = require('../config');
 
 const expect = chai.expect;
 
 const { app, runServer, closeServer } = require("../server");
 
 chai.use(chaiHttp);
+
+function expectCategory(category) {
+  expect(category).to.be.a("object");
+  expect(category).to.include.keys(
+    "id",
+    "title",
+    "description",
+    "status",
+    "username",
+    "videos",
+    "comments",
+    "user"
+  );
+}
 
 describe("Category", function() {
   before(function() {
@@ -16,54 +33,86 @@ describe("Category", function() {
     return closeServer();
   });
 
+  let token = '';
+  const username = 'exampleUser';
+
+  beforeEach(function(){
+    const password = 'examplePass';
+    const firstName = 'Example';
+    const lastName = 'User';
+
+    return User.hashPassword(password).then(password =>
+      User.create({
+        username,
+        password,
+        firstName,
+        lastName
+      })).then(() => {
+        
+        token = jwt.sign(
+          {
+            user: {
+              username,
+              firstName,
+              lastName
+            }
+          },
+          JWT_SECRET,
+          {
+            algorithm: 'HS256',
+            subject: username,
+            expiresIn: '7d'
+          }
+        );
+      });
+  })
+
+  afterEach(function() {
+    return User.remove({});
+  });
+
+
   it("should list items on GET", function() {
     return chai
       .request(app)
-      .get("/categories")
+      .get("/api/categories")
       .then(function(res) {
         expect(res).to.have.status(200);
         expect(res).to.be.json;
-        expect(res.body).to.be.a("object");
+        expect(res.body).to.be.an("array");
         expect(res.body.length).to.be.above(0);
-        res.body.forEach(function(item) {
-          expect(item).to.be.a("object");
-          expect(item).to.have.all.keys(
-            "id",
-            "title",
-            "description",
-            "status",
-            "username"
-          );
-        });
+        const categories  = res.body;
+        categories.forEach(expectCategory);
       });
   });
 
   it("should add a category on POST", function() {
     const newCategory = {
       title: "Lorem ip some",
-      content: "foo foo foo foo",
+      description: "foo foo foo foo",
       status: "Public",
-      videos: [{title:"Video Title", url:"http://example@example.com", videoID:'3452qtyz'}],
-      username: "Andrew Dice Clay"
+      videos: [{title:"Video Title", url:"http://example@example.com", videoID:'3452qtyz'}]
     };
     const expectedKeys = ["id"].concat(Object.keys(newCategory));
     const expectedVideoKeys = ["_id"].concat(Object.keys(newCategory.videos[0]));
 
     return chai
       .request(app)
-      .post("/categories")
+      .post("/api/categories")
+      .set('authorization', `Bearer ${token}`)
       .send(newCategory)
       .then(function(res) {
-        expect(res).to.have.status(201);
+        expect(res).to.have.status(200);
         expect(res).to.be.json;
         expect(res.body).to.be.a("object");
-        expect(res.body).to.have.all.keys(expectedKeys);
+        expect(res.body).to.include.keys(expectedKeys);
         expect(res.body.videos).to.be.a('array');
         expect(res.body.videos).to.have.lengthOf(1);
-        expect(res.body.videos[0]).to.have.all.keys(expectedVideoKeys);
+        expect(res.body.videos[0]).to.include.keys(expectedVideoKeys);
         expect(res.body.title).to.equal(newCategory.title);
-        expect(res.body.content).to.equal(newCategory.description);
-        expect(res.body.author).to.equal(newCategory.status);
+        expect(res.body.description).to.equal(newCategory.description);
+        expect(res.body.status).to.equal(newCategory.status);
+        expect(res.body.username).to.equal(username);
       });
   });
 
@@ -71,11 +120,18 @@ describe("Category", function() {
     const badRequestData = {};
     return chai
       .request(app)
-      .post("/categories")
+      .post("/api/categories")
+      .set('authorization', `Bearer ${token}`)
       .send(badRequestData)
       .then(function(res) {
-        expect(res).to.have.status(400);
-      });
+        expect.fail(null, null, 'Request should not succeed')
+      }).catch(err => {
+        if (err instanceof chai.AssertionError) {
+          throw err;
+        }
+        const res = err.response;
+        expect(res).to.have.status(422);
+      })
   });
 
   it("should update category on PUT", function() {
@@ -83,7 +139,7 @@ describe("Category", function() {
       chai
         .request(app)
         // first have to get
-        .get("/categories")
+        .get("/api/categories")
         .then(function(res) {
           const updatedPost = Object.assign(res.body[0], {
             title: "connect the dots",
@@ -91,7 +147,8 @@ describe("Category", function() {
           });
           return chai
             .request(app)
-            .put(`/categories/${res.body[0].id}`)
+            .put(`/api/categories/${res.body[0].id}`)
+            .set('authorization', `Bearer ${token}`)
             .send(updatedPost)
             .then(function(res) {
               expect(res).to.have.status(204);
@@ -105,11 +162,12 @@ describe("Category", function() {
       chai
         .request(app)
         // first have to get
-        .get("/categories")
+        .get("/api/categories")
         .then(function(res) {
           return chai
             .request(app)
-            .delete(`/categories/${res.body[0].id}`)
+            .delete(`/api/categories/${res.body[0].id}`)
+            .set('authorization', `Bearer ${token}`)
             .then(function(res) {
               expect(res).to.have.status(204);
             });

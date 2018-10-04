@@ -46,7 +46,7 @@ function submitCategoryForm(){
       Authorization: `Bearer ${authToken}`
     }
   }).then(function(response) {
-    console.log(response);
+    console.log('New category :  '+ response);
     $(formMessages).removeClass('error');
     $(formMessages).addClass('success');
     clearCategoryForm();
@@ -69,7 +69,7 @@ function submitCategoryForm(){
 
 function addCategoryToLocalArrays(category, categoryId){
   let formMessages = $('#form-messages');
-  console.log(category);
+ 
   // Create Category Array
 
   if(categoryId){

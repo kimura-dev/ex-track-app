@@ -1,5 +1,8 @@
 module.exports = {
   truncate: function(str, len){
+		if(!str || !str.length || !str.substr){
+			return str || '';
+		}
     if (str.length > len && str.length > 0) {
 			var new_str = str + " ";
 			new_str = str.substr(0, len);
@@ -10,6 +13,9 @@ module.exports = {
 		return str;
   },
   stripTags: function(input){
+		if(!input || !input.replace){
+			return input || '';
+		}
     return input.replace(/<(?:.|\n)*?>/gm, '');
   },
 };

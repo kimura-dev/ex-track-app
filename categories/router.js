@@ -10,6 +10,8 @@ const {
   stripTags
 } = require('../helpers/helpers');
 const {Category} = require('./models');
+const mongoose = require('mongoose');
+const ObjectId = mongoose.Schema.Types.ObjectId;
 
 
 // Category Index
@@ -55,12 +57,13 @@ router.get('/:id', (req, res) => {
 
 // Process Add Categories
 router.post('/', jwtAuth, (req, res) => {
-  if(req.body.videos.length > 0){
-    videos = req.body.videos;
-    // console.log(req.body.videos);
-  } else {
-    videos = null 
-  }
+  // console.log(JSON.stringify(req.body))
+  // if(req.body.videos.length > 0){
+  //   videos = req.body.videos;
+  //   // console.log(req.body.videos);
+  // } else {
+  //   videos = []; 
+  // }
 
   console.log('Req user info ', req.user);
 
@@ -72,7 +75,8 @@ router.post('/', jwtAuth, (req, res) => {
     status: req.body.status,
     // allowComments: allowComments,
     username: req.user.username, 
-    videos: JSON.parse(videos)
+    videos: req.body.videos
+    // videos: JSON.parse(videos)
   }
   console.log('-------------------------------------------');
   console.log(newCategory); 
@@ -147,7 +151,7 @@ router.delete('/videos/:video_id', jwtAuth,  (req, res) => {
 
   Category.findOneAndUpdate(
     {'videos._id': req.params.video_id},
-    {$pull: {videos: {_id: req.params.video_id}}},
+    {$pull: {videos: new ObjectId(req.params.video_id)}},
     {new: true}
   )
   .then((category) => {
