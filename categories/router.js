@@ -10,8 +10,6 @@ const {
   stripTags
 } = require('../helpers/helpers');
 const {Category} = require('./models');
-const mongoose = require('mongoose');
-const ObjectId = mongoose.Schema.Types.ObjectId;
 
 
 // Category Index
@@ -151,7 +149,7 @@ router.delete('/videos/:video_id', jwtAuth,  (req, res) => {
 
   Category.findOneAndUpdate(
     {'videos._id': req.params.video_id},
-    {$pull: {videos: new ObjectId(req.params.video_id)}},
+    {$pull: {videos: {_id: req.params.video_id}}},
     {new: true}
   )
   .then((category) => {
