@@ -355,6 +355,7 @@ $(function onAppStart() {
 
   // Delete Videos on category  
   $('.added-videos').on('click','.deleteVideo', function(e){
+    e.preventDefault();
     let videoId = $(this).closest('.video-controls').attr('data-videoid');
     console.log(this);
     
