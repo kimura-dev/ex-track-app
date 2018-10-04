@@ -97,7 +97,8 @@ router.post('/', jwtAuth, (req, res) => {
 router.put('/:id', jwtAuth, (req, res) => {
   Category.findByIdAndUpdate(req.params.id, {
 
-      ...req.body, videos: JSON.parse(req.body.videos)
+      // ...req.body, videos: JSON.parse(req.body.videos)
+      ...req.body
   }, {
     new: true 
   }).then((data) =>{

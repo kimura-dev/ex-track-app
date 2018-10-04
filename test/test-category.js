@@ -151,11 +151,52 @@ describe("Category", function() {
             .set('authorization', `Bearer ${token}`)
             .send(updatedPost)
             .then(function(res) {
-              expect(res).to.have.status(204);
+              expect(res).to.have.status(200);
             });
         })
     );
   });
+
+  it("should add a video", function(){
+    return (
+      chai
+        .request(app)
+        .get('/api/categories')
+        .then(function(res) {
+          const category = res.body[0];
+          const video = {
+            title: "connect the dots",
+            videoID: "345edfghsd",
+            url:"http://example@example.com"
+          };
+
+          const expectedKeys = Object.keys(video)
+          expectedKeys.push('_id');
+         
+          category.videos.push(video);
+
+          return chai
+          .request(app)
+          .put(`/api/categories/${category.id}`)
+          .set('authorization', `Bearer ${token}`)
+          .send(category)
+          .then(function(res) {
+            expect(res).to.have.status(200);
+            expect(res.body.videos).to.be.an('array');
+            expect(res.body.videos).to.be.an('array');
+            expect(res.body.videos.length).to.be.greaterThan(0);
+
+            const lastVideo = res.body.videos[res.body.videos.length-1];
+
+            expect(lastVideo).to.be.an('object');
+            expect(lastVideo).to.include.keys(expectedKeys);
+            expect(lastVideo.title).to.equal(video.title);
+            expect(lastVideo.videoID).to.equal(video.videoID);
+            expect(lastVideo.url).to.equal(video.url);
+          });
+        })
+    )
+  })
 
   it("should delete category on DELETE", function() {
     return (
@@ -169,9 +210,10 @@ describe("Category", function() {
             .delete(`/api/categories/${res.body[0].id}`)
             .set('authorization', `Bearer ${token}`)
             .then(function(res) {
-              expect(res).to.have.status(204);
+              expect(res).to.have.status(200);
             });
         })
     );
   });
 });
+
