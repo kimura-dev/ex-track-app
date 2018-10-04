@@ -24,7 +24,8 @@ function submitCategoryForm(){
     title: $('.category-title').val(),
     description: $('.category-description').val(), 
     status: $('.status > option:selected').text(),
-    videos: JSON.stringify(videos)
+    // videos: JSON.stringify(videos)
+    videos: videos
   };
 
   let categoryId = $('.category-id').val() || false;
