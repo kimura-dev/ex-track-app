@@ -64,7 +64,6 @@ router.post('/', jwtAuth, (req, res) => {
       truncate(req.body.description)
     ),
     status: req.body.status,
-    // allowComments: allowComments,
     username: req.user.username, 
     videos: req.body.videos
     // videos: JSON.parse(videos)

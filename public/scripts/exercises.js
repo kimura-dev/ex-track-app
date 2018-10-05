@@ -44,7 +44,8 @@ function submitCategoryForm(){
     url: `${API_URL}/categories/${ categoryId ? categoryId  : ''}`,
     data: JSON.stringify(data),
     headers: {
-      Authorization: `Bearer ${authToken}`
+      Authorization: `Bearer ${authToken}`,
+      'Content-Type': 'application/json'
     }
   }).then(function(response) {
     console.log('New category :  '+ response);
