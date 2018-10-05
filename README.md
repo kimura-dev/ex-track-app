@@ -13,5 +13,9 @@ Private, well then it will only be visible to you.
 
 ### Video Picker
 
+![image](https://user-images.githubusercontent.com/37715269/46563268-54ac1680-c8b5-11e8-8c51-fcc0b3e8393e.png)
+
+The video picker allows provides you with your own search bar to customize your video search to whatever you like. 
+You then can preview videos before selecting them.
 
 
