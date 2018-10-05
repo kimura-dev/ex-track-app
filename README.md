@@ -1,5 +1,7 @@
 # Where's My Videos!
 
+![image](https://user-images.githubusercontent.com/37715269/46563173-e10a0980-c8b4-11e8-974a-50e499fdb944.png)
+
 ###  What the app does
 
 Where's My Videos, allows users to create categories of movies. It allows you to storee all your favorite videos 
