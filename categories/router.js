@@ -55,13 +55,6 @@ router.get('/:id', (req, res) => {
 
 // Process Add Categories
 router.post('/', jwtAuth, (req, res) => {
-  // console.log(JSON.stringify(req.body))
-  // if(req.body.videos.length > 0){
-  //   videos = req.body.videos;
-  //   // console.log(req.body.videos);
-  // } else {
-  //   videos = []; 
-  // }
 
   console.log('Req user info ', req.user);
 

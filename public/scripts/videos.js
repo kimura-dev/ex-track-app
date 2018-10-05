@@ -29,6 +29,9 @@ function youtubeOutput(data) {
   pageToken.prevPage = data.prevPageToken;
    
   let html = ` <div class="row clearfix">`;
+  // data.items = data.items.filter(function(result){
+  //   if(!result.id.videoID)
+  // })
   $.each(data['items'], function (index, value) {
 
     
@@ -56,6 +59,7 @@ function searchYoutube() {
           , part: 'snippet'
           , maxResults: 6
           , pageToken: pageToken.current
+          , type: 'video'
           // , pageToken: 'CAYQAA'
       }
   }).done(youtubeOutput);
