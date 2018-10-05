@@ -13,6 +13,10 @@ Private, well then it will only be visible to you. Where's My Videos!, also has 
 
 ### Categories 
 
+![image](https://user-images.githubusercontent.com/37715269/46563433-50342d80-c8b6-11e8-9599-cb59af7169bf.png)
+
+You can feel free to check around and look at other users categories and watch there saved videos as well! If you want to create your own  categories or have the ability to comment on other users, then simple register to become a new memeber!
+
 ### Video Picker
 
 ![image](https://user-images.githubusercontent.com/37715269/46563268-54ac1680-c8b5-11e8-8c51-fcc0b3e8393e.png)
