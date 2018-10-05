@@ -42,7 +42,7 @@ function submitCategoryForm(){
   $.ajax({
     type: categoryId ? 'PUT':'POST',
     url: `${API_URL}/categories/${ categoryId ? categoryId  : ''}`,
-    data: data,
+    data: JSON.stringify(data),
     headers: {
       Authorization: `Bearer ${authToken}`
     }
