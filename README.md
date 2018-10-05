@@ -6,7 +6,7 @@ https://infinite-oasis-77848.herokuapp.com/#
 
 ###  What the app does
 
-Where's My Videos, allows users to create categories of movies. It allows you to storee all your favorite videos 
+Where's My Videos, allows users to create categories of online videos. It allows you to store all of your favorite videos 
 into easy to find categories. 
 
 You can also choice to make your categories as Public or Private, depending on if you want other users to see it.
