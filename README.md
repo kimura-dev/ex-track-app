@@ -11,6 +11,8 @@ You can also choice to make your categories as Public or Private, depending on i
 If you choose Public then other users will be able to comment on your categories and I dialogue can begin. If you mark the category as
 Private, well then it will only be visible to you. Where's My Videos!, also has a built in video player so users never have to leave the site in order to see there favorite videos.
 
+### Categories 
+
 ### Video Picker
 
 ![image](https://user-images.githubusercontent.com/37715269/46563268-54ac1680-c8b5-11e8-8c51-fcc0b3e8393e.png)
