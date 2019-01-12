@@ -11,7 +11,6 @@
  <!-- Load an icon library to show a hamburger menu (bars) on small screens -->
   <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css"> -->
   <link rel="stylesheet" type="text/css" href="styles/float-grid.css">
   <link rel="stylesheet" type="text/css" href="styles/styles.css">
 </head>
@@ -25,31 +24,20 @@
         <a href="#" class="nav-login"><ion-icon name="person" class="ion"></ion-icon>Login</a>
         <a href="#" class="nav-signup"><ion-icon name="person-add" class="ion"></ion-icon>Register</a>
         <a href="#" class="nav-logout" hidden><ion-icon name="arrow-round-forward" class="ion"></ion-icon>Logout</a>
-        <!-- <div class="logo-container">
-          <a href="#" class="nav-logo"><img src="/styles/imgs/bjj-logo2.jpg" alt="bjj technique creator logo"></a>
-        </div> -->
-          
-
-        <!-- <a href="#" class="nav-username"><ion-icon name="person" class="ion"></ion-icon></a> -->
         <a href="javascript:void(0);" class="icon" onclick="responsiveNav()">
           <i class="fa fa-bars"></i>
         </a>
       </div>
     </nav>
   </header>
-    
-  <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
-  <!-- <div id="animation"></div> -->
 
   <section class="introduction-page" aria-live="polite">
     <div class="row">
       <div class="intro-content" aria-live="polite">
         <h1 class="intro-title">Where's My Videos!</h1>
-        <!-- <p class="intro-content">Create your favorite categories, find the best videos and stash em here! Choose for your categories to be viewed by others or completley private. </p>
-        <p class="loginOrRegisterPrompt"><a class="promptLogin">Login</a> or <a class="promptRegister">Register</a> to START CREATING!</p>  -->
-        <p class="intro-content">Use our <strong>Video Picker</strong> to locate, preview, then save your favorite videos into <strong>Categories</strong>.</p>
-        <p class="intro-content">Mark your <strong>Categories</strong> as <strong>Public</strong> and other users will be able to see and comment.</p>
-        <p class="loginOrRegisterPrompt"><a class="promptLogin">Login</a> or <a class="promptRegister">Register</a> to START!</p> 
+        <p class="intro-content">Use our Video Picker to locate, preview, then save your favorite videos into Categories.</p>
+        <p class="intro-content">Mark your Categories as Public and other users will be able to see and comment.</p>
+        <p class="loginOrRegisterPrompt"><a class="promptLogin"><strong>Login</strong></a> or <a class="promptRegister"><strong>Register</strong></a> to START!</p> 
       </div>
     </div>
 
@@ -57,18 +45,6 @@
         <button class="enter myButton" value="enter" name="enter">Enter</button>
       </div>
   </section>
-
-  <!-- <section class="search-category" hidden>
-      <form method="GET" action="/exercises">
-        <fieldset>
-          <legend>Search A Category:</legend>
-          <label for="search-category">
-             <input type="text" class="search-category">
-            </label>
-            <button type="submit">Search</button>
-        </fieldset>
-      </form>
-  </section> -->
 
   <div class="add-btn-box" aria-live="polite">
       <button class="add-category-btn myButton" hidden><ion-icon name="add-circle-outline"></ion-icon>Add New Category</button>
@@ -97,9 +73,6 @@
         <label for="password">Password
           <input type="password" name="password" class="password" min="6" required>
         </label>
-        <!-- <label for="password2">Confirm Password
-            <input type="password" name="password2" class="password2" min="6" required>
-        </label> -->
         <button class="signup-btn" type="submit">Submit</button>
       </fieldset>
     </form>
@@ -193,12 +166,7 @@
                 </div>
 
                 <hr>
-              <!-- <div class="continuedComments" aria-live="polite">
-                <div class="row">
-                                 
-                </div>
-              </div> -->
-               
+           
           </fieldset>     
         </form>
         <section class="comment-section" aria-live="polite">
@@ -207,7 +175,6 @@
               
           </div>
         </section> 
-    <!-- </div> -->
   </section>
 
     <section class="video-picker" hidden aria-live="polite">
@@ -216,7 +183,6 @@
           <legend>Video Picker</legend>
           <h2 class="vid-picker-title">Video Picker</h2>
           <div class="vid-picker-content">
-            <!-- <p> Use the video picker below to search for videos to add to your techniques.</p> -->
             <p>Use the <strong>Preview</strong> &amp; <strong>Select</strong> buttons to check out the videos before you <strong>Add</strong> them to your category.</p>
           </div>
             <div class="vidPickerSearchSection" aria-live="polite">

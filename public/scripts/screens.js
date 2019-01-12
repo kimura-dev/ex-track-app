@@ -1,5 +1,4 @@
 // gets the current screen object from APP.screens
-
 function currentScreen(){
   if( APP.currentScreenName 
     && APP.screens 
@@ -15,7 +14,6 @@ function showScreen(screenName){
 
   if( screenName && screenName in APP.screens ){
     APP.lastScreen = currentScreen();
-
     APP.currentScreenName = screenName;
     // Hiding the screens that aren't the one that was selected
     Object.keys(APP.screens).forEach(screen => {
@@ -25,8 +23,6 @@ function showScreen(screenName){
             output = thisScreen.hide();
         }
       }
-
-      // console.log(screenName);
     });
 
     const screen = APP.screens[screenName];
@@ -56,7 +52,6 @@ function  redrawCurrentScreen(){
   console.log('RedrawCurrentScreen: '+screen);
 };
 
-
 // Make specific screens
 APP.screens.allCategories =  {
   title: "All Categories",
@@ -66,8 +61,6 @@ APP.screens.allCategories =  {
   hide: hideUserCategoryPage,
   nav: true
 };
-
-// console.log(APP.categories.all);
 
 APP.screens.myCategories = {
   title: "My Categories",
@@ -110,7 +103,6 @@ APP.screens.login = {
   url: '/api/auth/login',
   show: showLoginForm,
   hide: hideLoginForm,
-    // hideNavItemsWhenLoggedIn
   nav: true
 }
 

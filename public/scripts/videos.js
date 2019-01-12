@@ -1,6 +1,4 @@
 "use strict";
-
-
 /**----------------------------- */
 /*    Movie Picker Controls
 /**------------------------------ */
@@ -29,22 +27,18 @@ function youtubeOutput(data) {
   pageToken.prevPage = data.prevPageToken;
    
   let html = ` <div class="row clearfix">`;
-  // data.items = data.items.filter(function(result){
-  //   if(!result.id.videoID)
-  // })
+
   $.each(data['items'], function (index, value) {
 
     
     html += htmlForVideoResult(value);     
     if( (index + 1) % 3 === 0 ){
-      // console.log(index);
       html += '</div> <div class="row clearfix">'
     }
   });
   html += '</div>';
 
   $('.video-results').html(html);
-  // showPrevNextBtn();
 };
 
 function searchYoutube() {
@@ -60,7 +54,6 @@ function searchYoutube() {
           , maxResults: 6
           , pageToken: pageToken.current
           , type: 'video'
-          // , pageToken: 'CAYQAA'
       }
   }).done(youtubeOutput);
   
@@ -138,9 +131,7 @@ function jsonforVideo(videoElement){
  }
 
  return jsonVideo;
-
 }
-
 
 /**---------------------------- */
 /*     Add Videos to Profile

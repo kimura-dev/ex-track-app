@@ -53,9 +53,6 @@ function submitSignupForm(){
     } 
 
     $(formMessages).text('Awesome, your accounts created!! Add a category and begin finding videos!');
-    // showAddCategoryBtn();
-    // hideNavItemsWhenLoggedIn();
-    // showNavItemsAfterLogin();
     showScreen('myCategories');
   
     // Clear the form.
@@ -152,7 +149,6 @@ function loggingIn(){
     if(window.localStorage){
       window.localStorage.setItem('authToken', authToken);
       window.localStorage.setItem('user', user);
-      // location.reload();
     }
     
     $(formMessages).removeClass('error');
@@ -160,11 +156,8 @@ function loggingIn(){
     $(formMessages).text('');
     $('.username').val('');
     $('.password').val('');
-    
-    // hideLoginForm();
-    
+        
     return showScreen('myCategories');
-    
     
   }).fail(function(data) {
     $(formMessages).removeClass('success');

@@ -24,12 +24,10 @@ function submitCategoryForm(){
     title: $('.category-title').val(),
     description: $('.category-description').val(), 
     status: $('.status > option:selected').text(),
-    // videos: JSON.stringify(videos)
     videos: videos
   };
 
   let categoryId = $('.category-id').val() || false;
-  // console.log(categoryId);
   if (categoryId){
     data._id = categoryId;
   }
@@ -73,8 +71,8 @@ function addCategoryToLocalArrays(category, categoryId){
   let formMessages = $('#form-messages');
  
   // Create Category Array
-
   if(categoryId){
+
   // For Edits on Category
     $(formMessages).text(`${category.title} was edited successfully!`);
     const index = categories.findIndex((category) => {
@@ -103,8 +101,6 @@ function addCategoryToLocalArrays(category, categoryId){
 
     myCategories.push(category);
   }
-
-
 };
 
 /**--------------------------------------------------- */
@@ -117,7 +113,6 @@ function showAllCategoriesPage(){
     showloginRegisterPrompt();
     hideAddCategoryBtn();  
   }
-  // showAllCategoryPageHeader();
   hideUsernameHeader();
   showAllCategoryPageHeader();
   return showCategoriesPage(categories, '/categories');
@@ -229,23 +224,15 @@ function htmlForVideoOnCategoryForm(video, isOwner){
 
 
 function populateFormWCategoryData(category) {
-  // console.log(category.username);
-
   let formMessages = $('#form-messages');
 
   if(category){
-
     $('.category-id').val(category._id || '') ;
     $('.category-title').val(category.title || '') ;
     $('.category-description').val(category.description || '');
     $('.category-username').text(`Owner: ${category.username}'s` || '') ;
     $('.addCategoryTitleToVidSect').text(`${category.title} Videos`)
-    $(formMessages).text(`${category.title} category!`);
-    // hideUserCategoryPage();
-
-    // showCategoryForm();
-   
-    
+    $(formMessages).text(`${category.title} category!`);    
   }
   
 };
@@ -267,7 +254,6 @@ function getCurrentCategory(currentCategoryId){
        return category._id === currentCategoryId;
     });
   }
-  // console.log(currentCategoryId);
 };
 
 function getCurrentCategoryComments(){
@@ -318,7 +304,6 @@ function showCategoryForm(){
 function hideCategoryForm(){
   $('.category-form').attr('hidden');
   $('.category-form').hide();
-  // hideFormMessage();
 };
 
 function renderCategoryForm(){
@@ -380,13 +365,10 @@ function deleteCategory(category_id){
     headers: {
       Authorization: `Bearer ${authToken}`
     }
-  }).then((response) => {
-    // location.reload(true);
- 
+  }).then((response) => { 
     deleteSavedCategory(category_id);
     showScreen('myCategories');
     $(formMessages).text(`Your category was deleted successfully!`);
-
   });
   
 };
@@ -415,5 +397,4 @@ function clearCategoryForm(){
   $('.category-description').val('');
   $('.added-videos > .row').html('');
   $('.addCategoryTitleToVidSect').html('');
-  // $('.comment-section > .row').html('');
 }
