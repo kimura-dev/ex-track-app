@@ -319,6 +319,12 @@ $(function onAppStart() {
     loggingIn();
   });
 
+   // Demo Log In Click Event
+   $('.demoLogin').click(function(){
+    loggingIn('guest', '123456');
+  });
+
+
   $('.addVideosToProfileBtn').click(function(){
     addSelectedVideosToForm();
     hideMoviePicker();

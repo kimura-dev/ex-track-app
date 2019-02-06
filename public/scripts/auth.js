@@ -132,10 +132,11 @@ function hideLoginForm(){
 /*    Login AJAX
 /**-------------------------------- */
 
-function loggingIn(){
+function loggingIn(username, password){
+
   let data = {
-    username: $('.login-username').val(),
-    password: $('.login-password').val()
+    username: username || $('.login-username').val(),
+    password: password || $('.login-password').val()
   };
   let formMessages = $('#form-messages');
   $.ajax({
