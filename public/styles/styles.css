@@ -87,8 +87,8 @@ nav .nav-container {
   padding-right: 0.5em; 
 }
 
-.logo {
-  width: 60px;
+a.logo {
+  width: 75px;
 }
 
 a.nav-username {
@@ -99,15 +99,8 @@ a.nav-username {
 /* Change the color of links on hover */
 .topnav a:hover,
 .topnav a:focus {
-  /* background-color: rgb(238, 122, 13);    */
   color: rgb(240, 166, 8);
 }
-
-/* a.nav-logo:hover,
-a.nav-logo:focus {
-  background-color: rgb(42, 59, 212);
-  cursor: default;
-} */
 
 .hydrated {
   margin-right: 10px;
