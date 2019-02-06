@@ -182,6 +182,10 @@ div.error {
   color: rgb(243, 125, 16);
 }
 
+.demoLogin{
+  text-decoration: none;
+}
+
 .loginOrRegisterPrompt a:hover,
 .loginOrRegisterPrompt a:focus {
   color:  #E5E5E5;
