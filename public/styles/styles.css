@@ -56,16 +56,23 @@ legend {
 /* Add a black background color to the top navigation */
 .topnav {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   background-color: rgb(90, 18, 22);
   border-bottom: 8px solid rgb(238, 122, 13);
   overflow: hidden;
   position: relative;
 }
 
+@media screen and (max-width: 640px) {
+  .topnav{
+    justify-content: space-between;
+  }
+}
+
 nav .nav-container {
   margin-left: 0;
 }
+
 
 /* Style the links inside the navigation bar */
 .topnav a {
