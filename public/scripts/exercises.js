@@ -6,7 +6,8 @@ const REFRESH_PERIOD = 1000 * 60; // 60,000 milliseconds
 let lastCategoryPage = '';
 let currentcategoryId = '';
 let pageToken = {};
-const API_URL = 'https://infinite-oasis-77848.herokuapp.com/api';
+const API_URL = 'https://wheresmyvideos.herokuapp.com/api';
+// const API_URL = 'https://infinite-oasis-77848.herokuapp.com/api';
 
 
 /**-------------------------------- */
