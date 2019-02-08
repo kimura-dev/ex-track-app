@@ -145,6 +145,7 @@ function hideLoginRegisterPrompt(){
 
 function hideSubmitCommentBtn(){
   $('.commentSaveBtn').hide();
+  console.log('Testing');
 }
 /**-------------------------------- */
 /*  ENABLE/DISABLE FORM INPUTS
