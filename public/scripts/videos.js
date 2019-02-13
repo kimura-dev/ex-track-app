@@ -245,10 +245,10 @@ function videoControls(isAdded, isOwner){
     return html;
   } 
     return `<div class="float-left">
-      <button class="preview-video"><ion-icon name="play-circle"></ion-icon>Preview</button>     
+      <button class="preview-video">Preview</button>     
     </div>
     <div class="float-right">
-      <button class="select-video-btn"><ion-icon name="add-circle"></ion-icon>Select</button>
+      <button class="select-video-btn">Select</button>
     </div>
     <div class="float-right">
       <button class="unselect-video-btn"><ion-icon name="undo"></ion-icon>Unselect</button>

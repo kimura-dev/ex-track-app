@@ -1,3 +1,8 @@
+/* Colors
+      RED - rgb(90, 18, 22);
+      GREEN - rgb(238, 122, 13)
+*/
+
 *, *:before, *:after {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -292,18 +297,6 @@ div.error {
 .label-for-ex {
   color: #fff;
   letter-spacing: 0.1em;
-  /* text-shadow: 0 1px 0 rgb(255, 129, 12),
-  0 2px 0 #fa8e04,
-  0 3px 0 rgb(248, 132, 0),
-  0 4px 0 #dd8028,
-  0 5px 0 rgb(230, 130, 16),
-  0 6px 1px rgba(0,0,0,.1),
-  0 0 5px rgba(0,0,0,.1),
-  0 1px 3px rgba(0,0,0,.3),
-  0 3px 5px rgba(0,0,0,.2),
-  0 5px 10px rgba(0,0,0,.25),
-  0 10px 10px rgba(0,0,0,.2),
-  0 20px 20px rgba(0,0,0,.15); */
 }
 
 .addCategoryTitleToVidSect {
@@ -655,6 +648,38 @@ p {
 }
 
 .tokenClass {
+  border-top: 1px solid #ed790d;
+  background: #5a1216;
+  background: -webkit-gradient(linear, left top, left bottom, from(#5a1317), to(#5a1216));
+  background: -webkit-linear-gradient(top, #5a1317, #5a1216);
+  background: -moz-linear-gradient(top, #5a1317, #5a1216);
+  background: -ms-linear-gradient(top, #5a1317, #5a1216);
+  background: -o-linear-gradient(top, #5a1317, #5a1216);
+  padding: 11px 19px;
+  -webkit-border-radius: 7px;
+  -moz-border-radius: 7px;
+  border-radius: 2px;
+  -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+  -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+  box-shadow: rgba(0,0,0,1) 0 1px 0;
+  text-shadow: rgba(0,0,0,.4) 0 1px 0;
+  color: white;
+  font-size: 16px;
+  font-family: Georgia, serif;
+  text-decoration: none;
+  vertical-align: middle;
+  }
+.tokenClass:hover {
+  border-top-color: #ee7a0d;
+  background: #ee7a0d;
+  color: #fffaff;
+  }
+.tokenClass:active {
+  border-top-color: #ee7a0d;
+  background: #ee7a0d;
+  }
+
+/* .tokenClass {
   padding: 10px;
   font-size: 18px;
   background-color: rgb(105, 5, 5);
@@ -665,7 +690,7 @@ p {
 .tokenClass:focus {
   cursor: pointer;
   background-color:  rgb(238, 122, 13);
-}
+} */
 
 /*------------------------------------------*/
 /*         VideoPicker Style
@@ -763,17 +788,51 @@ p {
 .select-video-btn {
   color: #E5E5E5;
   padding: 8px;
-  font-size: 85%;
+  /* font-size: 85%; */
   background-color: rgb(150, 48, 48);
 }
 
+.preview-video,
+.select-video-btn {
+  border-top: 1px solid #ed790d;
+  background: #5a1216;
+  background: -webkit-gradient(linear, left top, left bottom, from(#5a1317), to(#5a1216));
+  background: -webkit-linear-gradient(top, #5a1317, #5a1216);
+  background: -moz-linear-gradient(top, #5a1317, #5a1216);
+  background: -ms-linear-gradient(top, #5a1317, #5a1216);
+  background: -o-linear-gradient(top, #5a1317, #5a1216);
+  padding: 8.5px 17px;
+  -webkit-border-radius: 7px;
+  -moz-border-radius: 7px;
+  border-radius: 7px;
+  -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+  -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+  box-shadow: rgba(0,0,0,1) 0 1px 0;
+  text-shadow: rgba(0,0,0,.4) 0 1px 0;
+  color: white;
+  font-size: 16px;
+  font-family: Georgia, serif;
+  text-decoration: none;
+  vertical-align: middle;
+  }
 .preview-video:hover,
+.select-video-btn:hover {
+  border-top-color: #ee7a0d;
+  background: #ee7a0d;
+  color: #fffaff;
+  }
+.preview-video:active {
+  border-top-color: #ee7a0d;
+  background: #ee7a0d;
+  }
+
+/* .preview-video:hover,
 .preview-video:focus,
 .select-video-btn:hover,
 .select-video-btn:focus,
  {
   background-color: rgb(238, 122, 13);  
-}
+} */
 
 /*------------------------------------------*/
 /*         YouTube Results Page
