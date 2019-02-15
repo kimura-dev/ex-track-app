@@ -696,6 +696,11 @@ p {
 /*         VideoPicker Style
 /*------------------------------------------*/
 
+.video-picker-ui-container {
+  max-width: 1200px;
+  margin: auto;
+}
+
 .vidPickerSearchSection {
   display: inline-block;
 }
@@ -821,7 +826,8 @@ p {
   background: #ee7a0d;
   color: #fffaff;
   }
-.preview-video:active {
+.preview-video:active,
+.select-video-btn:active {
   border-top-color: #ee7a0d;
   background: #ee7a0d;
   }
