@@ -1,6 +1,6 @@
 # Where's My Videos!
 
-https://infinite-oasis-77848.herokuapp.com/#
+https://wheresmyvideos.herokuapp.com/#
 
 ![image](https://user-images.githubusercontent.com/37715269/46563173-e10a0980-c8b4-11e8-974a-50e499fdb944.png)
 
@@ -25,7 +25,7 @@ If you want to create your own  categories or have the ability to comment on oth
 
 
 ### Video Picker
-The video picke provides you with a search bar to customize your video search to whatever you like. Provide a search query and the video picker will provide you with tons of video based on your query. 
+The video picker provides you with a search bar to customize your video search to whatever you like. Provide a search query and the video picker will provide you with tons of video based on your query. 
 
 ![image](https://user-images.githubusercontent.com/37715269/46563268-54ac1680-c8b5-11e8-8c51-fcc0b3e8393e.png)
 
@@ -33,4 +33,10 @@ The video picke provides you with a search bar to customize your video search to
 The video picker allows you to preview videos before selecting them as well.
 
 ![image](https://user-images.githubusercontent.com/37715269/46563344-aeacdc00-c8b5-11e8-833d-9e9ad3479000.png)
+
+Built with:<br>
+---
+Front End - HTML5, CSS3, jQuery, Javascript<br>
+Back End - NodeJS, Express, MongoDB, Mongoose<br>
+Tools - Git, Heroku, Mocha & Chai, Travis CI
 
