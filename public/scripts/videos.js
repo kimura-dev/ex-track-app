@@ -223,7 +223,7 @@ function htmlForVideoResult(video, isOwner){
 };
 
 function truncateVideoTitle(title){
-  let length = 40;
+  let length = 15;
   let shortText = title.substring(0, length) + "...";
 
   return shortText;

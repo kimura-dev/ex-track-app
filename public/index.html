@@ -185,28 +185,28 @@
 
     <section class="video-picker" hidden aria-live="polite">
       <form method="POST" action="#">
-        <fieldset class="videoPickerFieldSet">
-          <legend>Video Picker</legend>
-          <h2 class="vid-picker-title">Video Picker</h2>
-          <div class="vid-picker-content">
-            <p>Use the <strong>Preview</strong> &amp; <strong>Select</strong> buttons to check out the videos before you <strong>Add</strong> them to your category.</p>
-          </div>
-            <div class="vidPickerSearchSection" aria-live="polite">
-              <label for="search">Search for videos:
-              <input type="text" name="search" class="video-search-input" placeholder="e.g.,kettle bells...">
-              <button type="search" class="video-search-btn"><ion-icon name="search"></ion-icon>Search</button>
+        <div class="video-picker-ui-container">
+          <fieldset class="videoPickerFieldSet">
+            <legend>Video Picker</legend>
+            <h2 class="vid-picker-title">Video Picker</h2>
+            <div class="vid-picker-content">
+              <p>Use the <strong>Preview</strong> &amp; <strong>Select</strong> buttons to check out the videos before you <strong>Add</strong> them to your category.</p>
             </div>
+              <div class="vidPickerSearchSection" aria-live="polite">
+                <label for="search">Search for videos:
+                <input type="text" name="search" class="video-search-input" placeholder="e.g.,kettle bells...">
+                <button type="search" class="video-search-btn"><ion-icon name="search"></ion-icon>Search</button>
+              </div>
+              
             
-           
-            <button type="cancel" class="closePickerBtn"><ion-icon name="undo"></ion-icon>Back to Category</button>
+              <button type="cancel" class="closePickerBtn"><ion-icon name="undo"></ion-icon>Back to Category</button>
 
-          </label>
-        </fieldset>
+            </label>
+          </fieldset>
       </form>
 
       <hr>
 
-      <div class="video-picker-ui-container">
       <div class="button-options prevPage" aria-live="polite">
         <button class="tokenClass" name="previous" value="Previous"><ion-icon name="arrow-round-back"></ion-icon>Prev</button>
       </div>
