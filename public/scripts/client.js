@@ -252,14 +252,14 @@ $(function onAppStart() {
 
     if(isLoggedIn()){
       showFormMessages();
-      $('#form-messages').text('Create your Category here! !');
+      $('#form-messages').text('Create your Category');
       hideAddCategoryBtn();
       setCurrentCategory(false);  
       showScreen('categoryForm');
       enableFormInputs();
     } else {
       showFormMessages();
-      $('#form-messages').text(`Please login or register to add a technique!`);
+      $('#form-messages').text(`Please login or register to add a category`);
     }  
   })
 

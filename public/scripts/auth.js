@@ -6,7 +6,7 @@
 
 function showSignupForm(){
   let formMessages = $('#form-messages'); 
-  $(formMessages).text('Sign Up here to begin creating categories!')
+  $(formMessages).text('Sign Up here to begin creating categories')
   $('#sign-up-form').show();
   hideLoginForm();
   if(currentScreen() == 'categoryForm'){
