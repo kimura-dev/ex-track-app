@@ -12,13 +12,11 @@ const bcrypt = require('bcryptjs');
 
 
 // Load Models
-const {Category} = require('./categories/models');
-// const {Log} = require('./log-entries/models');
+const { Category } = require('./categories/models');
 
 // Load Routers
 const { router: usersRouter } = require('./users');
 const categoryRouter = require('./categories/router');
-// const logRouter = require('./log-entries/router');
 const { router: authRouter, localStrategy, jwtStrategy } = require('./auth');
 
 mongoose.Promise = global.Promise;
@@ -50,8 +48,6 @@ app.use(function (req, res, next) {
 // Passport Middleware
 passport.use(localStrategy);
 passport.use(jwtStrategy);
-// app.use(passport.initialize());
-// app.use(passport.session());
 
 // Body Parser Middleware
 app.use(bodyParser.json());
